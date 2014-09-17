@@ -26,6 +26,17 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'account.OferClubAbstractUser'
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/login/'
+
+FACEBOOK_APP_ID = '174003539462247'
+FACEBOOK_APP_SECRET = '044aa2fc0080358270e9f20e75f00e08'
+FACEBOOK_CALLBACK_URL = 'http://localhost:8000/contas/new/facebook/callback/'
+
+# SITE_ID = 1
+SLUGFIELD_SEPARATOR = ''
 
 # Application definition
 
@@ -40,6 +51,11 @@ INSTALLED_APPS = (
     'checkout',
     'offer',
 )
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.request',
+    )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
