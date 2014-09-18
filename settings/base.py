@@ -40,6 +40,8 @@ SLUGFIELD_SEPARATOR = ''
 
 LANGUAGE_CODE = 'pt-BR'
 
+DEFAULT_FROM_EMAIL = 'victorluna22@gmail.com'
+
 # Application definition
 
 INSTALLED_APPS = (

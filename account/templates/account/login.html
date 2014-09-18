@@ -34,9 +34,9 @@
             {% endfor %}
             <br />
             <br />
-            <p class="forgot-pass"><a href="">Esqueci minha senha</a></p>
+            <p class="forgot-pass"><a href="{% url 'account:password_reset' %}">Esqueci minha senha</a></p>
 
-            <p id="cadstrado">Não é cadastrado? <a href="" class="login">&nbsp;&nbsp;Cadastre-se</a></p>
+            <p id="cadstrado">Não é cadastrado? <a href="{% url 'account:signup' %}" class="login">&nbsp;&nbsp;Cadastre-se</a></p>
         </form>
 
 </body>

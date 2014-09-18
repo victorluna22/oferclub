@@ -19,10 +19,32 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse_lazy
+from django.contrib.auth.forms import SetPasswordForm
+from django.template.response import TemplateResponse
+from django.contrib.auth.tokens import default_token_generator
 
 from .models import OferClubUser, Account, get_facebook_service
+from .forms import OferClubUserForm
 
-# Create your views here.
+
+class OferClubCreateView(FormView):
+    form_class = OferClubUserForm
+    context_object_name = 'object'
+    template_name = 'account/signup.html'
+    success_url = reverse_lazy('offer:home')
+
+    def form_valid(self, form):
+        full_name = form.cleaned_data['full_name']
+        email = form.cleaned_data['email']
+        password = form.cleaned_data['password']
+        city = form.cleaned_data['city']
+        gender = form.cleaned_data['gender']
+        birthday = form.cleaned_data['birthday']
+        OferClubUser.objects.create_user(email=email, password=password, full_name=full_name, city=city, gender=gender, birthday=birthday)
+        user = authenticate(email=email, password=password)
+        auth_login(self.request, user)
+
+        return super(OferClubCreateView, self).form_valid(form)
 
 
 class LoginView(FormView):
@@ -226,3 +248,48 @@ def login_social(request, user=None, oauth_token=None):
     url = reverse_lazy('offer:home', kwargs={})
 
     return HttpResponseRedirect(url)
+
+
+@sensitive_post_parameters()
+@never_cache
+def password_reset_confirm(request, uidb36=None, token=None,
+                           template_name='registration/password_reset_confirm.html',
+                           token_generator=default_token_generator,
+                           set_password_form=SetPasswordForm,
+                           post_reset_redirect=None,
+                           current_app=None, extra_context=None):
+    """
+    View that checks the hash in a password reset link and presents a
+    form for entering a new password.
+    """
+    assert uidb36 is not None and token is not None  # checked by URLconf
+    if post_reset_redirect is None:
+        post_reset_redirect = reverse('django.contrib.auth.views.password_reset_complete')
+    try:
+        uid_int = base36_to_int(uidb36)
+        user = OferClubUser.objects.get(pk=uid_int)
+    except (ValueError, OverflowError, OferClubUser.DoesNotExist):
+        user = None
+
+    if user is not None and token_generator.check_token(user, token):
+        validlink = True
+        if request.method == 'POST':
+            form = set_password_form(user, request.POST)
+            if form.is_valid():
+                new_user = form.save(commit=False)
+                new_user.has_password = True
+                new_user.save()
+                return HttpResponseRedirect(post_reset_redirect)
+        else:
+            form = set_password_form(None)
+    else:
+        validlink = False
+        form = None
+    context = {
+        'form': form,
+        'validlink': validlink,
+    }
+    if extra_context is not None:
+        context.update(extra_context)
+    return TemplateResponse(request, template_name, context,
+                            current_app=current_app)
