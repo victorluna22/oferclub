@@ -34,13 +34,14 @@ class OferClubUserChangeForm(UserChangeForm):
 
     class Meta:
         model = OferClubUser
+        fields = ('full_name', 'email', 'gender', 'birthday', 'city')
 
 
 class OferClubUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_(u'Informações'), {'fields': ('full_name', 'gender', 'birthday', 'city', 'credit')}),
-        (_(u'Permissões'), {'fields': ('is_active', 'is_staff', 'is_superuser', )}),
+        (_(u'Permissões'), {'fields': ('is_active', 'is_staff', )}),
         (_(u'Datas importantes'), {'fields': ('last_login', 'date_joined')}),
     )
     add_fieldsets = (
@@ -73,7 +74,7 @@ class FilialCreationForm(UserCreationForm):
 
     class Meta:
         model = Filial
-        fields = ('full_name', 'email', 'partner', 'city')
+        fields = ('full_name', 'email', 'city')
 
 
 class FilialChangeForm(UserChangeForm):
@@ -89,6 +90,7 @@ class FilialChangeForm(UserChangeForm):
 
     class Meta:
         model = Filial
+        fields = ('full_name', 'email', 'city')
 
 
 class FilialAdmin(UserAdmin):
@@ -96,7 +98,7 @@ class FilialAdmin(UserAdmin):
         (None, {'fields': ('email', 'password')}),
         (_(u'Informações'), {'fields': ('full_name', 'partner', 'phone', 'cellphone', 'city')}),
         (_(u'Informações Bancária'), {'fields': ('owner_name', 'bank_name', 'agency', 'number', 'cpf')}),
-        (_(u'Permissões'), {'fields': ('is_active', 'is_staff', 'is_superuser', )}),
+        (_(u'Permissões'), {'fields': ('is_active', 'is_staff', )}),
         (_(u'Datas importantes'), {'fields': ('last_login', 'date_joined')}),
     )
     add_fieldsets = (
@@ -143,6 +145,7 @@ class AffiliateChangeForm(UserChangeForm):
 
     class Meta:
         model = Affiliate
+        fields = ('full_name', 'email', 'city')
 
 
 class AffiliateAdmin(UserAdmin):
@@ -150,7 +153,7 @@ class AffiliateAdmin(UserAdmin):
         (None, {'fields': ('email', 'password')}),
         (_(u'Informações'), {'fields': ('full_name', 'phone', 'cellphone', 'city')}),
         (_(u'Informações Bancária'), {'fields': ('owner_name', 'bank_name', 'agency', 'number', 'cpf')}),
-        (_(u'Permissões'), {'fields': ('is_active', 'is_staff', 'is_superuser', )}),
+        (_(u'Permissões'), {'fields': ('is_active', 'is_staff', )}),
         (_(u'Datas importantes'), {'fields': ('last_login', 'date_joined')}),
     )
     add_fieldsets = (
@@ -173,5 +176,5 @@ class AffiliateAdmin(UserAdmin):
 admin.site.register(OferClubUser, OferClubUserAdmin)
 admin.site.register(Filial, FilialAdmin)
 admin.site.register(Affiliate, AffiliateAdmin)
-admin.site.register(Account)
+# admin.site.register(Account)
 admin.site.register(Partner)

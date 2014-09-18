@@ -176,8 +176,8 @@ class Partner(models.Model):
     email = models.EmailField(max_length=255, unique=True, db_index=True)
     slug = models.SlugField(max_length=255, blank=True, unique=True, editable=False)
     cnpj = models.CharField(verbose_name=_(u'CNPJ'), max_length=18)
-    phone = models.CharField(verbose_name=_(u'Telefone'), max_length=20)
-    cellphone = models.CharField(verbose_name=_(u'Celular'), max_length=20)
+    phone = models.CharField(verbose_name=_(u'Telefone'), blank=True, null=True, max_length=20)
+    cellphone = models.CharField(verbose_name=_(u'Celular'), blank=True, null=True, max_length=20)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(instance=self,
@@ -196,8 +196,8 @@ class Partner(models.Model):
 class Filial(OferClubAbstractUser):
     partner = models.ForeignKey(Partner)
     city = models.ForeignKey(City, blank=True, null=True)
-    phone = models.CharField(verbose_name=_(u'Telefone'), max_length=20)
-    cellphone = models.CharField(verbose_name=_(u'Celular'), max_length=20)
+    phone = models.CharField(verbose_name=_(u'Telefone'), blank=True, null=True, max_length=20)
+    cellphone = models.CharField(verbose_name=_(u'Celular'), blank=True, null=True, max_length=20)
 
     owner_name = models.CharField(
         verbose_name=_(u'Nome do Titular'),
@@ -242,8 +242,8 @@ class Filial(OferClubAbstractUser):
 
 class Affiliate(OferClubAbstractUser):
     city = models.ForeignKey(City, blank=True, null=True)
-    phone = models.CharField(verbose_name=_(u'Telefone'), max_length=20)
-    cellphone = models.CharField(verbose_name=_(u'Celular'), max_length=20)
+    phone = models.CharField(verbose_name=_(u'Telefone'), blank=True, null=True, max_length=20)
+    cellphone = models.CharField(verbose_name=_(u'Celular'), blank=True, null=True, max_length=20)
 
     owner_name = models.CharField(
         verbose_name=_(u'Nome do Titular'),

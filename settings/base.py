@@ -31,12 +31,14 @@ AUTH_USER_MODEL = 'account.OferClubAbstractUser'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
 
-FACEBOOK_APP_ID = '174003539462247'
-FACEBOOK_APP_SECRET = '044aa2fc0080358270e9f20e75f00e08'
-FACEBOOK_CALLBACK_URL = 'http://localhost:8000/contas/new/facebook/callback/'
+FACEBOOK_APP_ID = '340736239438743'
+FACEBOOK_APP_SECRET = 'eac89cdcf746cbb69397be018ccaf071'
+FACEBOOK_CALLBACK_URL = 'http://localhost:8000/new/facebook/callback/'
 
 # SITE_ID = 1
 SLUGFIELD_SEPARATOR = ''
+
+LANGUAGE_CODE = 'pt-BR'
 
 # Application definition
 
@@ -58,6 +60,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -69,6 +72,13 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'urls'
 
 WSGI_APPLICATION = 'wsgi.application'
+
+AUTHENTICATION_BACKENDS = (
+    'account.backends.AccountsBackend.AccountsBackend',
+    'account.backends.EmailBackend.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+    # 'guardian.backends.ObjectPermissionBackend',  # activate django-guardian
+)
 
 
 # Internationalization
