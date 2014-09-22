@@ -6,6 +6,8 @@ from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.admin import UserAdmin
 from account.models import Account, OferClubUser, Partner, Filial, Affiliate
 
+
+
 class OferClubUserCreationForm(UserCreationForm):
     """
     A form that creates a user, with no privileges, from the given email and
@@ -171,10 +173,35 @@ class AffiliateAdmin(UserAdmin):
     ordering = ('-date_joined',)
     readonly_fields = ('date_joined', 'last_login')
 
+class FilialInline(admin.StackedInline):
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        (_(u'Informações'), {'fields': ('full_name', 'partner', 'phone', 'cellphone', 'city')}),
+        (_(u'Informações Bancária'), {'fields': ('owner_name', 'bank_name', 'agency', 'number', 'cpf')}),
+        (_(u'Permissões'), {'fields': ('is_active', 'is_staff', )}),
+        (_(u'Datas importantes'), {'fields': ('last_login', 'date_joined')}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'full_name', 'partner', 'city', 'password1', 'password2')}
+        ),
+    )
+    model = Filial
+    form = FilialChangeForm
+    add_form = FilialCreationForm
+    min_num = 1
+    extra = 0
+
+class PartnerAdmin(admin.ModelAdmin):
+    inlines = [
+        FilialInline,
+    ]
+
 
 # Register your models here.
 admin.site.register(OferClubUser, OferClubUserAdmin)
-admin.site.register(Filial, FilialAdmin)
+# admin.site.register(Filial, FilialAdmin)
 admin.site.register(Affiliate, AffiliateAdmin)
 # admin.site.register(Account)
-admin.site.register(Partner)
+admin.site.register(Partner, PartnerAdmin)

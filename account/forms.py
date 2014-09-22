@@ -85,6 +85,13 @@ class OferClubUserForm(forms.ModelForm):
             user.save()
         return user
 
+class OferClubUserChangeForm(forms.ModelForm):
+    class Meta:
+        model = OferClubUser
+        fields = ('email', 'gender', 'birthday', 'city', 'full_name')
+        widgets = {
+            'email': forms.TextInput(attrs={'class': 'form-control'}),
+        }
 
 class PasswordResetForm(forms.Form):
     email = forms.EmailField(label=_(u'email'), max_length=254,
@@ -94,7 +101,7 @@ class PasswordResetForm(forms.Form):
              subject_template_name='account/password_reset_subject.txt',
              email_template_name='account/password_reset_email.html',
              use_https=False, token_generator=default_token_generator,
-             from_email=None, request=None):
+             from_email=None, request=None, html_email_template_name=None):
         """
         Generates a one-use only link for resetting password and sends to the
         user.

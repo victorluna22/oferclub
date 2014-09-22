@@ -8,7 +8,8 @@ from django.shortcuts import render
 from account.forms import EmailAuthenticationForm
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, UpdateView
+from django.views.generic.list import ListView
 from django.views.decorators.cache import never_cache
 from django.contrib.sites.models import Site
 from django.contrib.auth import login as auth_login
@@ -22,9 +23,50 @@ from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.forms import SetPasswordForm
 from django.template.response import TemplateResponse
 from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import base36_to_int
 
+from offer.views import LoginRequiredMixin
+from checkout.models import Coupon, Operation, Order
 from .models import OferClubUser, Account, get_facebook_service
-from .forms import OferClubUserForm
+from .forms import OferClubUserForm, OferClubUserChangeForm
+
+
+class MyCouponsListView(LoginRequiredMixin, ListView):
+    model = Coupon
+    template_name = u"account/user/coupons.html"
+
+    def get_queryset(self):
+        user = self.request.user
+        return Coupon.objects.filter(order__user=user)
+
+class MyOrdersListView(LoginRequiredMixin, ListView):
+    model = Coupon
+    template_name = u"account/user/orders.html"
+
+    def get_queryset(self):
+        user = self.request.user
+        return Order.objects.filter(user=user)
+
+class MyOperationsListView(LoginRequiredMixin, ListView):
+    model = Operation
+    template_name = u"account/user/operations.html"
+
+    def get_queryset(self):
+        user = self.request.user
+        return Operation.objects.filter(user=user)
+
+class OferClubUserEditView(LoginRequiredMixin, UpdateView):
+    model = OferClubUser
+    form_class = OferClubUserChangeForm
+    template_name = 'account/user/edit_user.html'
+    success_url = '/usuario/editar-dados/'
+
+    def get_object(self):
+        return self.request.user
+
+    def form_invalid(self, form):
+        import pdb;pdb.set_trace()
+        return super(OferClubUserEditView, self).form_invalid(form)
 
 
 class OferClubCreateView(FormView):

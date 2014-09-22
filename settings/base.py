@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+FILE_UPLOAD_PERMISSIONS = 0777
+FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0777
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -20,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'x*s0a%+l%j0^c^gg6+@6-fp(t^8-jl9*94pv0#a^44ifsrih%_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
@@ -39,18 +42,22 @@ FACEBOOK_CALLBACK_URL = 'http://localhost:8000/new/facebook/callback/'
 SLUGFIELD_SEPARATOR = ''
 
 LANGUAGE_CODE = 'pt-BR'
+LANGUAGES_CODE = ['pt-BR']
 
 DEFAULT_FROM_EMAIL = 'victorluna22@gmail.com'
 
 # Application definition
 
 INSTALLED_APPS = (
+    'django.contrib.contenttypes',
+    # 'django_admin_bootstrapped.bootstrap3',
+    # 'django_admin_bootstrapped',
     'django.contrib.admin',
     'django.contrib.auth',
-    'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tinymce',
     'account',
     'checkout',
     'offer',
@@ -59,6 +66,7 @@ INSTALLED_APPS = (
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.request',
+    'django.core.context_processors.media',
     )
 
 MIDDLEWARE_CLASSES = (
@@ -86,9 +94,8 @@ AUTHENTICATION_BACKENDS = (
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Recife'
 
 USE_I18N = True
 
@@ -101,3 +108,47 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = '/home/victor/statics/oferclub'
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = '/home/gloose-onix/projetos/oferclub/media'
+
+SEND_EMAIL = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USER = 'victorluna22@gmail.com'
+EMAIL_PASSWORD = 'v183729465'
+EMAIL_PORT = 487
+EMAIL_TLS = False
+
+if DEBUG:
+    EMAIL_HOST = '127.0.0.1'
+    EMAIL_USER = ''
+    EMAIL_HOST_PASSWORD = ''
+    EMAIL_PORT = 1025
+    EMAIL_USE_TLS = False
+
+if SEND_EMAIL:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = EMAIL_HOST
+    EMAIL_HOST_USER = EMAIL_USER
+    EMAIL_HOST_PASSWORD = EMAIL_PASSWORD
+    EMAIL_PORT = EMAIL_PORT
+    EMAIL_USE_TLS = EMAIL_TLS
+    SERVER_EMAIL = EMAIL_HOST_USER
+    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+TINYMCE_JS_URL = os.path.join(STATIC_URL, "tiny_mce/tiny_mce.js")
+TINYMCE_JS_ROOT = os.path.join(STATIC_ROOT, "tiny_mce")
+
+# TINYMCE_JS_URL = 'http://debug.example.org/tiny_mce/tiny_mce_src.js'
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': "table,spellchecker,paste,searchreplace",
+    'theme': "advanced",
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 10,
+}
+TINYMCE_SPELLCHECKER = True
+TINYMCE_COMPRESSOR = True

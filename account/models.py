@@ -143,10 +143,14 @@ class OferClubAbstractUser(AbstractBaseUser, PermissionsMixin):
 class State(models.Model):
     name = models.CharField(max_length=100)
     acronym = models.CharField(max_length=2)
+    def __unicode__(self):
+        return u'%s-%s' % (self.name, self.acronym)
 
 class City(models.Model):
     name = models.CharField(max_length=100)
     state = models.ForeignKey(State)
+    def __unicode__(self):
+        return u'%s' % (self.name)
 
 
 class Address(models.Model):
@@ -174,6 +178,7 @@ class OferClubUser(OferClubAbstractUser):
 class Partner(models.Model):
     name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255, unique=True, db_index=True)
+    logo = models.ImageField(verbose_name=u'Logomarca',blank=True, null=True, upload_to='parceiro/')
     slug = models.SlugField(max_length=255, blank=True, unique=True, editable=False)
     cnpj = models.CharField(verbose_name=_(u'CNPJ'), max_length=18)
     phone = models.CharField(verbose_name=_(u'Telefone'), blank=True, null=True, max_length=20)
@@ -244,6 +249,7 @@ class Affiliate(OferClubAbstractUser):
     city = models.ForeignKey(City, blank=True, null=True)
     phone = models.CharField(verbose_name=_(u'Telefone'), blank=True, null=True, max_length=20)
     cellphone = models.CharField(verbose_name=_(u'Celular'), blank=True, null=True, max_length=20)
+    percent = models.DecimalField(u'Percentual do afiliado', decimal_places=2, max_digits=10, blank=True, null=True)
 
     owner_name = models.CharField(
         verbose_name=_(u'Nome do Titular'),

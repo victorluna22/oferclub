@@ -1,0 +1,14 @@
+{% extends 'offer/base.html' %}
+
+{% block content %}
+
+{% for image in offer.images.all %}
+	<img src="{{ MEDIA_URL }}{{ image.name }}">
+{% endfor %}
+
+{% for option in offer.options.all %}
+	<h3>{{ option.title }}</h3>
+	<p>R$ {{ option.new_price }}</p>
+	<a href="{% url 'offer:buy_offer' option.id %}">Comprar</a>
+{% endfor %}
+{% endblock content %}

@@ -1,0 +1,10 @@
+{% extends 'offer/base.html' %}
+
+{% block content %}
+<h2>Créditos</h2>
+<ul>
+{% for operation in operation_list %}
+	<li>{{ operation.value }}</li>
+{% endfor %}
+</ul>
+{% endblock content %}
