@@ -11,7 +11,8 @@
 <form action="." method="POST">
 {% csrf_token %}
 {{ form.as_p }}
-<table>
+{{ form.errors }}
+<!-- <table>
 <tr>
 	<td><label>Nome do titular</label></td>
 	<td><input type="text" name="own_name"></td>
@@ -28,8 +29,8 @@
 	<td><label>Código de segurança</label></td>
 	<td><input type="text" name="security_code"></td>
 </tr>
-</table>
-<input type="submit" value="Pagar">
+</table> -->
+<input type="submit" value="Pagar com pagseguro">
 </form>
 
 {% endblock content %}

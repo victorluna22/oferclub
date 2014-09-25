@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='offer',
             name='affiliate',
-            field=models.ForeignKey(verbose_name='Afiliado', blank=True, to='account.Affiliate', null=True),
+            field=models.ForeignKey(verbose_name='Franqueado', blank=True, to='account.Affiliate', null=True),
         ),
         migrations.AlterField(
             model_name='offer',

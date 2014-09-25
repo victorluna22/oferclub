@@ -21,7 +21,7 @@ class OfferForm(forms.ModelForm):
     class Meta:
         model = Offer
         fields = ('title', 'slug', 'highlight', 'highlight_image', 'affiliate', 'bought', 'bought_virtual', 'max_by_user', 'percent_by_site',
-        		'city', 'description', 'regulation')
+        		'percent_cashback', 'city', 'description', 'regulation')
 
 class OfferAdmin(admin.ModelAdmin):
 

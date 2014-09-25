@@ -284,8 +284,8 @@ class Affiliate(OferClubAbstractUser):
     
 
     class Meta:
-        verbose_name = _(u'Afiliado')
-        verbose_name_plural = _(u'Afiliados')
+        verbose_name = _(u'Franqueado')
+        verbose_name_plural = _(u'Franqueados')
 
 
     def __unicode__(self):

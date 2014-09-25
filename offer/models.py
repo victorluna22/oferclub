@@ -1,4 +1,5 @@
 # coding: utf-8
+from datetime import datetime
 from django.db import models
 from offer.slugify import unique_slugify as slugify
 from tinymce import models as tinymce_models
@@ -28,11 +29,12 @@ class Offer(models.Model):
 	slug = models.SlugField(max_length=255, unique=True, blank=True)
 	highlight = models.BooleanField(u'Destaque', default=False)
 	highlight_image = models.ImageField(verbose_name=u'Imagem Destaque', upload_to='oferta/')
-	affiliate = models.ForeignKey(Affiliate, verbose_name=u'Afiliado', blank=True, null=True)
+	affiliate = models.ForeignKey(Affiliate, verbose_name=u'Franqueado', blank=True, null=True)
 	bought = models.IntegerField(u'Comprados', default=0)
 	bought_virtual = models.IntegerField(u'Quantidade virtual')
 	max_by_user = models.IntegerField(u'Máximo por pessoa', blank=True, null=True)
 	percent_by_site = models.DecimalField(u'Percentual do site', decimal_places=2, max_digits=10)
+	percent_cashback = models.DecimalField(u'Percentual de CashBack', decimal_places=2, max_digits=10)
 	city = models.ManyToManyField(City, blank=True, null=True)
 	description = tinymce_models.HTMLField()
 	regulation = tinymce_models.HTMLField()
@@ -80,3 +82,9 @@ class Option(models.Model):
 
 	def __unicode__(self):
 		return self.title
+
+	def is_available(self):
+		today = datetime.today().strftime('%s')
+		if today >= self.start_time.strftime('%s') and today < self.end_time.strftime('%s'):
+			return True
+		return False

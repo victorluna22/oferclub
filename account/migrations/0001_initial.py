@@ -80,8 +80,8 @@ class Migration(migrations.Migration):
                 ('cpf', models.CharField(help_text='CPF do propriet\xe1rio da conta', max_length=14, null=True, verbose_name='CPF', blank=True)),
             ],
             options={
-                'verbose_name': 'Afiliado',
-                'verbose_name_plural': 'Afiliados',
+                'verbose_name': 'Franqueado',
+                'verbose_name_plural': 'Franqueados',
             },
             bases=('account.oferclubabstractuser',),
         ),

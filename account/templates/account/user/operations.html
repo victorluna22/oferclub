@@ -4,7 +4,8 @@
 <h2>Créditos</h2>
 <ul>
 {% for operation in operation_list %}
-	<li>{{ operation.value }}</li>
+	<li>{{ operation.description }} - {{ operation.value }}</li>
 {% endfor %}
+<li><b>Total: {{ request.user.credit }}</b></li>
 </ul>
 {% endblock content %}

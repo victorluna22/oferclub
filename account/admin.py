@@ -70,9 +70,9 @@ class FilialCreationForm(UserCreationForm):
     password.
     """
 
-    def __init__(self, *args, **kargs):
-        super(FilialCreationForm, self).__init__(*args, **kargs)
-        del self.fields['username']
+    # def __init__(self, *args, **kargs):
+    #     super(FilialCreationForm, self).__init__(*args, **kargs)
+    #     del self.fields['username']
 
     class Meta:
         model = Filial
@@ -85,10 +85,6 @@ class FilialChangeForm(UserChangeForm):
     the user, but replaces the password field with admin's
     password hash display field.
     """
-
-    def __init__(self, *args, **kargs):
-        super(FilialChangeForm, self).__init__(*args, **kargs)
-        del self.fields['username']
 
     class Meta:
         model = Filial
@@ -174,12 +170,21 @@ class AffiliateAdmin(UserAdmin):
     readonly_fields = ('date_joined', 'last_login')
 
 class FilialInline(admin.StackedInline):
+    # fieldsets = (
+    #     (None, {'fields': ('email', 'password')}),
+    #     (_(u'Informações'), {'fields': ('full_name', 'partner', 'phone', 'cellphone', 'city')}),
+    #     (_(u'Informações Bancária'), {'fields': ('owner_name', 'bank_name', 'agency', 'number', 'cpf')}),
+    #     (_(u'Permissões'), {'fields': ('is_active', 'is_staff', )}),
+    #     (_(u'Datas importantes'), {'fields': ('last_login', 'date_joined')}),
+    # )
+    # add_fieldsets = (
+    #     (None, {
+    #         'classes': ('wide',),
+    #         'fields': ('email', 'full_name', 'partner', 'city', 'password1', 'password2')}
+    #     ),
+    # )
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
-        (_(u'Informações'), {'fields': ('full_name', 'partner', 'phone', 'cellphone', 'city')}),
-        (_(u'Informações Bancária'), {'fields': ('owner_name', 'bank_name', 'agency', 'number', 'cpf')}),
-        (_(u'Permissões'), {'fields': ('is_active', 'is_staff', )}),
-        (_(u'Datas importantes'), {'fields': ('last_login', 'date_joined')}),
+        (None, {'fields': ('email', 'password','full_name', 'partner', 'phone', 'cellphone', 'city','owner_name', 'bank_name', 'agency', 'number', 'cpf','is_active', 'last_login', 'date_joined')}),
     )
     add_fieldsets = (
         (None, {
@@ -190,6 +195,7 @@ class FilialInline(admin.StackedInline):
     model = Filial
     form = FilialChangeForm
     add_form = FilialCreationForm
+    readonly_fields = ('date_joined', 'last_login')
     min_num = 1
     extra = 0
 
