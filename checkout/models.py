@@ -2,6 +2,7 @@
 import time
 import hashlib
 import random
+from pagseguro import PagSeguro
 from django.db.models.signals import post_save
 from django.db import models
 from account.models import OferClubUser
@@ -64,7 +65,8 @@ class Order(models.Model):
 
 
     def pay_pagseguro(self):
-        pg = PagSeguro(email="financeiro@gloose.me", token="ABCDEFGHIJKLMNO")
+        import pdb;pdb.set_trace()
+        pg = PagSeguro(email="victorluna22@gmail.com", token="4194D1DFC27E4E1FAAC0E1B20690B5B5")
         pg.sender = {
             "name": self.user.full_name,
             "email": self.user.email,
