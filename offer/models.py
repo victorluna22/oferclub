@@ -84,6 +84,7 @@ class Option(models.Model):
 		return self.title
 
 	def is_available(self):
+		# import pdb;pdb.set_trace()
 		today = datetime.today().strftime('%s')
 		if today >= self.start_time.strftime('%s') and today < self.end_time.strftime('%s'):
 			return True

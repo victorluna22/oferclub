@@ -8,7 +8,7 @@ from django.db import models
 from account.models import OferClubUser
 from offer.models import Option
 from account.models import Address
-from .signals import generate_coupon, generate_cashback, update_credit
+from .signals import receiver_post_save, update_credit
 
 # Create your models here.
 
@@ -46,6 +46,8 @@ class Order(models.Model):
 
     purchase_time = models.DateTimeField(auto_now_add=True, verbose_name=u'data')
 
+    date_approved = models.DateTimeField(u'Aprovado em', blank=True, null=True)
+
     class Meta:
         ordering = ["purchase_time"]
         verbose_name = u"Pedido"
@@ -65,7 +67,7 @@ class Order(models.Model):
 
 
     def pay_pagseguro(self):
-        import pdb;pdb.set_trace()
+        # import pdb;pdb.set_trace()
         pg = PagSeguro(email="victorluna22@gmail.com", token="4194D1DFC27E4E1FAAC0E1B20690B5B5")
         pg.sender = {
             "name": self.user.full_name,
@@ -73,7 +75,7 @@ class Order(models.Model):
         }
         pg.reference_prefix = None
         pg.reference = self.id
-        pg.add_item(id=self.option.id, description=self.option.title, amount=self.option.new_price, quantity=self.quantity, weight=0)
+        pg.add_item(id=self.option.id, description=self.option.title, amount=self.total, quantity=1, weight=0)
         # pg.redirect_url = "http://meusite.com/obrigado"
         response = pg.checkout()
         self.code_pagseguro = response.code
@@ -134,12 +136,11 @@ class Operation(models.Model):
 
     def __unicode__(self):
         if self.type_operation:
-            type_operation = 'Crédito'
+            type_operation = u'Crédito'
         else:
-            type_operation = 'Débito'
-        return '%s - R$%.2f (%s)' % (self.user.full_name, self.value, type_operation)
+            type_operation = u'Débito'
+        return u'%s - R$%.2f (%s)' % (self.user.full_name, self.value, type_operation)
 
 
-post_save.connect(generate_coupon, sender=Order, dispatch_uid='checkout.signals.post_save')
-post_save.connect(generate_cashback, sender=Order, dispatch_uid='checkout.signals.post_save2')
+post_save.connect(receiver_post_save, sender=Order, dispatch_uid='checkout.signals.post_save')
 post_save.connect(update_credit, sender=Operation, dispatch_uid='checkout.signals.post_save')

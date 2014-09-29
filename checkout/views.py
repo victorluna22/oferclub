@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect
 from pagseguro import PagSeguro
-from .models import Order
+from .models import Order, ORDER_AUTHORIZED
 from .forms import OrderCreateForm
 from offer.models import Option
 from offer.views import LoginRequiredMixin
@@ -19,7 +19,9 @@ class OrderCreateViewView(LoginRequiredMixin, CreateView):
 	def get_context_data(self, **kwargs):
 		context = super(OrderCreateViewView, self).get_context_data(**kwargs)
 		if self.kwargs.get('option_id', ''):
-			context['option'] = get_object_or_404(Option, pk=self.kwargs.get('option_id'))
+			option = get_object_or_404(Option, pk=self.kwargs.get('option_id'))
+			context['option'] = option
+			context['total'] = max(0, option.new_price - self.request.user.credit)
 		return context
 
 	def form_valid(self, form):
@@ -31,10 +33,13 @@ class OrderCreateViewView(LoginRequiredMixin, CreateView):
 					self.object = form.save(commit=False)
 					self.object.user = self.request.user
 					self.object.option = option
-					self.object.total = self.object.option.new_price * self.object.quantity
+					self.object.total = max(0, self.object.option.new_price * self.object.quantity - self.request.user.credit)
+					if self.object.total == 0:
+						self.object.status = ORDER_AUTHORIZED
 					self.object.save()
-					url = self.object.pay_pagseguro()
-					return redirect(url)
+					if self.object.total > 0:
+						return redirect(self.object.pay_pagseguro())
+					return HttpResponseRedirect(self.get_success_url())
 				else:
 					form.errors['quantity'] = 'Restam apenas %d cupons para esta oferta!' % int(option.quantity)
 			else:

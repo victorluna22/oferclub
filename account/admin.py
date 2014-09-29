@@ -61,18 +61,17 @@ class OferClubUserAdmin(UserAdmin):
     ordering = ('-date_joined',)
     readonly_fields = ('date_joined', 'last_login')
 
-
-
-
 class FilialCreationForm(UserCreationForm):
     """
     A form that creates a user, with no privileges, from the given email and
     password.
     """
 
-    # def __init__(self, *args, **kargs):
-    #     super(FilialCreationForm, self).__init__(*args, **kargs)
-    #     del self.fields['username']
+    def __init__(self, *args, **kwargs):
+        kwargs['initial'] = {'is_staff': True}
+        super(FilialCreationForm, self).__init__(*args, **kwargs)
+        del self.fields['username']
+        
 
     class Meta:
         model = Filial
@@ -86,6 +85,11 @@ class FilialChangeForm(UserChangeForm):
     password hash display field.
     """
 
+    def __init__(self, *args, **kwargs):
+        kwargs['initial'] = {'is_staff': True}
+        super(FilialChangeForm, self).__init__(*args, **kwargs)
+        del self.fields['username']
+
     class Meta:
         model = Filial
         fields = ('full_name', 'email', 'city')
@@ -96,7 +100,7 @@ class FilialAdmin(UserAdmin):
         (None, {'fields': ('email', 'password')}),
         (_(u'Informações'), {'fields': ('full_name', 'partner', 'phone', 'cellphone', 'city')}),
         (_(u'Informações Bancária'), {'fields': ('owner_name', 'bank_name', 'agency', 'number', 'cpf')}),
-        (_(u'Permissões'), {'fields': ('is_active', 'is_staff', )}),
+        (_(u'Permissões'), {'fields': ('is_active', 'is_staff', 'groups', )}),
         (_(u'Datas importantes'), {'fields': ('last_login', 'date_joined')}),
     )
     add_fieldsets = (
@@ -169,22 +173,12 @@ class AffiliateAdmin(UserAdmin):
     ordering = ('-date_joined',)
     readonly_fields = ('date_joined', 'last_login')
 
+
+
+
 class FilialInline(admin.StackedInline):
-    # fieldsets = (
-    #     (None, {'fields': ('email', 'password')}),
-    #     (_(u'Informações'), {'fields': ('full_name', 'partner', 'phone', 'cellphone', 'city')}),
-    #     (_(u'Informações Bancária'), {'fields': ('owner_name', 'bank_name', 'agency', 'number', 'cpf')}),
-    #     (_(u'Permissões'), {'fields': ('is_active', 'is_staff', )}),
-    #     (_(u'Datas importantes'), {'fields': ('last_login', 'date_joined')}),
-    # )
-    # add_fieldsets = (
-    #     (None, {
-    #         'classes': ('wide',),
-    #         'fields': ('email', 'full_name', 'partner', 'city', 'password1', 'password2')}
-    #     ),
-    # )
     fieldsets = (
-        (None, {'fields': ('email', 'password','full_name', 'partner', 'phone', 'cellphone', 'city','owner_name', 'bank_name', 'agency', 'number', 'cpf','is_active', 'last_login', 'date_joined')}),
+        (None, {'fields': ('email', 'password', 'is_staff', 'full_name', 'partner', 'phone', 'cellphone', 'city','owner_name', 'bank_name', 'agency', 'number', 'cpf','is_active', 'last_login', 'date_joined')}),
     )
     add_fieldsets = (
         (None, {
@@ -199,15 +193,15 @@ class FilialInline(admin.StackedInline):
     min_num = 1
     extra = 0
 
-class PartnerAdmin(admin.ModelAdmin):
-    inlines = [
-        FilialInline,
-    ]
+# class PartnerAdmin(admin.ModelAdmin):
+    # inlines = [
+    #     FilialInline,
+    # ]
 
 
 # Register your models here.
 admin.site.register(OferClubUser, OferClubUserAdmin)
-# admin.site.register(Filial, FilialAdmin)
+admin.site.register(Filial, FilialAdmin)
 admin.site.register(Affiliate, AffiliateAdmin)
 # admin.site.register(Account)
-admin.site.register(Partner, PartnerAdmin)
+admin.site.register(Partner)

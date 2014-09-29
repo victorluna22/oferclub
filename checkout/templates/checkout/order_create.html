@@ -6,7 +6,9 @@
 {% endfor %}
 
 <h3>{{ option.title }}</h3>
-<p>R$ {{ option.new_price }}</p>
+<p>Preço: R$ {{ option.new_price }}</p>
+<p>Seus créditos: R$ {{ request.user.credit }}</p>
+<p>Total: R$ {{ total }}</p>
 
 <form action="." method="POST">
 {% csrf_token %}
