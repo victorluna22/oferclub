@@ -1,6 +1,7 @@
 #coding: utf-8
 
 import urlparse
+import json
 from datetime import timedelta
 from datetime import datetime
 from urlparse import parse_qs
@@ -8,7 +9,7 @@ from django.shortcuts import render
 from account.forms import EmailAuthenticationForm
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.views.generic.edit import FormView, UpdateView
+from django.views.generic.edit import FormView, UpdateView, CreateView
 from django.views.generic.list import ListView
 from django.views.decorators.cache import never_cache
 from django.contrib.sites.models import Site
@@ -27,8 +28,8 @@ from django.utils.http import base36_to_int
 
 from offer.views import LoginRequiredMixin
 from checkout.models import Coupon, Operation, Order
-from .models import OferClubUser, Account, get_facebook_service
-from .forms import OferClubUserForm, OferClubUserChangeForm
+from .models import OferClubUser, Account, Invite, get_facebook_service
+from .forms import OferClubUserForm, OferClubUserChangeForm, InviteCreateForm
 
 
 class MyCouponsListView(LoginRequiredMixin, ListView):
@@ -65,7 +66,7 @@ class OferClubUserEditView(LoginRequiredMixin, UpdateView):
         return self.request.user
 
     def form_invalid(self, form):
-        import pdb;pdb.set_trace()
+        # import pdb;pdb.set_trace()
         return super(OferClubUserEditView, self).form_invalid(form)
 
 
@@ -82,11 +83,24 @@ class OferClubCreateView(FormView):
         city = form.cleaned_data['city']
         gender = form.cleaned_data['gender']
         birthday = form.cleaned_data['birthday']
-        OferClubUser.objects.create_user(email=email, password=password, full_name=full_name, city=city, gender=gender, birthday=birthday)
+        inviter = None
+        if self.request.session.get('invite'):
+            invite = Invite.objects.get_invite_by_code(self.request.session.get('invite'))
+            if invite and invite.email == email:
+                inviter = invite.user
+        OferClubUser.objects.create_user(email=email, password=password, full_name=full_name, city=city, gender=gender, birthday=birthday, inviter=inviter)
         user = authenticate(email=email, password=password)
         auth_login(self.request, user)
-
         return super(OferClubCreateView, self).form_valid(form)
+
+    def get_initial(self):
+        # import pdb;pdb.set_trace()
+        if self.request.GET.get('token'):
+            self.request.session['invite'] = self.request.GET.get('token')
+        if self.request.session.get('invite'):
+            invite = Invite.objects.get_invite_by_code(self.request.session['invite'])
+            if invite:
+                return {'email': invite.email}
 
 
 class LoginView(FormView):
@@ -335,3 +349,35 @@ def password_reset_confirm(request, uidb36=None, token=None,
         context.update(extra_context)
     return TemplateResponse(request, template_name, context,
                             current_app=current_app)
+
+
+class InviteCreateView(LoginRequiredMixin, CreateView):
+    model = Invite
+    template_name = 'account/user/invite.html'
+    form_class = InviteCreateForm
+
+    def form_valid(self, form):
+        # import pdb;pdb.set_trace()
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        self.object.mail_invite()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form):
+        # import pdb;pdb.set_trace()
+        for error in json.loads(form.errors.as_json())['email']:
+            if error['code'] == 'already_exists':
+                return super(InviteCreateView, self).form_invalid(form)
+            if error['code'] == 'unique':
+                invite = Invite.objects.get(email=form.data['email'])
+                if invite:
+                    invite.invite_date = datetime.now()
+                    invite.user = self.request.user
+                    invite.save()
+                    invite.mail_invite()
+                    return HttpResponseRedirect(self.get_success_url())
+        return super(InviteCreateView, self).form_invalid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('offer:user:invite', kwargs={})

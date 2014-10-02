@@ -4,6 +4,9 @@
 <h2>Ofertas</h2>
 
 <ul>
+	<pre>
+	{{ blocks }}
+	</pre>
 	{% for offer in offer_list %}
 	<li><a href="{% url 'offer:offer_detail' offer.slug %}">{{ offer.title }}</a></li>
 	{% endfor %}

@@ -3,7 +3,8 @@
 from datetime import timedelta
 from datetime import datetime
 import re
-
+import md5
+import base64
 from rauth import OAuth2Service
 
 from django.conf import settings
@@ -168,6 +169,7 @@ class OferClubUser(OferClubAbstractUser):
     birthday = models.DateField(verbose_name=_(u'Data de nascimento'), blank=True, null=True,
                                 help_text=_(u'Insira sua data de nascimento.'))
     credit = models.DecimalField(verbose_name=_(u'Saldo'), max_digits=9, decimal_places=2, default=0)
+    inviter = models.ForeignKey('self', blank=True, null=True)
     objects = OferClubUserManager()
 
     class Meta:
@@ -364,3 +366,38 @@ class Account(models.Model):
         return client
 
 
+class InviteManager(models.Manager):
+    def get_code_by_id(self, id_invite):
+        return base64.b64encode(str(id_invite) + '@@' + md5.new(str(id_invite)).hexdigest()[:10])
+
+    def get_id_by_code(self, code):
+        try:
+            return int(base64.b64decode(code).split('@@')[0])
+        except:
+            return None
+
+    def get_invite_by_code(self, code):
+        id_invite = self.get_id_by_code(code)
+        if id_invite:
+            if self.filter(id=id_invite).exists():
+                return self.get(id=id_invite)
+        return None
+
+
+class Invite(models.Model):
+    user = models.ForeignKey(OferClubUser)
+    email = models.EmailField(u'E-mail', max_length=255, unique=True)
+    invited_user = models.ForeignKey(OferClubUser, blank=True, null=True, related_name='invited')
+    invite_date = models.DateTimeField(auto_now_add=True)
+    accept_date = models.DateTimeField(blank=True, null=True)
+
+    objects = InviteManager()
+
+    def __unicode__(self):
+        return "%s - %s" % (self.user.full_name, self.email)
+
+
+    def mail_invite(self):
+        subject = 'Ofer Club - Convite para juntar-se a nós'
+        message = 'http://ofer.club/cadastrar/?token=%s' % Invite.objects.get_code_by_id(self.id)
+        send_mail(subject, message, 'contato@ofer.club', [self.email])

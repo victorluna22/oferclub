@@ -9,7 +9,7 @@ from django.template import loader
 from django.utils.http import int_to_base36
 from django.utils.translation import ugettext_lazy as _
 
-from .models import OferClubUser
+from .models import OferClubUser, Invite
 
 
 class OferClubUserForm(forms.ModelForm):
@@ -235,3 +235,15 @@ class EmailAuthenticationForm(forms.Form):
 
     def get_user(self):
         return self.user_cache
+
+
+class InviteCreateForm(forms.ModelForm):
+    class Meta:
+        model = Invite
+        fields = ('email',)
+
+    def clean_email(self):
+        if OferClubUser.objects.filter(email=self.cleaned_data['email']).exists():
+            raise forms.ValidationError('Já existe um usuário ativo com este E-mail!', code='already_exists')
+
+        return self.cleaned_data['email']

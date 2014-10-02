@@ -23,7 +23,7 @@ FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0777
 SECRET_KEY = 'x*s0a%+l%j0^c^gg6+@6-fp(t^8-jl9*94pv0#a^44ifsrih%_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = True
 
@@ -127,7 +127,7 @@ if DEBUG:
     EMAIL_USER = ''
     EMAIL_HOST_PASSWORD = ''
     EMAIL_PORT = 1025
-    EMAIL_USE_TLS = False
+    EMAIL_USE_TLS = True
 
 if SEND_EMAIL:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

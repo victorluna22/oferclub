@@ -1,5 +1,6 @@
 # coding: utf-8
 from datetime import datetime
+from django.utils import timezone
 from django.db import models
 from offer.slugify import unique_slugify as slugify
 from tinymce import models as tinymce_models
@@ -23,6 +24,18 @@ class Category(models.Model):
 		verbose_name = u'Categoria'
 		verbose_name_plural = u'Categorias'
 
+class OfferManager(models.Manager):
+	def latest_offers(self, format='json', limit=8):
+		offers = self.all().order_by('-date_created')[:limit]
+		data = []
+		for offer in offers:
+			fields = {}
+			fields['title'] = offer.title
+			fields['partner'] = offer.options.all()[0].filial.partner.name
+			fields['city'] = 'Recife'
+			data.append(fields)
+		return data
+
 
 class Offer(models.Model):
 	title = models.CharField(u'Título', max_length=255)
@@ -40,12 +53,18 @@ class Offer(models.Model):
 	regulation = tinymce_models.HTMLField()
 	date_created = models.DateTimeField(auto_now_add=True)
 
+	objects = OfferManager()
+
 	class Meta:
 		verbose_name = u'Oferta'
 		verbose_name_plural = u'Ofertas'
 
 	def __unicode__(self):
 		return self.title
+
+	@property
+	def partner(self):
+		return self.options.all()[0]
 
 	def save(self, *args, **kwargs):
 		if not self.slug:
@@ -85,7 +104,7 @@ class Option(models.Model):
 
 	def is_available(self):
 		# import pdb;pdb.set_trace()
-		today = datetime.today().strftime('%s')
-		if today >= self.start_time.strftime('%s') and today < self.end_time.strftime('%s'):
+		today = timezone.now()
+		if today >= self.start_time and today < self.end_time:
 			return True
 		return False

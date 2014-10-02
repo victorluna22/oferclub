@@ -3,6 +3,7 @@ from account.models import OferClubUser
 
 class EmailBackend(object):
     def authenticate(self, email=None, password=None):
+        # import pdb;pdb.set_trace()
         kwargs = {'email': email}
         try:
             user = OferClubUser.objects.get(**kwargs)

@@ -16,7 +16,6 @@ urlpatterns = patterns('',
 
     (r'^tinymce/', include('tinymce.urls')),
 
-
     # url(r'^admin/', include(xadmin.site.urls)),
     url(r'^admin/', include(admin.site.urls)),
 )

@@ -15,6 +15,11 @@ def receiver_post_save(sender, instance, created, **kwargs):
 		# generate coupons
 		for i in range(instance.quantity):
 			Coupon.objects.create(order=instance, price=instance.option.new_price, date_expiration=instance.option.date_expiration)
+			instance.option.offer.bought += 1
+			instance.option.quantity -= 1
+
+		instance.option.offer.save()
+		instance.option.save()
 
 		# generate cashback
 		if instance.option.offer.percent_cashback > 0 and instance.total > 0:

@@ -1,3 +1,5 @@
+#coding: utf-8
+from django.core import serializers
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -21,17 +23,25 @@ class LoginRequiredMixin(object):
         return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
 
 
-class OfferListView(ListView):
-    model = Offer
-    template_name = u"offer/home.html"
+# class OfferListView(ListView):
+#     model = Offer
+#     template_name = u"offer/home.html"
 
-    def get_queryset(self):
-        return Offer.objects.all()
+#     def get_queryset(self):
+#         return Offer.objects.all()
 
 class OfferDetailView(DetailView):
     model = Offer
 
 
 def home(request):
-	return render(request, 'offer/home.html', {})
+    context = {}
+    data = []
+    data.append({'titulo_bloco': 'Ultimas Ofertas', 'ofertas': Offer.objects.latest_offers()})
+    # data.append({'titulo_bloco': 'Mais Vendidos', 'ofertas': queryset.order_by('-bought')[:8].values()})
+    # blocks = serializers.serialize("json", data)
+    import json
+    # blocks = json.dumps(data)
+    context['blocks'] = data
+    return render(request, 'offer/home.html', context)
 
