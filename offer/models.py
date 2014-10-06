@@ -27,19 +27,32 @@ class Category(models.Model):
 class OfferManager(models.Manager):
 	def latest_offers(self, format='json', limit=8):
 		offers = self.all().order_by('-date_created')[:limit]
+		return self.prepare_dict(offers)
+
+	def bestsellers(self, format='json', limit=8):
+		offers = self.all().order_by('-bought')[:limit]
+		return self.prepare_dict(offers)
+
+	def prepare_dict(self, offers):
 		data = []
 		for offer in offers:
+			option = offer.options.all()[0]
 			fields = {}
-			fields['title'] = offer.title
-			fields['partner'] = offer.options.all()[0].filial.partner.name
-			fields['city'] = 'Recife'
+			fields["title"] = str(offer.title)
+			fields["partner"] = str(option.filial.partner.name)
+			fields["city"] = str(offer.city.name)
+			if offer.options.all().count() == 1:
+				fields["old_price"] = float(option.old_price)
+			fields["new_price"] = float(option.new_price)
+			fields["cashback"] = float(offer.percent_cashback)
+			fields["quantity"] = int(offer.bought + offer.bought_virtual)
 			data.append(fields)
 		return data
-
 
 class Offer(models.Model):
 	title = models.CharField(u'Título', max_length=255)
 	slug = models.SlugField(max_length=255, unique=True, blank=True)
+	category = models.ForeignKey(Category, verbose_name=u'Categoria')
 	highlight = models.BooleanField(u'Destaque', default=False)
 	highlight_image = models.ImageField(verbose_name=u'Imagem Destaque', upload_to='oferta/')
 	affiliate = models.ForeignKey(Affiliate, verbose_name=u'Franqueado', blank=True, null=True)
@@ -48,7 +61,7 @@ class Offer(models.Model):
 	max_by_user = models.IntegerField(u'Máximo por pessoa', blank=True, null=True)
 	percent_by_site = models.DecimalField(u'Percentual do site', decimal_places=2, max_digits=10)
 	percent_cashback = models.DecimalField(u'Percentual de CashBack', decimal_places=2, max_digits=10)
-	city = models.ManyToManyField(City, blank=True, null=True)
+	city = models.ForeignKey(City, verbose_name=u'Cidade')
 	description = tinymce_models.HTMLField()
 	regulation = tinymce_models.HTMLField()
 	date_created = models.DateTimeField(auto_now_add=True)
