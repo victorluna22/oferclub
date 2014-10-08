@@ -25,10 +25,11 @@ from django.contrib.auth.forms import SetPasswordForm
 from django.template.response import TemplateResponse
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import base36_to_int
+from django.shortcuts import get_object_or_404
 
 from offer.views import LoginRequiredMixin
 from checkout.models import Coupon, Operation, Order
-from .models import OferClubUser, Account, Invite, get_facebook_service
+from .models import OferClubUser, Account, Invite, City, get_facebook_service
 from .forms import OferClubUserForm, OferClubUserChangeForm, InviteCreateForm
 
 
@@ -381,3 +382,15 @@ class InviteCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('offer:user:invite', kwargs={})
+
+
+
+def change_city(request):
+    if request.POST and request.POST.get('city'):
+        city_id = request.POST.get('city')
+        city = get_object_or_404(City, pk=city_id)
+        response = HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        max_age = 365 * 24 * 60 * 60  #one year
+        expires = datetime.strftime(datetime.utcnow() + timedelta(seconds=max_age), "%a, %d-%b-%Y %H:%M:%S GMT")
+        response.set_cookie('city', city.id, max_age=max_age, expires=expires, secure=settings.SESSION_COOKIE_SECURE or None)
+        return response

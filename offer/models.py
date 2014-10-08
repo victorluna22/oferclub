@@ -20,9 +20,36 @@ class Category(models.Model):
 	def __unicode__(self):
 		return self.name
 
+	def get_offers_available(self):
+		return Offer.objects.filter(subcategory__category=self, options__start_time__lte=datetime.today(), options__end_time__gte=datetime.today()).order_by('-date_created')
+
 	class Meta:
 		verbose_name = u'Categoria'
 		verbose_name_plural = u'Categorias'
+
+
+class SubCategory(models.Model):
+	name = models.CharField(u'Nome', max_length=255)
+	category = models.ForeignKey(Category, related_name="subcategories")
+
+	def __unicode__(self):
+		return '%s - %s' % (self.name, self.category.name)
+
+	class Meta:
+		verbose_name = u'SubCategoria'
+		verbose_name_plural = u'SubCategorias'
+
+class Interest(models.Model):
+	name = models.CharField(u'Nome', max_length=255)
+	category = models.ForeignKey(Category, related_name='interests')
+
+	def __unicode__(self):
+		return '%s - %s' % (self.name, self.category.name)
+
+	class Meta:
+		verbose_name = u'Interesse'
+		verbose_name_plural = u'Interesses'
+
 
 class OfferManager(models.Manager):
 	def latest_offers(self, format='json', limit=8):
@@ -52,7 +79,8 @@ class OfferManager(models.Manager):
 class Offer(models.Model):
 	title = models.CharField(u'Título', max_length=255)
 	slug = models.SlugField(max_length=255, unique=True, blank=True)
-	category = models.ForeignKey(Category, verbose_name=u'Categoria')
+	subcategory = models.ForeignKey(SubCategory, verbose_name=u'Sub Categoria')
+	interests = models.ManyToManyField(Interest, verbose_name=u'Interesses')
 	highlight = models.BooleanField(u'Destaque', default=False)
 	highlight_image = models.ImageField(verbose_name=u'Imagem Destaque', upload_to='oferta/')
 	affiliate = models.ForeignKey(Affiliate, verbose_name=u'Franqueado', blank=True, null=True)
@@ -62,8 +90,10 @@ class Offer(models.Model):
 	percent_by_site = models.DecimalField(u'Percentual do site', decimal_places=2, max_digits=10)
 	percent_cashback = models.DecimalField(u'Percentual de CashBack', decimal_places=2, max_digits=10)
 	city = models.ForeignKey(City, verbose_name=u'Cidade')
-	description = tinymce_models.HTMLField()
-	regulation = tinymce_models.HTMLField()
+	description = tinymce_models.HTMLField(verbose_name=u'Descrição')
+	when_to_use = tinymce_models.HTMLField()
+	how_to_use = tinymce_models.HTMLField()
+	good_to_know = tinymce_models.HTMLField()
 	date_created = models.DateTimeField(auto_now_add=True)
 
 	objects = OfferManager()
@@ -77,7 +107,16 @@ class Offer(models.Model):
 
 	@property
 	def partner(self):
-		return self.options.all()[0]
+		return self.options.all()[0].filial.partner.name
+
+	def bought_total(self):
+		return self.bought + self.bought_virtual
+
+	def first_option(self):
+		return self.options.filter(start_time__lte=datetime.today(), end_time__gte=datetime.today()).order_by('new_price')[0]
+
+	def other_options(self):
+		return self.options.all().exlude(id=self.first_option().id)
 
 	def save(self, *args, **kwargs):
 		if not self.slug:
@@ -121,3 +160,12 @@ class Option(models.Model):
 		if today >= self.start_time and today < self.end_time:
 			return True
 		return False
+
+	def discount(self):
+		return 100 * self.new_price / self.old_price
+
+	def time_remaining(self):
+		date = self.end_time - timezone.now()
+		# return datetime.strptime(date, "%a %b %d %H:%M:%S %Z %Y")
+		return "%sd %.2d:%.2d:%.2d" % (date.days,date.seconds//3600,(date.seconds//60)%60, date.seconds%60)
+

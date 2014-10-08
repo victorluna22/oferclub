@@ -15,6 +15,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 FILE_UPLOAD_PERMISSIONS = 0777
 FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0777
 
+# SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -48,6 +49,8 @@ DEFAULT_FROM_EMAIL = 'victorluna22@gmail.com'
 
 # Application definition
 
+SESSION_COOKIE_DOMAIN = '.ofer.club'
+
 INSTALLED_APPS = (
     'django.contrib.contenttypes',
     # 'django_admin_bootstrapped.bootstrap3',
@@ -66,6 +69,7 @@ INSTALLED_APPS = (
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.request',
+    'django.core.context_processors.static',
     'django.core.context_processors.media',
     )
 
@@ -77,6 +81,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'offer.middleware.CitiesMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
@@ -90,6 +95,9 @@ AUTHENTICATION_BACKENDS = (
     # 'guardian.backends.ObjectPermissionBackend',  # activate django-guardian
 )
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -109,7 +117,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = '/home/victor/statics/oferclub'
+STATIC_ROOT = '/home/victor/projetos/oferclub/static'
 
 MEDIA_URL = '/media/'
 

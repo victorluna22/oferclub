@@ -1,4 +1,6 @@
 #coding: utf-8
+import json
+from datetime import datetime
 from django.core import serializers
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -40,12 +42,13 @@ def home(request):
     data.append({"titulo_bloco": "Ultimas Ofertas", "ofertas": Offer.objects.latest_offers()})
     data.append({"titulo_bloco": "Mais Vendidos", "ofertas": Offer.objects.bestsellers()})
     for category in Category.objects.all():
-        offers = Offer.objects.filter(category=category).order_by('-date_created')
-        if offers:
-            data.append({"titulo_bloco": str(category.name), "ofertas": Offer.objects.prepare_dict(offers)})
+        offers = category.get_offers_available()
+        data.append({"titulo_bloco": category.name.encode('utf-8'), "ofertas": Offer.objects.prepare_dict(offers)})
     # blocks = serializers.serialize("json", data)
-    import json
+    
     blocks = json.dumps(data)
-    context['blocks'] = blocks
+    context['json'] = blocks
+    context['destaques'] = Offer.objects.filter(highlight=True, options__start_time__lte=datetime.today(), options__end_time__gte=datetime.today())
+    context['blocos'] = data
     return render(request, 'offer/home.html', context)
 

@@ -1,9 +1,24 @@
 # coding: utf-8
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
-from offer.models import Offer, Category, Option, Image
+from offer.models import Offer, Category, Option, Image, SubCategory, Interest
 from django import forms
 from tinymce.widgets import TinyMCE
+
+class SubCategoryInline(admin.StackedInline):
+    model = SubCategory
+    extra = 0
+
+class InterestInline(admin.StackedInline):
+    model = Interest
+    extra = 0
+
+class CategoryAdmin(admin.ModelAdmin):
+
+    inlines = [
+        SubCategoryInline,
+        InterestInline,
+    ]
 
 class OptionInline(admin.StackedInline):
     model = Option
@@ -38,8 +53,8 @@ class OfferForm(forms.ModelForm):
 
     class Meta:
         model = Offer
-        fields = ('title', 'slug', 'category', 'highlight', 'highlight_image', 'affiliate', 'bought', 'bought_virtual', 'max_by_user', 'percent_by_site',
-        		'percent_cashback', 'city', 'description', 'regulation')
+        fields = ('title', 'slug', 'highlight', 'highlight_image', 'subcategory', 'interests', 'affiliate', 'bought', 'bought_virtual', 'max_by_user', 'percent_by_site',
+        		'percent_cashback', 'city', 'description', 'when_to_use', 'how_to_use', 'good_to_know')
 
 class OfferAdmin(admin.ModelAdmin):
 
@@ -75,4 +90,6 @@ class OfferAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Offer, OfferAdmin)
-admin.site.register(Category)
+admin.site.register(Category, CategoryAdmin)
+admin.site.register(SubCategory)
+admin.site.register(Interest)

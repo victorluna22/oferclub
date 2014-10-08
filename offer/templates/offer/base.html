@@ -1,28 +1,145 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title></title>
+	<meta charset="UTF-8">
+	<title>Ofer Club</title>
+	<meta name="author" content="Clóvis da Silva Neto" />
+	<meta name="description" content="Um dos plugins, com efeito slider em jquery, mais fáceis de se implementar no seu web site" />
+	<meta name="keywords" content="plugins jquery, sliders jquery, jquery slider, first slider mother fucky, slide jquery facil de se implementar, baixar plugin slider jquery, slider jquery, jquery slider, clovis web designer, clovis da silva neto, clovis neto" />
+
+	<!-- SEO -->
+	<!-- <meta name="robots" content="noodp,noydir" />
+	<link rel="author" href="https://plus.google.com/u/0/107923948578708069647/posts" />
+	<meta property="og:locale" content="pt_BR" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="First Slider Mother Fucky .:: Desenvolvido por Clóvis Neto ::." />
+	<meta property="og:description" content="Um dos plugins, com efeito slider em jquery, mais fáceis de se implementar no seu web site" />
+	<meta property='og:image' content='http://www.devmedia.com.br/imagens/fotoscolunistas/imagem025-3.jpg'/>
+	<meta property="og:url" content="http://motherfucky.eu5.org/" />
+	<meta property="og:site_name" content="First Slider Mother Fucky " /> -->
+	
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/skeleton.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
+
+	
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
 </head>
 <body>
+	<header id="header">
+		<div class="cor-clara">
+			<div class="container">
+				<div class="sixteen columns">
+					<ul>
+						<li><a href="#">Atendimento</a></li>
+						<li><a href="#">Blog</a></li>
+						<li><a href="#">Cadastre-se</a></li>
+						<li><a href="#">Login</a></li>
+						<li class="redes face"><a href="#"></a></li>
+						<li class="redes"><a href="#" class="twitter"></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
 
-{{ request.user }} <br />
-<ul>
-	<li><a href="{% url 'offer:home' %}">Home</a></li>
-	{% if request.user.is_authenticated %}
-		<li><a href="{% url 'offer:user:my_coupons' %}">Meus Cupons</a></li>
-		<li><a href="{% url 'offer:user:my_orders' %}">Minhas Compras</a></li>
-		<li><a href="{% url 'offer:user:my_operations' %}">Meus Créditos</a></li>
-		<li><a href="{% url 'offer:user:change_user' %}">Editar Dados</a></li>
-		<li><a href="{% url 'offer:user:invite' %}">Convidar</a></li>
-		<li><a href="{% url 'account:logout' %}">Logout</a></li>
-	{% else %}
-		<li><a href="{% url 'account:login' %}">Login</a></li>
-	{% endif %}
+		<div class="cor-clara2">
+			<div class="container">
+				<div id="bg-top"></div>
+
+				<div class="four columns">
+					<h1><a href="#"><img src="{{ STATIC_URL }}img/oferClub.png" alt=""></a></h1>
+				</div>
+				
+				<div class="twelve columns">
+					<a href="#" class="btn-top cor-clara">Ofertas Locais</a>
+					<a href="#" class="btn-top cor-clara">Produtos</a>
+					<form action="">
+						<input type="text" placeholder="O que você procura?">
+					</form>
+					<form id="form-change-city" action="{% url 'offer:user:change_city' %}" method="POST" >
+					{% csrf_token %}
+						<div>
+							{% for city in request.session.cities %}
+								{% if city.id|stringformat:"s" == request.COOKIES.city|stringformat:"s" %}
+									<label for="cidade">{{ city.name }}</label>
+								{% endif %}
+							{% endfor %}
+							<select name="city" id="change-city">
+							{% for city in request.session.cities %}
+								<option value="{{ city.id }}">{{ city.name }}</option>
+							{% endfor %}
+							</select>
+						</div>
+					</form>
+				</div>
+				<!-- END DIV -->
+			</div>
+			<!-- END CONTAINER -->
+		</div>
+		<!-- END COR CLARA2 -->
+	</header>
+	<!-- END HEADER -->
+
+	{% block content %}
+	{% endblock %}
+
+	<footer>
+		<div id="top-footer" class="cor-clara">
+			<div class="container">
+				<ul class="four columns">
+					<li class="title-footer"><a href="#">OferClub</a></li>
+					<li><a href="#">Sobre Nós</a></li>
+					<li><a href="#">Termos de uso</a></li>
+					<li><a href="#">Como funciona</a></li>
+				</ul>
+
+				<ul class="four columns">
+					<li class="title-footer"><a href="#">Parceria</a></li>
+					<li><a href="#">Seja um parceiro</a></li>
+					<li><a href="#">Nosso parceiro</a></li>
+				</ul>
+
+				<ul class="four columns">
+					<li class="title-footer"><a href="#">Ofertas</a></li>
+					<li><a href="#">Dinheiro de volta</a></li>
+					<li><a href="#">Receba ofertas</a></li>
+				</ul>
+
+				<ul class="four columns">
+					<li class="title-footer"><a href="#">Atendimento</a></li>
+					<li><a href="#">Fale conosco</a></li>
+					<li><a href="#">Perguntas frequenciais</a></li>
+					<li><a href="#">Política de compra</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- END TOP-FOOTER -->
+
+		<div id="bottom-footer" class="container">
+			<div class="four columns">
+				<h6>Cartões de Crédito</h6>
+				<img src="{{ STATIC_URL }}mg/cartoes.png" alt="">
+			</div>
+			<div class="four columns">
+				<h6>Transferencia Online</h6>
+				<img src="{{ STATIC_URL }}img/transferencia.png" alt="">
+			</div>
+
+			<p class="sixteen columns">© 2014 Groupon, Inc. Todos os direitos reservados Ofer.Club - CNPJ</p>
+		</div>
+	</footer>
 	
-</ul>
-
-{% block content %}
-
-{% endblock content %}
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+	<script type="text/javascript" src="{{ STATIC_URL }}js/main.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('#change-city').change(function(){
+			$('#form-change-city').submit();
+		});
+	});
+	</script>
 </body>
 </html>
