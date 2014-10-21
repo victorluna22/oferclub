@@ -29,8 +29,8 @@ from django.shortcuts import get_object_or_404
 
 from offer.views import LoginRequiredMixin
 from checkout.models import Coupon, Operation, Order
-from .models import OferClubUser, Account, Invite, City, get_facebook_service
-from .forms import OferClubUserForm, OferClubUserChangeForm, InviteCreateForm
+from .models import OferClubUser, Account, Invite, City, NewsLetter, get_facebook_service
+from .forms import OferClubUserForm, OferClubUserChangeForm, InviteCreateForm, NewsLetterForm
 
 
 class MyCouponsListView(LoginRequiredMixin, ListView):
@@ -386,11 +386,29 @@ class InviteCreateView(LoginRequiredMixin, CreateView):
 
 
 def change_city(request):
+    # import pdb;pdb.set_trace()
     if request.POST and request.POST.get('city'):
         city_id = request.POST.get('city')
         city = get_object_or_404(City, pk=city_id)
-        response = HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-        max_age = 365 * 24 * 60 * 60  #one year
-        expires = datetime.strftime(datetime.utcnow() + timedelta(seconds=max_age), "%a, %d-%b-%Y %H:%M:%S GMT")
-        response.set_cookie('city', city.id, max_age=max_age, expires=expires, secure=settings.SESSION_COOKIE_SECURE or None)
-        return response
+        request.session['city'] = city.id
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+class NewsLetterCreateView(FormView):
+    model = NewsLetter
+    # template_name = 'account/user/invite.html'
+    form_class = NewsLetterForm
+
+    def get_success_url(self):
+        return reverse_lazy('offer:home', kwargs={})
+
+    def form_valid(self, form):
+        city_id = self.request.session['city']
+        city = get_object_or_404(City, pk=city_id)
+        newsletter = form.save(commit=False)
+        newsletter.city = city
+        newsletter.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form): 
+        return HttpResponseRedirect(self.get_success_url())

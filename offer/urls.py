@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
-from offer.views import OfferDetailView
+from django.views.generic import TemplateView
+from offer.views import OfferDetailView, OfferListView
 from account.views import MyCouponsListView, MyOrdersListView, MyOperationsListView, OferClubUserEditView, \
 InviteCreateView, change_city
 from checkout.views import OrderCreateViewView
@@ -7,6 +8,8 @@ from checkout.views import OrderCreateViewView
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'offer.views.home', name='home'),
+    url(r'^selecionar/(?P<slug>[\w_-]+)/$', 'offer.views.change_product_type', name='change_product_type'),
+    url(r'^oferta/listagem/$', OfferListView.as_view(), name='offer_list'),
     url(r'^oferta/(?P<slug>[\w_-]+)/$', OfferDetailView.as_view(), name='offer_detail'),
     url(r'^oferta/(?P<option_id>\d+)/comprar/$', OrderCreateViewView.as_view(), name='buy_offer'),
 
@@ -18,5 +21,19 @@ urlpatterns = patterns('',
 	    	url(r'^convidar/$', InviteCreateView.as_view(), name='invite'),
 	    	url(r'^mudar-cidade/$', change_city, name='change_city'),
 	    ), namespace='user')),
+
+
+	# Static Pages
+	url(r'^atendimento/$', TemplateView.as_view(template_name='institucional/customer_service.html'), name="customer_service"),
+	url(r'^sobre-nos/$', TemplateView.as_view(template_name='institucional/about_us.html'), name="about_us"),
+	url(r'^termo-de-uso/$', TemplateView.as_view(template_name='institucional/use_terms.html'), name="use_terms"),
+	url(r'^como-funciona/$', TemplateView.as_view(template_name='institucional/how_to_work.html'), name="how_to_work"),
+	url(r'^seja-parceiro/$', TemplateView.as_view(template_name='institucional/be_partner.html'), name="be_partner"),
+	url(r'^nosso-parceiro/$', TemplateView.as_view(template_name='institucional/our_partner.html'), name="our_partner"),
+	url(r'^dinheiro-de-volta/$', TemplateView.as_view(template_name='institucional/cashback.html'), name="cashback"),
+	url(r'^receba-ofertas/$', TemplateView.as_view(template_name='institucional/receive_offers.html'), name="receive_offers"),
+	url(r'^fale-conosco/$', TemplateView.as_view(template_name='institucional/contact_us.html'), name="contact_us"),
+	url(r'^perguntas-frequentes/$', TemplateView.as_view(template_name='institucional/faq.html'), name="faq"),
+	url(r'^politica-de-compra/$', TemplateView.as_view(template_name='institucional/buy_policy.html'), name="buy_policy"),
 
 )

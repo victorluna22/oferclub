@@ -14,6 +14,7 @@ class OrderAdmin(admin.ModelAdmin):
     
     list_display = ('user', 'total', 'status', 'purchase_time')
     search_fields = ('user__full_name',)
+    list_filter = ('user__date_joined',)
     date_hierarchy = 'purchase_time'
     ordering = ('-purchase_time',)
     readonly_fields = ('purchase_time',)

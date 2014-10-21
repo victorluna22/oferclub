@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
+{% extends 'offer/base.html' %}
+
+{% block content %}
 <p class="center"><a href="{% url 'account:accounts_facebook_new' %}" class="bt-fb">login facebook</a></p>
 <form action="" id="form-login" class="signup forms-adm"  method="post">
             <legend>Login</legend>
@@ -38,6 +35,4 @@
 
             <p id="cadstrado">Não é cadastrado? <a href="{% url 'account:signup' %}" class="login">&nbsp;&nbsp;Cadastre-se</a></p>
         </form>
-
-</body>
-</html>
+{% endblock content %}

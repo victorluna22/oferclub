@@ -33,10 +33,10 @@
 			<div class="container">
 				<div class="sixteen columns">
 					<ul>
-						<li><a href="#">Atendimento</a></li>
+						<li><a href="{% url 'offer:customer_service' %}">Atendimento</a></li>
 						<li><a href="#">Blog</a></li>
-						<li><a href="#">Cadastre-se</a></li>
-						<li><a href="#">Login</a></li>
+						<li><a href="{% url 'account:signup' %}">Cadastre-se</a></li>
+						<li><a href="{% url 'account:login' %}">Login</a></li>
 						<li class="redes face"><a href="#"></a></li>
 						<li class="redes"><a href="#" class="twitter"></a></li>
 					</ul>
@@ -49,12 +49,12 @@
 				<div id="bg-top"></div>
 
 				<div class="four columns">
-					<h1><a href="#"><img src="{{ STATIC_URL }}img/oferClub.png" alt=""></a></h1>
+					<h1><a href="{% url 'offer:home' %}"><img src="{{ STATIC_URL }}img/oferClub.png" alt=""></a></h1>
 				</div>
 				
 				<div class="twelve columns">
-					<a href="#" class="btn-top cor-clara">Ofertas Locais</a>
-					<a href="#" class="btn-top cor-clara">Produtos</a>
+					<a href="{% url 'offer:change_product_type' 'ofertas-locais' %}" class="btn-top cor-clara">Ofertas Locais</a>
+					<a href="{% url 'offer:change_product_type' 'produtos' %}" class="btn-top cor-clara">Produtos</a>
 					<form action="">
 						<input type="text" placeholder="O que você procura?">
 					</form>
@@ -62,11 +62,12 @@
 					{% csrf_token %}
 						<div>
 							{% for city in request.session.cities %}
-								{% if city.id|stringformat:"s" == request.COOKIES.city|stringformat:"s" %}
+								{% if city.id|stringformat:"s" == request.session.city|stringformat:"s" %}
 									<label for="cidade">{{ city.name }}</label>
 								{% endif %}
 							{% endfor %}
 							<select name="city" id="change-city">
+								<option value="">Selecione</option>
 							{% for city in request.session.cities %}
 								<option value="{{ city.id }}">{{ city.name }}</option>
 							{% endfor %}
@@ -90,28 +91,28 @@
 			<div class="container">
 				<ul class="four columns">
 					<li class="title-footer"><a href="#">OferClub</a></li>
-					<li><a href="#">Sobre Nós</a></li>
-					<li><a href="#">Termos de uso</a></li>
-					<li><a href="#">Como funciona</a></li>
+					<li><a href="{% url 'offer:about_us' %}">Sobre Nós</a></li>
+					<li><a href="{% url 'offer:use_terms' %}">Termos de uso</a></li>
+					<li><a href="{% url 'offer:how_to_work' %}">Como funciona</a></li>
 				</ul>
 
 				<ul class="four columns">
 					<li class="title-footer"><a href="#">Parceria</a></li>
-					<li><a href="#">Seja um parceiro</a></li>
-					<li><a href="#">Nosso parceiro</a></li>
+					<li><a href="{% url 'offer:be_partner' %}">Seja um parceiro</a></li>
+					<li><a href="{% url 'offer:our_partner' %}">Nosso parceiro</a></li>
 				</ul>
 
 				<ul class="four columns">
 					<li class="title-footer"><a href="#">Ofertas</a></li>
-					<li><a href="#">Dinheiro de volta</a></li>
-					<li><a href="#">Receba ofertas</a></li>
+					<li><a href="{% url 'offer:cashback' %}">Dinheiro de volta</a></li>
+					<li><a href="{% url 'offer:receive_offers' %}">Receba ofertas</a></li>
 				</ul>
 
 				<ul class="four columns">
 					<li class="title-footer"><a href="#">Atendimento</a></li>
-					<li><a href="#">Fale conosco</a></li>
-					<li><a href="#">Perguntas frequenciais</a></li>
-					<li><a href="#">Política de compra</a></li>
+					<li><a href="{% url 'offer:contact_us' %}">Fale conosco</a></li>
+					<li><a href="{% url 'offer:faq' %}">Perguntas frequenciais</a></li>
+					<li><a href="{% url 'offer:buy_policy' %}">Política de compra</a></li>
 				</ul>
 			</div>
 		</div>
@@ -132,8 +133,8 @@
 	</footer>
 	
 <!-- Go to www.addthis.com/dashboard to customize your tools -->
-	<script type="text/javascript" src="{{ STATIC_URL }}js/main.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/main.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
 		$('#change-city').change(function(){

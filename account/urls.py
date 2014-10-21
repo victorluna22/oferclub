@@ -7,7 +7,8 @@ from django.contrib.auth.views import password_reset_complete
 from django.contrib.auth.views import password_reset_done
 from .forms import PasswordResetForm
 
-from account.views import LoginView, OferClubCreateView, facebook_new, facebook_callback, password_reset_confirm
+from account.views import LoginView, OferClubCreateView, facebook_new, facebook_callback, password_reset_confirm, \
+                            NewsLetterCreateView
 from account.forms import EmailAuthenticationForm, SetPasswordForm
 
 urlpatterns = patterns('',
@@ -28,6 +29,8 @@ urlpatterns = patterns('',
     url(r'^logout/$', logout,
         {'next_page': reverse_lazy('account:login', kwargs={})},
         name='logout'),
+
+    url(r'^cadastrar-newsletter/$', NewsLetterCreateView.as_view(), name='create_newsletter'),
 
 
 

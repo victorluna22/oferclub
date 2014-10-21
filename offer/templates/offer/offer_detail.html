@@ -1,29 +1,20 @@
 {% extends 'offer/base.html' %}
 
 {% block content %}
-{% comment %}
-{% for image in offer.images.all %}
-	<img src="{{ MEDIA_URL }}{{ image.name }}">
-{% endfor %}
+	<!-- <a href=" url 'offer:buy_offer' option.id ">Comprar</a> -->
 
-{% for option in offer.options.all %}
-	<h3>{{ option.title }}</h3>
-	<p>R$ {{ option.new_price }}</p>
-	<a href="{% url 'offer:buy_offer' option.id %}">Comprar</a>
-{% endfor %}
-{% endcomment %}
 <section class="container internas">
 		<header class="sixteen columns">
 			<h2>{{ offer.title }}</h2>
 		</header>
 
 		<article class="eleven columns produto">
-		{% for image in offer.images.all %}
+		{% for image in images %}
 			<img src="{{ MEDIA_URL }}{{ image.name }}" alt="">
 		{% endfor %}
 
 			<figure>
-			{% for image in offer.images.all %}
+			{% for image in images %}
 				<img src="{{ MEDIA_URL }}{{ image.name }}" alt="" width="50px" height="50px">
 			{% endfor %}
 				
@@ -31,9 +22,9 @@
 		</article>
 
 		<article class="comprar-produto five columns">
-			<p class="de"><span class="riscado">R$ {{ offer.first_option.old_price }}</span> <span class="por"> por</span></p>
-			<p class="preco-destaque">R$ {{ offer.first_option.new_price }}</p>
-			<a href="#" class="btn-comprar">COMPRAR</a>
+			<p class="de"><span class="riscado">R$ {{ first_option.old_price }}</span> <span class="por"> por</span></p>
+			<p class="preco-destaque">R$ {{ first_option.new_price }}</p>
+			<a href="{% url 'offer:buy_offer' first_option.id %}" class="btn-comprar">COMPRAR</a>
 
 			<footer>Compre por telefone: 3388 1414</footer>
 		</article>
@@ -41,11 +32,13 @@
 
 		<article class="info-produto">
 			<div class="five columns alpha omega">
+			{% if partner.logo %}
 				<figure>
-					<img src="{{ STATIC_URL }}img/pousada.jpg" alt="">
+					<img src="{{ MEDIA_URL }}{{ partner.logo }}" width="71" height="71" alt="">
 				</figure>
+			{% endif %}
 				<figcaption>
-					<a href="#">{{ offer.partner }}</a>
+					<a href="#">{{ partner.name }}</a>
 					<p>{{ offer.city.name }}</p>
 				</figcaption>
 			</div>
@@ -53,7 +46,7 @@
 			<ul class="seven columns">
 				<li>
 					<img src="{{ STATIC_URL }}img/Ícone-OFF-Cinza-.png" alt="">
-					<span>{{ offer.first_option.discount }}% OFF</span></li>
+					<span>{{ first_option.discount }}% OFF</span></li>
 				<li>
 					<img src="{{ STATIC_URL }}img/Ícone_Compraram-Cinza.png" alt="">
 					<span>{{ offer.bought_total }} Compr{{ offer.bought_total|pluralize:"ou,aram" }}</span>
@@ -66,7 +59,7 @@
 
 				<li>
 					<img src="{{ STATIC_URL }}img/Ícone-Relógio-Cinza.png" alt="">
-					<span>{{ offer.first_option.time_remaining }}</span>
+					<span>{{ first_option.time_remaining }}</span>
 				</li>
 
 			</ul>
@@ -91,9 +84,7 @@
 			<div class="bd">
 				<h3>A empresa</h3>
 				
-				<p>Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos. </p>
-
-				<p>Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica, permanecendo essencialmente inalterado. Se popularizou na década de 60, quando a Letraset lançou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker.</p>
+				{{ partner.about|safe }}
 			</div>
 		</article>
 
@@ -113,39 +104,33 @@
 			<h3>Localização</h3>
 
 			<address>
-				<p>Endereço: Rua do Sol, 100 - CEP: 59178000 - Praia da Pipa - Praia do Pipa - RN</p>
+				<p>Endereço: {{ first_option.filial.street|default:'' }}, {{ first_option.filial.number_home|default:'' }} - CEP: {{ first_option.filial.cep|default:'' }} - {{ first_option.filial.complement|default:'' }} - {{ first_option.filial.neighborhood|default:'' }} - {{ first_option.filial.city.state.acronym|default:'' }}</p>
 			</address>
 			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.832892413855!2d-34.847331400000016!3d-8.016162099999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ab22ba35e72209%3A0xe223c0d7faeb8fda!2sR.+do+Sol%2C+100+-+Carmo%2C+Olinda+-+PE!5e0!3m2!1spt-BR!2sbr!4v1412622830499" class="map" frameborder="0" style="border:0"></iframe>
 		</article>
 
+		{% if other_options %}
 		<article class="outras">
 			<h3>Outras opções</h3>
 
-			<div class="eleven columns alpha omega">
-				<p class="title-outras">Duas Diárias para casal em Cabana Praia Hotel</p>
-				<span>Hospedagem + Café da manhã</span>
-			</div>
-
+			{% for option in other_options %}
+				<div class="eleven columns alpha omega">
+					<p class="title-outras">{{ option.title }}</p>
+					<span>{{ option.subtitle }}</span>
+				</div>
 			<div class="five columns alpha omega">
-				<p class="de"><span class="riscado">R$ 499,90</span></p>
-				<span>R$ 199,90</span>
-				<a href="#">Comprar</a>
+				<p class="de"><span class="riscado">R$ {{ option.old_price }}</span></p>
+				<span>R$ {{ option.new_price }}</span>
+				<a href="{% url 'offer:buy_offer' option.id %}">Comprar</a>
 			</div>
 
-			<div class="eleven columns alpha omega">
-				<p class="title-outras">Duas Diárias para casal em Cabana Praia Hotel</p>
-				<span>Hospedagem + Café da manhã</span>
-			</div>
-
-			<div class="five columns alpha omega">
-				<p class="de"><span class="riscado">R$ 499,90</span></p>
-				<span>R$ 199,90</span>
-				<a href="#">Comprar</a>
-			</div>
+			{% endfor %}
+			
 		</article>
 		<!-- END OUTRAS -->
 
 		<a href="#" class="ver-mais">Ver mais detalhes</a>
+		{% endif %}
 	</section>
 
 	<div class="container">
@@ -158,118 +143,31 @@
 			</header>
 			
 			<div>
+
+			{% for related in related_offers %}
 				<article>
 					
 						<figure>
-							<a href="#"><img src="{{ STATIC_URL }}img/img-decorativa.png" alt=""></a>
+							<a href="{% url 'offer:offer_detail' related.slug %}"><img src="{{ MEDIA_URL }}{{ related.image_grid }}" alt=""></a>
 							<figcaption>
 								
-								<a href="#"><div class="desconto">50% OFF</div></a>
-								<a href="#"><div class="compras">123 compraram</div></a>
-								<a href="#"><div class="volta">2% de volta</div></a>
-								<a href="#"><div class="dias">3 dias 1:10:30</div></a>
+								<a href="{% url 'offer:offer_detail' related.slug %}"><div class="desconto">{{ related.first_option.discount }}% OFF</div></a>
+								<a href="{% url 'offer:offer_detail' related.slug %}"><div class="compras">{{ related.bought_total }} compraram</div></a>
+								<a href="{% url 'offer:offer_detail' related.slug %}"><div class="volta">{{ related.percent_cashback }}% de volta</div></a>
+								<a href="{% url 'offer:offer_detail' related.slug %}"><div class="dias">{{ related.first_option.time_remaining }}</div></a>
 							</figcaption>
 						</figure>
 					<header>
-						<h4>Duas diárias para o fim de semana</h4>
-						<a href="#"><h5>Hotel Ponta Negra</h5></a>
-						<a href="#"><span class="localidade-box">Natal</span></a>
+						<h4>{{ related.title }}</h4>
+						<a href="#"><h5>{{ related.partner.name }}</h5></a>
+						<a href="#"><span class="localidade-box">{{ related.city.name }}</span></a>
 
-						<p class="riscado">De R$:899,90</p>
-						<p class="color-destaque">Por R$ 399,90</p>
+						<p class="riscado">De R$:{{ related.first_option.old_price }}</p>
+						<p class="color-destaque">Por R$ {{ related.first_option.new_price }}</p>
 					</header>
 				</article>
 				<!-- END OFERTA -->
-				<article>
-					
-						<figure>
-							<a href="#"><img src="{{ STATIC_URL }}img/img-decorativa.png" alt=""></a>
-							<figcaption>
-								
-								<a href="#"><div class="desconto">50% OFF</div></a>
-								<a href="#"><div class="compras">123 compraram</div></a>
-								<a href="#"><div class="volta">2% de volta</div></a>
-								<a href="#"><div class="dias">3 dias 1:10:30</div></a>
-							</figcaption>
-						</figure>
-					<header>
-						<h4>Duas diárias para o fim de semana</h4>
-						<a href="#"><h5>Hotel Ponta Negra</h5></a>
-						<a href="#"><span class="localidade-box">Natal</span></a>
-
-						<p class="riscado">De R$:899,90</p>
-						<p class="color-destaque">Por R$ 399,90</p>
-					</header>
-				</article>
-				<!-- END OFERTA -->
-				<article>
-					
-						<figure>
-							<a href="#"><img src="{{ STATIC_URL }}img/img-decorativa.png" alt=""></a>
-							<figcaption>
-								
-								<a href="#"><div class="desconto">50% OFF</div></a>
-								<a href="#"><div class="compras">123 compraram</div></a>
-								<a href="#"><div class="volta">2% de volta</div></a>
-								<a href="#"><div class="dias">3 dias 1:10:30</div></a>
-							</figcaption>
-						</figure>
-					<header>
-						<h4>Duas diárias para o fim de semana</h4>
-						<a href="#"><h5>Hotel Ponta Negra</h5></a>
-						<a href="#"><span class="localidade-box">Natal</span></a>
-
-						<p class="riscado">De R$:899,90</p>
-						<p class="color-destaque">Por R$ 399,90</p>
-					</header>
-				</article>
-				<!-- END OFERTA -->
-
-				<article>
-					
-						<figure>
-							<a href="#"><img src="{{ STATIC_URL }}img/img-decorativa.png" alt=""></a>
-							<figcaption>
-								
-								<a href="#"><div class="desconto">50% OFF</div></a>
-								<a href="#"><div class="compras">123 compraram</div></a>
-								<a href="#"><div class="volta">2% de volta</div></a>
-								<a href="#"><div class="dias">3 dias 1:10:30</div></a>
-							</figcaption>
-						</figure>
-					<header>
-						<h4>Duas diárias para o fim de semana</h4>
-						<a href="#"><h5>Hotel Ponta Negra</h5></a>
-						<a href="#"><span class="localidade-box">Natal</span></a>
-
-						<p class="riscado">De R$:899,90</p>
-						<p class="color-destaque">Por R$ 399,90</p>
-					</header>
-				</article>
-				<!-- END OFERTA -->
-
-				<article>
-					
-						<figure>
-							<a href="#"><img src="{{ STATIC_URL }}img/img-decorativa.png" alt=""></a>
-							<figcaption>
-								
-								<a href="#"><div class="desconto">50% OFF</div></a>
-								<a href="#"><div class="compras">123 compraram</div></a>
-								<a href="#"><div class="volta">2% de volta</div></a>
-								<a href="#"><div class="dias">3 dias 1:10:30</div></a>
-							</figcaption>
-						</figure>
-					<header>
-						<h4>Duas diárias para o fim de semana</h4>
-						<a href="#"><h5>Hotel Ponta Negra</h5></a>
-						<a href="#"><span class="localidade-box">Natal</span></a>
-
-						<p class="riscado">De R$:899,90</p>
-						<p class="color-destaque">Por R$ 399,90</p>
-					</header>
-				</article>
-				<!-- END OFERTA -->
+				{% endfor %}
 			</div>
 		</section>
 		<!-- END BOX -->

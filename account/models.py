@@ -6,6 +6,7 @@ import re
 import md5
 import base64
 from rauth import OAuth2Service
+from tinymce import models as tinymce_models
 
 from django.conf import settings
 from django.core.mail import send_mail
@@ -185,6 +186,7 @@ class Partner(models.Model):
     cnpj = models.CharField(verbose_name=_(u'CNPJ'), max_length=18)
     phone = models.CharField(verbose_name=_(u'Telefone'), blank=True, null=True, max_length=20)
     cellphone = models.CharField(verbose_name=_(u'Celular'), blank=True, null=True, max_length=20)
+    about = tinymce_models.HTMLField()
 
     def save(self, *args, **kwargs):
         self.slug = slugify(instance=self,
@@ -205,6 +207,11 @@ class Filial(OferClubAbstractUser):
     city = models.ForeignKey(City, blank=True, null=True)
     phone = models.CharField(verbose_name=_(u'Telefone'), blank=True, null=True, max_length=20)
     cellphone = models.CharField(verbose_name=_(u'Celular'), blank=True, null=True, max_length=20)
+    cep = models.CharField(max_length=9, blank=True, null=True, verbose_name=u'CEP')
+    street = models.CharField(max_length=255, blank=True, null=True, verbose_name=u'Logradouro')
+    number_home = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'Número')
+    complement = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'Complemento')
+    neighborhood = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'Bairro')
 
     owner_name = models.CharField(
         verbose_name=_(u'Nome do Titular'),
@@ -401,3 +408,12 @@ class Invite(models.Model):
         subject = 'Ofer Club - Convite para juntar-se a nós'
         message = 'http://ofer.club/cadastrar/?token=%s' % Invite.objects.get_code_by_id(self.id)
         send_mail(subject, message, 'contato@ofer.club', [self.email])
+
+
+class NewsLetter(models.Model):
+    email = models.EmailField(u'E-mail', max_length=255, unique=True)
+    city = models.ForeignKey(City, verbose_name='Cidade')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return self.email

@@ -19,4 +19,3 @@ INSTALLED_APPS += (
     'django_extensions',
 )
 
-SESSION_COOKIE_DOMAIN = 'localhost'

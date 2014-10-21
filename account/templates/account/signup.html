@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
+{% extends 'offer/base.html' %}
+
+{% block content %}
 <form class="signup forms-adm" id="signup_form" method="post" action="">
     {% csrf_token %}
     <div class="box_input">
@@ -37,7 +34,4 @@
     <button type="submit" id="bt-cadastro" class="btn bt-cadastro btn-default"><span>Cadastrar</span></button>
     <p id="cadstrado">Já é cadastrado? <a href="{% url 'account:login' %}" class="login">Faça o login.</a></p>
 </form>
-
-
-</body>
-</html>
+{% endblock content %}

@@ -15,7 +15,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 FILE_UPLOAD_PERMISSIONS = 0777
 FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0777
 
+
 # SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -27,6 +29,8 @@ SECRET_KEY = 'x*s0a%+l%j0^c^gg6+@6-fp(t^8-jl9*94pv0#a^44ifsrih%_'
 DEBUG = True
 
 TEMPLATE_DEBUG = True
+
+THUMBNAIL_DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -49,17 +53,17 @@ DEFAULT_FROM_EMAIL = 'victorluna22@gmail.com'
 
 # Application definition
 
-SESSION_COOKIE_DOMAIN = '.ofer.club'
 
 INSTALLED_APPS = (
     'django.contrib.contenttypes',
     # 'django_admin_bootstrapped.bootstrap3',
     # 'django_admin_bootstrapped',
+    'django.contrib.sessions',
     'django.contrib.admin',
     'django.contrib.auth',
-    'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'sorl.thumbnail',
     'tinymce',
     'account',
     'checkout',
@@ -109,7 +113,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

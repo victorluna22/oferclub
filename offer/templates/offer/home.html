@@ -1,6 +1,6 @@
 {% extends 'offer/base.html' %}
 
-{% load offer %}
+{% load offer thumbnail %}
 
 {% block content %}
 <div class="container">
@@ -15,7 +15,7 @@
 			<ul>
 			{% for bloco in blocos %}
 				
-				<li><a href="#"><p class="color-destaque">{{ bloco.titulo_bloco }} </p><span>{{ bloco.ofertas|length }}</span></a></li>
+				<li><a href="{% url 'offer:offer_list' %}?category={{ bloco.category }}"><p class="color-destaque">{{ bloco.titulo_bloco }} </p><span>{{ bloco.ofertas|length }}</span></a></li>
 			{% endfor %}
 			</ul>
 		</nav>
@@ -26,7 +26,10 @@
 			</ul>
 			{% for destaque in destaques %}
 			<figure>
-				<img src="{{ MEDIA_URL }}{{ destaque.highlight_image }}" alt="imagem do slider">
+				{% thumbnail destaque.highlight_image "700x361" crop="center" as im %}
+				    <!-- <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"> -->
+					<img src="{{ im.url }}" alt="{{ destaque.title }}">
+				{% endthumbnail %}
 				<div>
 					<h6>{{ destaque.title }}</h6>
 					<a href="#">{{ destaque.partner }}</a>
@@ -52,377 +55,10 @@
 		</section>
 		<!-- END PROPAGANDAS -->
 
-		<section class="box-content sixteen columns carrosel">
-			<header>
-				<h3>Últimas Ofertas</h3>
-				<button class="prev"></button>
-				<button class="next"></button>
-				<a href="#" class="ver-carrosel">Ver todos</a>
-			</header>
-			
-			<div>
-				<article>
-					
-						<figure>
-							<a href="#"><img src="{{ STATIC_URL }}img/img-decorativa.png" alt=""></a>
-							<figcaption>
-								
-								<a href="#"><div class="desconto">50% OFF</div></a>
-								<a href="#"><div class="compras">123 compraram</div></a>
-								<a href="#"><div class="volta">2% de volta</div></a>
-								<a href="#"><div class="dias">3 dias 1:10:30</div></a>
-							</figcaption>
-						</figure>
-					<header>
-						<h4>Duas diárias para o fim de semana</h4>
-						<a href="#"><h5>Hotel Ponta Negra</h5></a>
-						<a href="#"><span class="localidade-box">Natal</span></a>
+		<div id="json"></div>
+		<!-- JSON DO CARROSEL -->
 
-						<p class="riscado">De R$:899,90</p>
-						<p class="color-destaque">Por R$ 399,90</p>
-					</header>
-				</article>
-				<!-- END OFERTA -->
-				<article>
-					
-						<figure>
-							<a href="#"><img src="{{ STATIC_URL }}img/img-decorativa.png" alt=""></a>
-							<figcaption>
-								
-								<a href="#"><div class="desconto">50% OFF</div></a>
-								<a href="#"><div class="compras">123 compraram</div></a>
-								<a href="#"><div class="volta">2% de volta</div></a>
-								<a href="#"><div class="dias">3 dias 1:10:30</div></a>
-							</figcaption>
-						</figure>
-					<header>
-						<h4>Duas diárias para o fim de semana</h4>
-						<a href="#"><h5>Hotel Ponta Negra</h5></a>
-						<a href="#"><span class="localidade-box">Natal</span></a>
-
-						<p class="riscado">De R$:899,90</p>
-						<p class="color-destaque">Por R$ 399,90</p>
-					</header>
-				</article>
-				<!-- END OFERTA -->
-				<article>
-					
-						<figure>
-							<a href="#"><img src="{{ STATIC_URL }}img/img-decorativa.png" alt=""></a>
-							<figcaption>
-								
-								<a href="#"><div class="desconto">50% OFF</div></a>
-								<a href="#"><div class="compras">123 compraram</div></a>
-								<a href="#"><div class="volta">2% de volta</div></a>
-								<a href="#"><div class="dias">3 dias 1:10:30</div></a>
-							</figcaption>
-						</figure>
-					<header>
-						<h4>Duas diárias para o fim de semana</h4>
-						<a href="#"><h5>Hotel Ponta Negra</h5></a>
-						<a href="#"><span class="localidade-box">Natal</span></a>
-
-						<p class="riscado">De R$:899,90</p>
-						<p class="color-destaque">Por R$ 399,90</p>
-					</header>
-				</article>
-				<!-- END OFERTA -->
-
-				<article>
-					
-						<figure>
-							<a href="#"><img src="{{ STATIC_URL }}img/img-decorativa.png" alt=""></a>
-							<figcaption>
-								
-								<a href="#"><div class="desconto">50% OFF</div></a>
-								<a href="#"><div class="compras">123 compraram</div></a>
-								<a href="#"><div class="volta">2% de volta</div></a>
-								<a href="#"><div class="dias">3 dias 1:10:30</div></a>
-							</figcaption>
-						</figure>
-					<header>
-						<h4>Duas diárias para o fim de semana</h4>
-						<a href="#"><h5>Hotel Ponta Negra</h5></a>
-						<a href="#"><span class="localidade-box">Natal</span></a>
-
-						<p class="riscado">De R$:899,90</p>
-						<p class="color-destaque">Por R$ 399,90</p>
-					</header>
-				</article>
-				<!-- END OFERTA -->
-
-				<article>
-					
-						<figure>
-							<a href="#"><img src="{{ STATIC_URL }}img/img-decorativa.png" alt=""></a>
-							<figcaption>
-								
-								<a href="#"><div class="desconto">50% OFF</div></a>
-								<a href="#"><div class="compras">123 compraram</div></a>
-								<a href="#"><div class="volta">2% de volta</div></a>
-								<a href="#"><div class="dias">3 dias 1:10:30</div></a>
-							</figcaption>
-						</figure>
-					<header>
-						<h4>Duas diárias para o fim de semana</h4>
-						<a href="#"><h5>Hotel Ponta Negra</h5></a>
-						<a href="#"><span class="localidade-box">Natal</span></a>
-
-						<p class="riscado">De R$:899,90</p>
-						<p class="color-destaque">Por R$ 399,90</p>
-					</header>
-				</article>
-				<!-- END OFERTA -->
-			</div>
-		</section>
-		<!-- END BOX -->
-
-		<section class="box-content sixteen columns carrosel">
-			<header>
-				<h3>Mais Vendidos</h3>
-				<button class="prev"></button>
-				<button class="next"></button>
-				<a href="#" class="ver-carrosel">Ver todos</a>
-			</header>
-			
-			<div>
-				<article>
-					
-						<figure>
-							<a href="#"><img src="{{ STATIC_URL }}img/img-decorativa.png" alt=""></a>
-							<figcaption>
-								
-								<a href="#"><div class="desconto">50% OFF</div></a>
-								<a href="#"><div class="compras">123 compraram</div></a>
-								<a href="#"><div class="volta">2% de volta</div></a>
-								<a href="#"><div class="dias">3 dias 1:10:30</div></a>
-							</figcaption>
-						</figure>
-					<header>
-						<h4>Duas diárias para o fim de semana</h4>
-						<a href="#"><h5>Hotel Ponta Negra</h5></a>
-						<a href="#"><span class="localidade-box">Natal</span></a>
-
-						<p class="riscado">De R$:899,90</p>
-						<p class="color-destaque">Por R$ 399,90</p>
-					</header>
-				</article>
-				<!-- END OFERTA -->
-
-				<article>
-					
-						<figure>
-							<a href="#"><img src="{{ STATIC_URL }}img/img-decorativa.png" alt=""></a>
-							<figcaption>
-								
-								<a href="#"><div class="desconto">50% OFF</div></a>
-								<a href="#"><div class="compras">123 compraram</div></a>
-								<a href="#"><div class="volta">2% de volta</div></a>
-								<a href="#"><div class="dias">3 dias 1:10:30</div></a>
-							</figcaption>
-						</figure>
-					<header>
-						<h4>Duas diárias para o fim de semana</h4>
-						<a href="#"><h5>Hotel Ponta Negra</h5></a>
-						<a href="#"><span class="localidade-box">Natal</span></a>
-
-						<p class="riscado">De R$:899,90</p>
-						<p class="color-destaque">Por R$ 399,90</p>
-					</header>
-				</article>
-				<!-- END OFERTA -->
-
-				<article>
-					
-						<figure>
-							<a href="#"><img src="{{ STATIC_URL }}img/img-decorativa.png" alt=""></a>
-							<figcaption>
-								
-								<a href="#"><div class="desconto">50% OFF</div></a>
-								<a href="#"><div class="compras">123 compraram</div></a>
-								<a href="#"><div class="volta">2% de volta</div></a>
-								<a href="#"><div class="dias">3 dias 1:10:30</div></a>
-							</figcaption>
-						</figure>
-					<header>
-						<h4>Duas diárias para o fim de semana</h4>
-						<a href="#"><h5>Hotel Ponta Negra</h5></a>
-						<a href="#"><span class="localidade-box">Natal</span></a>
-
-						<p class="riscado">De R$:899,90</p>
-						<p class="color-destaque">Por R$ 399,90</p>
-					</header>
-				</article>
-				<!-- END OFERTA -->
-			</div>
-		</section>
-		<!-- END BOX -->
-
-		<aside class="sixteen columns carrosel" id="oferta">
-			<img src="{{ STATIC_URL }}img/oferta.png" alt="Confira nossas ofertas">
-		</aside>
-
-		<section class="box-content sixteen columns carrosel">
-			<header>
-				<h3>Bares e Restaurantes</h3>
-				<button class="prev"></button>
-				<button class="next"></button>
-				<a href="#" class="ver-carrosel">Ver todos</a>
-			</header>
-			
-			<div>
-				<article>
-					
-						<figure>
-							<a href="#"><img src="{{ STATIC_URL }}img/img-decorativa.png" alt=""></a>
-							<figcaption>
-								
-								<a href="#"><div class="desconto">50% OFF</div></a>
-								<a href="#"><div class="compras">123 compraram</div></a>
-								<a href="#"><div class="volta">2% de volta</div></a>
-								<a href="#"><div class="dias">3 dias 1:10:30</div></a>
-							</figcaption>
-						</figure>
-					<header>
-						<h4>Duas diárias para o fim de semana</h4>
-						<a href="#"><h5>Hotel Ponta Negra</h5></a>
-						<a href="#"><span class="localidade-box">Natal</span></a>
-
-						<p class="riscado">De R$:899,90</p>
-						<p class="color-destaque">Por R$ 399,90</p>
-					</header>
-				</article>
-				<!-- END OFERTA -->
-
-				<article>
-					
-						<figure>
-							<a href="#"><img src="{{ STATIC_URL }}img/img-decorativa.png" alt=""></a>
-							<figcaption>
-								
-								<a href="#"><div class="desconto">50% OFF</div></a>
-								<a href="#"><div class="compras">123 compraram</div></a>
-								<a href="#"><div class="volta">2% de volta</div></a>
-								<a href="#"><div class="dias">3 dias 1:10:30</div></a>
-							</figcaption>
-						</figure>
-					<header>
-						<h4>Duas diárias para o fim de semana</h4>
-						<a href="#"><h5>Hotel Ponta Negra</h5></a>
-						<a href="#"><span class="localidade-box">Natal</span></a>
-
-						<p class="riscado">De R$:899,90</p>
-						<p class="color-destaque">Por R$ 399,90</p>
-					</header>
-				</article>
-				<!-- END OFERTA -->
-
-				<article>
-					
-						<figure>
-							<a href="#"><img src="{{ STATIC_URL }}img/img-decorativa.png" alt=""></a>
-							<figcaption>
-								
-								<a href="#"><div class="desconto">50% OFF</div></a>
-								<a href="#"><div class="compras">123 compraram</div></a>
-								<a href="#"><div class="volta">2% de volta</div></a>
-								<a href="#"><div class="dias">3 dias 1:10:30</div></a>
-							</figcaption>
-						</figure>
-					<header>
-						<h4>Duas diárias para o fim de semana</h4>
-						<a href="#"><h5>Hotel Ponta Negra</h5></a>
-						<a href="#"><span class="localidade-box">Natal</span></a>
-
-						<p class="riscado">De R$:899,90</p>
-						<p class="color-destaque">Por R$ 399,90</p>
-					</header>
-				</article>
-				<!-- END OFERTA -->
-			</div>
-		</section>
-		<!-- END BOX -->
-
-		<section class="box-content sixteen columns carrosel">
-			<header>
-				<h3>Hoteis e Pousadas</h3>
-				<button class="prev"></button>
-				<button class="next"></button>
-				<a href="#" class="ver-carrosel">Ver todos</a>
-			</header>
-			
-			<div>
-				<article>
-					
-						<figure>
-							<a href="#"><img src="{{ STATIC_URL }}img/img-decorativa.png" alt=""></a>
-							<figcaption>
-								
-								<a href="#"><div class="desconto">50% OFF</div></a>
-								<a href="#"><div class="compras">123 compraram</div></a>
-								<a href="#"><div class="volta">2% de volta</div></a>
-								<a href="#"><div class="dias">3 dias 1:10:30</div></a>
-							</figcaption>
-						</figure>
-					<header>
-						<h4>Duas diárias para o fim de semana</h4>
-						<a href="#"><h5>Hotel Ponta Negra</h5></a>
-						<a href="#"><span class="localidade-box">Natal</span></a>
-
-						<p class="riscado">De R$:899,90</p>
-						<p class="color-destaque">Por R$ 399,90</p>
-					</header>
-				</article>
-				<!-- END OFERTA -->
-
-				<article>
-					
-						<figure>
-							<a href="#"><img src="{{ STATIC_URL }}img/img-decorativa.png" alt=""></a>
-							<figcaption>
-								
-								<a href="#"><div class="desconto">50% OFF</div></a>
-								<a href="#"><div class="compras">123 compraram</div></a>
-								<a href="#"><div class="volta">2% de volta</div></a>
-								<a href="#"><div class="dias">3 dias 1:10:30</div></a>
-							</figcaption>
-						</figure>
-					<header>
-						<h4>Duas diárias para o fim de semana</h4>
-						<a href="#"><h5>Hotel Ponta Negra</h5></a>
-						<a href="#"><span class="localidade-box">Natal</span></a>
-
-						<p class="riscado">De R$:899,90</p>
-						<p class="color-destaque">Por R$ 399,90</p>
-					</header>
-				</article>
-				<!-- END OFERTA -->
-
-				<article>
-					
-						<figure>
-							<a href="#"><img src="{{ STATIC_URL }}img/img-decorativa.png" alt=""></a>
-							<figcaption>
-								
-								<a href="#"><div class="desconto">50% OFF</div></a>
-								<a href="#"><div class="compras">123 compraram</div></a>
-								<a href="#"><div class="volta">2% de volta</div></a>
-								<a href="#"><div class="dias">3 dias 1:10:30</div></a>
-							</figcaption>
-						</figure>
-					<header>
-						<h4>Duas diárias para o fim de semana</h4>
-						<a href="#"><h5>Hotel Ponta Negra</h5></a>
-						<a href="#"><span class="localidade-box">Natal</span></a>
-
-						<p class="riscado">De R$:899,90</p>
-						<p class="color-destaque">Por R$ 399,90</p>
-					</header>
-				</article>
-				<!-- END OFERTA -->
-			</div>
-		</section>
-		<!-- END BOX -->
+		
 		
 		<aside class="sixteen columns">
 			<a href="#" id="carregar" class="cor-clara">Carregar todas as ofertas</a>
@@ -433,14 +69,15 @@
 				<h5>Cadastre-se</h5>
 				<p>E receba as nossas novidades no seu email</p>
 			</header>
-			<form action="" class="eleven columns">
-				<input type="text" placeholder="Digite seu email aqui">
+			<form action="{% url 'account:create_newsletter' %}" method="POST" class="eleven columns">
+				{% csrf_token %}
+				<input type="text" name="email" placeholder="Digite seu email aqui">
 				<input type="submit">
 			</form>
 		</section>
 	</div>
 
 <script type="text/javascript">
-	var blocos = {{ json|safe }};
+	var json = {{ json|safe }};
 </script>
 {% endblock content %}

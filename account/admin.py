@@ -98,7 +98,7 @@ class FilialChangeForm(UserChangeForm):
 class FilialAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (_(u'Informações'), {'fields': ('full_name', 'partner', 'phone', 'cellphone', 'city')}),
+        (_(u'Informações'), {'fields': ('full_name', 'partner', 'phone', 'cellphone', 'street', 'number_home', 'complement', 'cep', 'neighborhood', 'city')}),
         (_(u'Informações Bancária'), {'fields': ('owner_name', 'bank_name', 'agency', 'number', 'cpf')}),
         (_(u'Permissões'), {'fields': ('is_active', 'is_staff', 'groups', )}),
         (_(u'Datas importantes'), {'fields': ('last_login', 'date_joined')}),
