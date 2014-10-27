@@ -1,0 +1,37 @@
+{% extends 'offer/base.html' %}
+
+{% block content %}
+<form class="signup forms-adm" id="signup_form" method="post" action="{% url 'account:signup' %}">
+    {% csrf_token %}
+    <div class="box_input">
+        {{ form.full_name }}
+        {{ form.full_name.errors }}
+    </div>
+    <div class="box_input">
+        {{ form.email }}
+        {{ form.email.errors }}
+    </div>
+    <div class="box_input">
+        {{ form.password }}
+        {{ form.password.errors }}
+    </div>
+    <div class="box_input">
+        {{ form.confirm_password }}
+        {{ form.confirm_password.errors }}
+    </div>
+    <div class="box_input">
+        {{ form.gender }}
+        {{ form.gender.errors }}
+    </div>
+    <div class="box_input">
+        {{ form.birthday }}
+        {{ form.birthday.errors }}
+    </div>
+    <div class="box_input">
+        {{ form.city }}
+        {{ form.city.errors }}
+    </div>
+    <button type="submit" id="bt-cadastro" class="btn bt-cadastro btn-default"><span>Cadastrar</span></button>
+    <p id="cadstrado">Já é cadastrado? <a href="{% url 'account:login' %}" class="login">Faça o login.</a></p>
+</form>
+{% endblock content %}

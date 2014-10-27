@@ -1,0 +1,83 @@
+{% extends 'offer/base.html' %}
+
+{% load offer thumbnail %}
+
+{% block content %}
+<div class="container">
+		<nav id="navigation" class="four columns">
+			<h5 id="header-nav">
+				<span id="top-nav"></span>
+				<span id="center-nav"></span>
+				<span id="bottom-nav"></span>
+				Navegue
+			</h5>
+
+			<ul>
+			{% for bloco in blocos %}
+				
+				<li><a href="{% url 'offer:offer_list' %}?category={{ bloco.category }}"><p class="color-destaque">{{ bloco.titulo_bloco }} </p><span>{{ bloco.ofertas|length }}</span></a></li>
+			{% endfor %}
+			</ul>
+		</nav>
+		<!-- END NAVIGATION -->
+
+		<section id="slider" class="twelve columns">
+			<ul>
+			</ul>
+			{% for destaque in destaques %}
+			<figure>
+				{% thumbnail destaque.highlight_image "700x361" crop="center" as im %}
+				    <!-- <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"> -->
+					<img src="{{ im.url }}" alt="{{ destaque.title }}">
+				{% endthumbnail %}
+				<div>
+					<h6>{{ destaque.title }}</h6>
+					<a href="#">{{ destaque.partner }}</a>
+					<a href="#" class="localidade-slider">{{ destaque.city.name }}</a>
+				</div>
+			</figure>
+			{% endfor %}
+			
+			
+		</section>
+		<!-- END SLIDER -->
+
+		<section id="propagandas" class="sixteen columns">
+			<article>
+				<a href="#"><img src="{{ STATIC_URL }}img/img-decorativa.png" alt=""></a>
+			</article>
+			<article>
+				<a href="#"><img src="{{ STATIC_URL }}img/img-decorativa.png" alt=""></a>
+			</article>
+			<article>
+				<a href="#"><img src="{{ STATIC_URL }}img/img-decorativa.png" alt=""></a>
+			</article>
+		</section>
+		<!-- END PROPAGANDAS -->
+
+		<div id="json"></div>
+		<!-- JSON DO CARROSEL -->
+
+		
+		
+		<aside class="sixteen columns">
+			<a href="#" id="carregar" class="cor-clara">Carregar todas as ofertas</a>
+		</aside>
+
+		<section id="cadastro">
+			<header class="five columns">
+				<h5>Cadastre-se</h5>
+				<p>E receba as nossas novidades no seu email</p>
+			</header>
+			<form action="{% url 'account:create_newsletter' %}" method="POST" class="eleven columns">
+				{% csrf_token %}
+				<input type="text" name="email" placeholder="Digite seu email aqui">
+				<input type="submit">
+			</form>
+		</section>
+	</div>
+
+<script type="text/javascript">
+	var json = {{ json|safe }};
+</script>
+{% endblock content %}

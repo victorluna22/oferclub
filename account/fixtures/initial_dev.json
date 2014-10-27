@@ -1,0 +1,523 @@
+[
+{
+    "fields": {
+        "groups": [],
+        "is_active": true,
+        "slug": "adm",
+        "is_superuser": true,
+        "is_staff": true,
+        "last_login": "2014-10-07T14:31:42",
+        "full_name": "adm",
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$12000$59XA12uTlZq2$SZJa7smALpUb68iIx10w8erdArPU40rrNsGEKo1CJJs=",
+        "email": "adm@adm.adm",
+        "date_joined": "2014-09-17T23:02:07"
+    },
+    "model": "account.oferclubabstractuser",
+    "pk": 1
+},
+{
+    "fields": {
+        "groups": [],
+        "is_active": true,
+        "slug": "victorlunaaa",
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": "2014-10-16T18:07:03",
+        "full_name": "Victor Lunaaa",
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$12000$2qvqoHebOku0$Rv6ydj6XlybAEX2kR8Se8rCGfNseq3UIhvwEsdC1urc=",
+        "email": "victorluna22@gmail.com",
+        "date_joined": "2014-09-17T23:42:20"
+    },
+    "model": "account.oferclubabstractuser",
+    "pk": 2
+},
+{
+    "fields": {
+        "groups": [],
+        "is_active": true,
+        "slug": "dasasdfd",
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": "2014-09-18T00:30:56",
+        "full_name": "dasasdfd",
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$12000$eBziIfBHgrno$oy06AvbXPvj/reu5Kcl1NlfNSxf3k7PDucjmKvmvOh8=",
+        "email": "sadasd@dasd.fsd",
+        "date_joined": "2014-09-18T00:30:56"
+    },
+    "model": "account.oferclubabstractuser",
+    "pk": 4
+},
+{
+    "fields": {
+        "groups": [],
+        "is_active": true,
+        "slug": "teste",
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": "2014-09-30T20:47:02",
+        "full_name": "teste",
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$12000$POZIfLTgDZRY$kQvymdqi8eY4/awFAQnE/Sp4zRu6JpM02BEHlIT8GEk=",
+        "email": "teste@tesee.asd",
+        "date_joined": "2014-09-18T01:24:30"
+    },
+    "model": "account.oferclubabstractuser",
+    "pk": 5
+},
+{
+    "fields": {
+        "groups": [
+            1
+        ],
+        "is_active": true,
+        "slug": "dasdasdas",
+        "is_superuser": false,
+        "is_staff": true,
+        "last_login": "2014-09-30T17:27:56",
+        "full_name": "dasdasdas",
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$12000$GbgOGsIqsg0R$6cCMDXLuzFCY0uDw/i5OZ1Zh0UJWeErpHBlgLrQN/4Q=",
+        "email": "dasdas@dasdas.das",
+        "date_joined": "2014-09-29T18:52:38"
+    },
+    "model": "account.oferclubabstractuser",
+    "pk": 6
+},
+{
+    "fields": {
+        "groups": [
+            1
+        ],
+        "is_active": true,
+        "slug": "dasdasd",
+        "is_superuser": false,
+        "is_staff": true,
+        "last_login": "2014-10-10T19:44:48",
+        "full_name": "dasdasd",
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$12000$dqgzxwF8la2h$4YSZO45pjtBBICIzqZEdv0HyI8l2dedePV3QkU1RG5k=",
+        "email": "aaa@aaa.aaa",
+        "date_joined": "2014-09-29T18:55:38"
+    },
+    "model": "account.oferclubabstractuser",
+    "pk": 7
+},
+{
+    "fields": {
+        "groups": [],
+        "is_active": true,
+        "slug": "sadasdas",
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": "2014-10-01T15:21:33",
+        "full_name": "sadasdas",
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$12000$lpe3teRUMKhV$Zz7b+gtIXcKjb+ONXd5Rx1+bHtEzx9+FvFbm2sk9ByU=",
+        "email": "bcxv@sad.fsdf",
+        "date_joined": "2014-10-01T15:21:33"
+    },
+    "model": "account.oferclubabstractuser",
+    "pk": 8
+},
+{
+    "fields": {
+        "groups": [],
+        "is_active": true,
+        "slug": "sdasdasd",
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": "2014-10-01T15:24:53",
+        "full_name": "sdasdasd",
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$12000$LQFnBn7sxGgL$zU/t2lDdGJiwysZP3bRcUv3j3M8B1rgBM4g9lQEmmMM=",
+        "email": "qweqwe@dasdas.asdasd",
+        "date_joined": "2014-10-01T15:24:53"
+    },
+    "model": "account.oferclubabstractuser",
+    "pk": 9
+},
+{
+    "fields": {
+        "acronym": "PE",
+        "name": "Pernambuco"
+    },
+    "model": "account.state",
+    "pk": 1
+},
+{
+    "fields": {
+        "state": 1,
+        "name": "Olinda"
+    },
+    "model": "account.city",
+    "pk": 1
+},
+{
+    "fields": {
+        "state": 1,
+        "name": "Recife"
+    },
+    "model": "account.city",
+    "pk": 2
+},
+{
+    "fields": {
+        "state": 1,
+        "name": "Camaragibe"
+    },
+    "model": "account.city",
+    "pk": 3
+},
+{
+    "fields": {
+        "state": 1,
+        "name": "Jaboat\u00e3o dos Guararapes"
+    },
+    "model": "account.city",
+    "pk": 4
+},
+{
+    "fields": {
+        "city": 1,
+        "gender": "M",
+        "credit": "14.81",
+        "birthday": "1990-11-22",
+        "groups": [],
+        "user_permissions": [],
+        "inviter": null
+    },
+    "model": "account.oferclubuser",
+    "pk": 2
+},
+{
+    "fields": {
+        "city": null,
+        "gender": "M",
+        "credit": "0.00",
+        "birthday": "1990-11-22",
+        "groups": [],
+        "user_permissions": [],
+        "inviter": null
+    },
+    "model": "account.oferclubuser",
+    "pk": 5
+},
+{
+    "fields": {
+        "city": 1,
+        "gender": "M",
+        "credit": "0.00",
+        "birthday": "1990-11-11",
+        "groups": [],
+        "user_permissions": [],
+        "inviter": null
+    },
+    "model": "account.oferclubuser",
+    "pk": 8
+},
+{
+    "fields": {
+        "city": 1,
+        "gender": "M",
+        "credit": "0.00",
+        "birthday": "1990-11-11",
+        "groups": [],
+        "user_permissions": [],
+        "inviter": 8
+    },
+    "model": "account.oferclubuser",
+    "pk": 9
+},
+{
+    "fields": {
+        "cnpj": "1231231231",
+        "about": "<p>Lorem Ipsum &eacute; simplesmente uma simula&ccedil;&atilde;o de texto da ind&uacute;stria tipogr&aacute;fica e de impressos, e vem sendo utilizado desde o s&eacute;culo XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos.</p>\r\n<p>Lorem Ipsum sobreviveu n&atilde;o s&oacute; a cinco s&eacute;culos, como tamb&eacute;m ao salto para a editora&ccedil;&atilde;o eletr&ocirc;nica, permanecendo essencialmente inalterado. Se popularizou na d&eacute;cada de 60, quando a Letraset lan&ccedil;ou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares de editora&ccedil;&atilde;o eletr&ocirc;nica como Aldus PageMaker.</p>",
+        "name": "walmart",
+        "cellphone": "9898989898",
+        "email": "walmart@walmart.com",
+        "phone": "9898989898",
+        "logo": "parceiro/wallpaper1.jpg",
+        "slug": "walmart"
+    },
+    "model": "account.partner",
+    "pk": 1
+},
+{
+    "fields": {
+        "cellphone": "",
+        "owner_name": "",
+        "neighborhood": "Jardim Primavera",
+        "city": 1,
+        "complement": "casa 106",
+        "agency": "",
+        "number": "",
+        "bank_name": "",
+        "phone": "",
+        "street": "Rua Rui Barbosa",
+        "cpf": "",
+        "groups": [
+            1
+        ],
+        "cep": "54753-440",
+        "user_permissions": [],
+        "partner": 1,
+        "number_home": "509"
+    },
+    "model": "account.filial",
+    "pk": 6
+},
+{
+    "fields": {
+        "cellphone": "",
+        "owner_name": "",
+        "neighborhood": "Jardim Atl\u00e2ntico",
+        "city": 1,
+        "complement": "apto 01",
+        "agency": "",
+        "number": "",
+        "bank_name": "",
+        "phone": "",
+        "street": "Avenida Rui Barbosa",
+        "cpf": "",
+        "groups": [
+            1
+        ],
+        "cep": "53140-050",
+        "user_permissions": [],
+        "partner": 1,
+        "number_home": "201"
+    },
+    "model": "account.filial",
+    "pk": 7
+},
+{
+    "fields": {
+        "city": null,
+        "owner_name": "",
+        "cellphone": "",
+        "agency": "",
+        "percent": null,
+        "number": "",
+        "bank_name": "",
+        "phone": "",
+        "cpf": "",
+        "groups": [],
+        "user_permissions": []
+    },
+    "model": "account.affiliate",
+    "pk": 4
+},
+{
+    "fields": {
+        "provider_id": "833139646718184",
+        "provider_username": "833139646718184",
+        "oauth_token_secret": "",
+        "expires_in": "2014-11-16T23:39:07",
+        "created_on": "2014-09-17T23:45:08",
+        "oauth_token": "CAAE15daDi5cBAIdyzGYSVUTRGhZAZA3dVGZBaVcUNrf4raAoNxekZB3agzwFMyW3bq2qxlilZAez2vPmBZBwctI1oAPmxKHT3kW7s542G0IIsadcPCEnpZC4QdYXWZCHPlz7P5HH82FZB2dZANuT4KkaqA4wNr4HjCHLZARuPQd59WJ06BL1EqNLQOZBbBc6FphWwi0yvTTHJwJD8ypZAbhsBOZB5U",
+        "user": 2,
+        "provider": "facebook",
+        "updated_on": "2014-09-17T23:45:08",
+        "refresh_token": ""
+    },
+    "model": "account.account",
+    "pk": 1
+},
+{
+    "fields": {
+        "accept_date": null,
+        "invite_date": "2014-10-01T13:29:25",
+        "invited_user": null,
+        "user": 2,
+        "email": "sdas@dasdasd.asd"
+    },
+    "model": "account.invite",
+    "pk": 1
+},
+{
+    "fields": {
+        "accept_date": null,
+        "invite_date": "2014-09-30T19:34:26",
+        "invited_user": null,
+        "user": 2,
+        "email": "aaqwe@dasdas.dasdd"
+    },
+    "model": "account.invite",
+    "pk": 2
+},
+{
+    "fields": {
+        "accept_date": null,
+        "invite_date": "2014-09-30T19:54:20",
+        "invited_user": null,
+        "user": 2,
+        "email": "asdasd@dasda.asd"
+    },
+    "model": "account.invite",
+    "pk": 3
+},
+{
+    "fields": {
+        "accept_date": null,
+        "invite_date": "2014-09-30T20:42:25",
+        "invited_user": null,
+        "user": 2,
+        "email": "aasd@dasd.czxcxc"
+    },
+    "model": "account.invite",
+    "pk": 4
+},
+{
+    "fields": {
+        "accept_date": null,
+        "invite_date": "2014-09-30T20:43:04",
+        "invited_user": null,
+        "user": 2,
+        "email": "qwe@das.asd"
+    },
+    "model": "account.invite",
+    "pk": 5
+},
+{
+    "fields": {
+        "accept_date": null,
+        "invite_date": "2014-09-30T20:44:10",
+        "invited_user": null,
+        "user": 2,
+        "email": "qwe@das.asdqq"
+    },
+    "model": "account.invite",
+    "pk": 6
+},
+{
+    "fields": {
+        "accept_date": null,
+        "invite_date": "2014-09-30T20:44:59",
+        "invited_user": null,
+        "user": 2,
+        "email": "aaaa@aasd.asd"
+    },
+    "model": "account.invite",
+    "pk": 7
+},
+{
+    "fields": {
+        "accept_date": null,
+        "invite_date": "2014-09-30T20:47:32",
+        "invited_user": null,
+        "user": 5,
+        "email": "adsf@dasd.asdas"
+    },
+    "model": "account.invite",
+    "pk": 8
+},
+{
+    "fields": {
+        "accept_date": null,
+        "invite_date": "2014-09-30T20:50:04",
+        "invited_user": null,
+        "user": 5,
+        "email": "qwetasd@dasd.aas"
+    },
+    "model": "account.invite",
+    "pk": 9
+},
+{
+    "fields": {
+        "accept_date": null,
+        "invite_date": "2014-10-01T13:14:59",
+        "invited_user": null,
+        "user": 2,
+        "email": "kjjh@dadas.asd"
+    },
+    "model": "account.invite",
+    "pk": 10
+},
+{
+    "fields": {
+        "accept_date": null,
+        "invite_date": "2014-10-01T13:16:54",
+        "invited_user": null,
+        "user": 2,
+        "email": "asdasd@dasdad.asd"
+    },
+    "model": "account.invite",
+    "pk": 11
+},
+{
+    "fields": {
+        "accept_date": null,
+        "invite_date": "2014-10-01T13:26:31",
+        "invited_user": null,
+        "user": 2,
+        "email": "asd@asdsa.dasd"
+    },
+    "model": "account.invite",
+    "pk": 12
+},
+{
+    "fields": {
+        "accept_date": null,
+        "invite_date": "2014-10-01T13:33:41",
+        "invited_user": null,
+        "user": 2,
+        "email": "asd@dassd.fdgdf"
+    },
+    "model": "account.invite",
+    "pk": 13
+},
+{
+    "fields": {
+        "accept_date": null,
+        "invite_date": "2014-10-01T14:29:22",
+        "invited_user": null,
+        "user": 2,
+        "email": "qweaxcz@dasd.asd"
+    },
+    "model": "account.invite",
+    "pk": 14
+},
+{
+    "fields": {
+        "accept_date": null,
+        "invite_date": "2014-10-01T14:32:24",
+        "invited_user": null,
+        "user": 2,
+        "email": "bcxv@sad.fsdf"
+    },
+    "model": "account.invite",
+    "pk": 15
+},
+{
+    "fields": {
+        "accept_date": null,
+        "invite_date": "2014-10-01T15:22:56",
+        "invited_user": null,
+        "user": 8,
+        "email": "qweqwe@dasdas.asdasd"
+    },
+    "model": "account.invite",
+    "pk": 16
+},
+{
+    "fields": {
+        "city": 2,
+        "created_at": "2014-10-16T12:23:15",
+        "email": "dassd@dasdas.dasd"
+    },
+    "model": "account.newsletter",
+    "pk": 1
+},
+{
+    "fields": {
+        "city": 3,
+        "created_at": "2014-10-16T12:23:42",
+        "email": "asdasd@dasdas.dasdasd"
+    },
+    "model": "account.newsletter",
+    "pk": 2
+}
+]

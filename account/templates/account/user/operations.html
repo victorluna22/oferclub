@@ -1,0 +1,11 @@
+{% extends 'offer/base.html' %}
+
+{% block content %}
+<h2>Créditos</h2>
+<ul>
+{% for operation in operation_list %}
+	<li>{{ operation.description }} - {{ operation.value }}</li>
+{% endfor %}
+<li><b>Total: {{ request.user.credit }}</b></li>
+</ul>
+{% endblock content %}

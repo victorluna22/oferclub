@@ -1,0 +1,439 @@
+
+@mixin transition($propiedade){
+	-webkit-transition:$propiedade;
+	-moz-transition:$propiedade;
+	-ms-transition:$propiedade;
+	-o-transition:$propiedade;
+	transition:$propiedade;
+}
+
+@mixin seta($expressura,$color){
+	width: 0;
+	height: 0;
+	border:solid $expressura transparent;
+	border-top-color: $color;
+}
+
+@mixin fixed($top,$left){
+	position: fixed;
+	top:$top;
+	left: $left;
+}
+@mixin posicao($top,$left){
+	position: absolute;
+	top: $top;
+	left: $left;
+}
+
+@mixin transform($propiedade){
+	-webkit-transform:$propiedade;
+	-moz-transform:$propiedade;
+	-o-transform:$propiedade;
+	-ms-transform:$propiedade;
+	transform:$propiedade;
+}
+
+$cor_clara: #26485d;
+$radius: 3px;
+$cor_clara2: #ffa719;
+$color_destaque: #ff9a15;
+$cor_comprar : #40cd28;
+
+@font-face {
+    font-family: 'MyriadProBold';
+    src: url('myriadpro-bold.eot');
+    src: url('myriadpro-bold.eot') format('embedded-opentype'),
+         url('myriadpro-bold.woff2') format('woff2'),
+         url('myriadpro-bold.woff') format('woff'),
+         url('myriadpro-bold.ttf') format('truetype'),
+         url('myriadpro-bold.svg#MyriadProBold') format('svg');
+}
+
+
+* {margin: 0; padding: 0; font-family: "Myriad Pro",arial,sans-serif; -webkit-box-sizing: border-box;-moz-box-sizing: border-box;-o-box-sizing: border-box;-ms-box-sizing: border-box;box-sizing: border-box; color: #737373}
+img {max-width: 100%;}
+a,img {border: none; text-decoration: none;}
+li {list-style: none;}
+body,html {position: relative; overflow-x: hidden;}
+body {background: #f2f2f2; }
+h1,h2,h3,h4,h5,h6 {font-weight: 300; }
+h2,h3,h4,h5 {font-family:'MyriadProBold',sans-serif; }
+
+.transition,#carregar,.btn-top,#cadastro input[type="submit"],.ver-mais,#header li.redes:hover a,.btn-comprar,.outras div.five a {@include transition(all ease-out 0.5s);}
+.relative {position: relative;}
+.cor-clara {background-color: $cor_clara;}
+.cor-clara2 {background-color: $cor_clara2;}
+
+#carregar:hover,.btn-top:hover, #cadastro input[type="submit"]:hover {box-shadow: inset 0 100px 0 $color_destaque;}
+#header li.redes:hover a{@include transform(rotateZ(360deg));}
+
+.btn-comprar,.outras div.five a,.ver-mais {box-shadow: inset 0 0 0 $color_destaque;}
+.btn-comprar:hover,.outras div.five a:hover,.ver-mais:hover {box-shadow: inset 0 0 50px 100px $color_destaque; }
+.ver-mais:hover {color: #fff}
+
+/************************************** HEADER *****************************************/
+
+#header {
+	position: relative; margin-bottom: 20px;
+	.cor-clara {height: 40px;
+		ul {float: right;}
+		li:first-child {border:none;}
+		li {
+			float: left;
+			margin-top: 10px;
+			padding: 0px 11px;
+			border-left: solid 1px #fff;
+		}
+		a {font-size: 12px;}
+		a:hover {text-decoration: underline;}
+	}
+	
+	a {color: #fff;}
+	
+	li.redes {
+		padding: 0; border: none; margin-top: 8px;
+		a {
+			background: url(../img/redes-sprite.png) no-repeat;
+			height: 20px;
+			width: 25px;
+			display: block;
+			background-position-y: center;
+			box-shadow: 0 0 0 8px transparent;
+			border-radius: 100%;
+		}
+		.twitter {background-position-x: right;}
+	}
+
+	.face {margin-left: 20px}
+
+	.cor-clara2 {height: 88px;
+		> div { position: relative;}
+		.four {min-height: 88px;}
+	}
+	h1 {position: absolute; left: 0;top: -25px;}
+
+	form {position: relative; z-index: 2;
+		div {position: relative;float: left;}
+	}
+	input {background: no-repeat url(../img/busca.png) 6px center;background-color: #fff;}
+	input,label {width: 206px;height: 34px;border: none;border-radius: $radius;float: left;margin-top: 25px;padding-left: 30px; color: #c8c8c8;font-family: "Myriad Pro",sans-serif;font-size: 14px; line-height: 37px;}
+	label {background: no-repeat url(../img/localidade.png) 6px center;background-color: #fff; margin-left: 15px;}
+	label:before {content: "";display: block; @include seta(6px, #828282);position: absolute;top: 40px;right: 10px;}
+	select {cursor: pointer; position: absolute;top: 25px;left: 15px;border-radius: $radius;width: 206px;height: 34px;opacity: 0;}
+}
+
+#bg-top { background-image: url(../img/bg-topo.jpg); width: 120%; height: 88px; position: absolute; z-index: 1; left:-350px; }
+.btn-top, #header h1 { z-index: 2;}
+.btn-top {
+	position: relative;
+	font-size: 18px;
+	padding: 0 12px;
+	height: 34px!important;
+	line-height: 36px;
+	float: left;
+	border-radius: $radius;
+	margin-top: 25px;
+	margin-right: 15px;
+}
+
+/************************************** NAVIGATION *****************************************/
+
+#navigation {
+	height: 42px; background: #ffb929; font-family:"MyriadProBold", sans-serif;  border-radius: $radius;
+	h5 { color: #fff;line-height:42px;font-size: 18px;padding-left: 45px; 
+		span {position: absolute;height: 5px;background: #fff;width: 27px;border-radius: 3px;left: 17px;}
+	}
+	ul {width: 100%; background: #fff; min-height: 318px; border-radius: $radius; margin-top: 2px; padding: 10px 0 13px;}
+	a {padding-left: 15px; font-size: 14px; height: 28px; display: inline-block;
+		p {float: left; color: #9e9e9e; margin-right: 11px;padding-top: 1px;}
+		span {width: 19px; height: 19px; display: inline-block; background: #eeeeee;border-radius: 3px; padding: 4px 2px; margin-left: 5px; font-size: 12px;}
+	}
+	a:hover p {color: $color_destaque;}
+}
+
+.color-destaque {color: $color_destaque!important;}
+
+#border-nav {
+	height: 32px!important;
+	width: 100%;
+	border-bottom: solid 2px #f2f2f2;
+	margin-bottom: 11px;
+}
+
+#top-nav {top: 9px;}
+#center-nav {top: 17px;}
+#bottom-nav {top: 25px;}
+
+/************************************** CONTEUDO *****************************************/
+
+#slider {border-radius: $radius*2; height: 361px; position: relative; overflow: hidden;
+	> figure {position: absolute;top: 0; left: 0; display: none; z-index: 1; @include transition(all ease-out 1s);}
+	li {cursor: pointer; width: 10px; height: 10px; background:#fff; position: relative; float: left; border-radius: 100%; margin-right: 5px;box-shadow: inset 0 0 0 0px $color_destaque; @include transition(all linear 0.3s);}
+	div {position: absolute;bottom: 0;left: 0;width: 100%;min-height: 126px;background: rgba(0,0,0,0.5); @include transition(all ease-out 0.5s); @include transform(translateY(140px));; padding:10px 20px;
+		h6 {font-family: "MyriadProBold",sans-serif; font-size: 20px; color: #fff }
+	}
+	li:hover {box-shadow: inset 0 0 0 2px $color_destaque;}
+	li.ativo-thumb {background:$color_destaque; }
+	ul {position: absolute; bottom: 10px;left: 50%;margin-left: -30px; z-index: 10;}
+	a {color: #fff; font-size: 14px; float: left; margin-right: 35px;margin-top: 5px; padding-top: 2px; }
+	a.localidade-slider {background: url(../img/localidade-write.png) no-repeat 9px 0;padding-left: 26px;}
+	a:hover {text-decoration: underline;}
+}
+
+#slider {
+	figure.ativo {z-index: 9; opacity: 1!important;
+		div {@include transform(translateY(0));}
+	}
+}
+
+#propagandas {margin-top:12px;
+	article {
+		border-radius: $radius;
+	}
+}
+
+.box-content article, #propagandas article {
+	float: left;
+	width: 31.9%;
+	margin-left: 20px;
+}
+
+#propagandas article,.box-content figure {
+	overflow: hidden;
+	height: 196px; 
+}
+
+
+#propagandas article:first-child,.box-content article:first-child {margin-left: 0;}
+
+.box-content {margin-top: 15px;
+	h3 {
+		font-size: 20px;
+		background: url(../img/topic.png) no-repeat 0 center;
+		padding-left: 20px;
+		padding-top: 4px;
+	}
+	article {margin-top: 15px; border-radius: $radius;
+		header {min-height: 107px;width: 100%;background: #fff;padding: 5px 6px 20px; border-radius: $radius;}
+		h4 {font-size:20px; color: #000; display: block; min-height: 39px;}
+		h5,.localidade-box{font-size: 14px; color: #a3a3a3;}
+		h5 { float: left;}
+		p.riscado,h4 {font-family: "Myriad Pro",sans-serif;}
+		p.riscado {margin-top: 18px;float: left;clear: both;color: #a3a3a3;font-size: 18px;text-decoration: line-through;}
+		p {font-family: "MyriadProBold",sans-serif; font-size: 20px;float: right;margin-top: 16px;}
+	}
+	
+	figure {width: 100%; position: relative;
+		figcaption {
+			div {width: 49.7%; height: 49.7%; position: absolute; border-radius: $radius; background:rgba($color_destaque,0.85); color: #fff; text-align: center; line-height: 98px; @include transition(all ease-out 0.5s)}
+			.desconto {top: 0; left: 0;@include transform(translateY(-100%));}
+			.compras {top: 0; right: 0;@include transform(translateX(100%));}
+			.volta {bottom: 0; left: 0;@include transform(translateX(-100%));}
+			.dias {bottom: 0; right: 0;@include transform(translateY(100%));}
+		}
+	}
+}
+
+.box-content article:hover div{@include transform(translate(0)!important)}
+.box-content div:hover {background: $color_destaque;}
+.box-content header a:hover span,.box-content header a:hover h5 {color: $color_destaque;}
+
+.localidade-box {
+	float: right;
+	background: url(../img/localidade.png) no-repeat;
+	padding-left: 15px;
+	padding-top: 2px;
+	margin-top: -2px;
+}
+
+.carrosel {
+	overflow: hidden;
+	header:after {content:""; display: block; clear: both;}
+	h3 {float: left; margin-right: 15px;}
+	button {float: left; height: 27px; width: 27px; background: url(../img/bullets-carrosel.png); border: none; cursor: pointer; margin-right: 3px;}
+	button.next {background-position: right; margin-right: 10px;}
+	.ver-carrosel {
+		font-size: 14px;
+		text-decoration: underline!important;
+		margin-top: 6px!important;
+		float: left;
+	}
+
+	> div {width: 9999%; position: relative; @include transition(all ease-out 0.5s); left: 0;
+		article {width: 299px;}
+	}
+
+}
+
+#oferta {margin-top: 45px;}
+#carregar {font-size: 14px; height: 31px; max-width: 181px; display: block; margin: 40px auto; border-radius: $radius; color: #fff; line-height: 31px; text-align: center;}
+
+#cadastro {
+	clear:both;background: $color_destaque; height: 54px; width: 100%; border-radius: $radius; padding: 8px 0;
+	h5,p {font-family: "Myriad Pro",sans-serif; color: #fff; }
+	h5 {font-size: 20px; }
+	p {font-size: 14px;}
+	form {position: relative;min-height: 1px;}
+	input[type="text"] {padding-left: 10px; width: 100%; min-height: 40px; background:#fff; border: none; border-radius: $radius;}
+	input[type="submit"] {width: 64px; height: 25px; color: #fff; background:$cor_clara; position: absolute; top: 8px; right: 10px; cursor: pointer; border: none;}
+}
+
+#top-footer {min-height: 217px; width: 100%; padding-top: 54px; margin-top: 50px;
+	ul {
+		border-left: solid 1px #3e789c;
+		padding-left: 35px;
+		min-height: 127px;
+		padding-top: 8px;
+	}
+	ul:first-child {border-left: none; padding-left: 0;}
+	li {margin-bottom: 5px;}
+	a {color: #fff; font-size: 14px; }
+	a:hover {text-decoration: underline;}
+	li.title-footer {margin-bottom: 30px;}
+}
+
+#bottom-footer h6 {font-size: 16px; margin-top: 30px; color: $cor_clara; margin-bottom: 15px;}
+#bottom-footer img {margin-bottom: 60px;}
+#top-footer li, #bottom-footer h6, #bottom-footer p {font-family: "Myriad Pro",sans-serif;}
+#bottom-footer p {font-size: 14px; color: $cor_clara; clear: both; margin-bottom: 60px;}
+
+/************************************** INTERNAS *****************************************/
+.relacionados {margin-top: 30px;}
+
+
+.internas {padding-top: 25px;padding-bottom: 15px;background: #fff;border-radius: $radius;
+	header.sixteen.columns,.produto {padding: 0 10px;}
+	h2{font-family: "Myriad Pro",sans-serif;color: #26485d;font-size: 30px; line-height: 30px; margin-bottom: 15px;
+		span {display: block;font-family: "Myriad Pro",sans-serif;color: #26485d;font-size: 30px; }
+	}
+	h3 {font-size: 20px;color: #26485d; margin-bottom: 20px;}
+	h4 {font-size: 18px; margin-top: 20px;}
+	p {margin-top: 5px; font-size: 14px;}
+	li {margin-top: 10px; font-size: 14px;}
+	ul {margin-bottom: 20px;}
+}
+
+.produto {position: relative; min-height: 358px; margin-top: 5px;
+	> img {position: absolute; top: 0; }
+	> img, figure {border-radius: $radius;}
+	figure {text-align: center; bottom: 0; width: 100%; position: absolute;padding: 17px 0 9px;background: rgba(0,0,0,0.5);
+		img {cursor: pointer;border-radius: 3px;margin: 0px 10px;}
+	}
+}
+
+.comprar-produto {padding: 5% 4%; margin-bottom: 10px;
+	.por, .preco-destaque {display: block; font-family: "MyriadProBold",sans-serif; }
+	footer {color: #a3a3a3;font-size: 14px;padding-left: 5px;}
+}
+
+.riscado {text-decoration: line-through;}
+
+.de span {color: #aaaaaa;font-size: 18px;margin-right: 5px}
+.por {text-transform: capitalize;margin: 10px 0;}
+.preco-destaque {font-size: 46px!important; color: $color_destaque;}
+.btn-comprar {background: $cor_comprar;display: inline-block; font-family: "MyriadProBold",sans-serif; font-size: 20px; color: #fff; height: 54px;line-height: 54px;width: 207px;text-align: center;margin-top: 18px;margin-bottom: 62px; border-radius: $radius+2}
+
+.info-produto {padding-top: 15px;border-top: solid 1px #e5e5e5; clear: both; margin: 5px 20px;
+	position: relative;
+	figure {float: left; margin-right: 15px}
+	a {color: #26485d;}
+	p {margin-top: 27px;background: url(../img/localidade.png) no-repeat;overflow: hidden;padding-left: 16px;padding-top: 4px;
+	}
+
+	a,p {font-size: 14px;}
+	li {float: left;margin-top: 9px;text-align: center;margin-right: 19px;
+		span {display: block;}
+	}
+}
+
+.redes-info {margin-top: 12px}
+
+article.info-produto:after {
+	content: "";
+	display: block;
+	clear: both;
+	border-bottom: solid 1px #e5e5e5;
+	padding-bottom: 10px;
+	margin-bottom: 20px;
+}
+
+.map-box {border-top: solid 1px #e5e5e5;padding-top: 25px;margin-top: 30px;}
+
+.description {padding-left: 10px; 
+	p {margin-top: 20px;}
+	> div {margin-bottom: 20px; border-bottom: solid 1px #e5e5e5;padding-bottom: 65px}
+	> div:last-child {border: none; padding-bottom: 0;}
+	li {background: url(../img/seta.png) no-repeat -10px 0;padding-left: 18px;padding-top: 6px;}
+	ul {margin-top: -9px;}
+	address p {font-style: normal;}
+}
+
+.map {width: 100%; height: 303px;}
+
+.outras {clear: both; padding: 34px 20px;
+	div.eleven {margin-bottom: 21px;border-right: solid 1px #a0a0a0;}
+	div.five span {font-size: 18px;color: #f6b65d;margin: 10px 60px 10px 40px;font-family: "MyriadProBold";float: left;}
+	div.five a {color: #fff;font-family: "MyriadProBold",sans-serif;background: #40cd28;float: left;width: 81px;height: 37px;text-align: center;line-height: 37px;border-radius: 5px;}
+	span {font-size: 14px;color: #737373;}
+}
+
+.title-outras {color: #26485d;font-family: "MyriadProBold";}
+
+.ver-mais {clear: both;display: block;padding: 11px;margin-bottom: -15px;border-top: solid 1px #e7e7e7;border-radius:$radius+1;text-align: center;font-size: 18px;color: #26485d;}
+.outras p.de {
+	span{font-size: 14px;color: #737373; margin-bottom: -10px;margin-top: -6px;}
+}
+
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 959px) {
+	.btn-top {font-size: 14px;padding: 0 10px;}
+	#header input, #header label {width: 160px;}
+	#slider {height: 287px}
+	#slider div {bottom: 5px;}
+	#navigation {
+		li:first-child, li:nth-child(2) {display: none;}
+		ul {padding: 10px 0; min-height: 0;}
+		p {font-size: 12px; margin-right: 5px!important;}
+	}
+
+	#propagandas article, .relacionados article {width: 31.5%;}
+	.carrosel {> div article {width: 363px;} img {width: 100%;}}
+	#cadastro {width: 748px;margin: 0 auto;
+		header {width: 250px!important}
+		form {max-width: 458px;}
+	}
+
+	.internas { 
+		h2 span {display: inline;}
+	}
+
+	.produto {min-height: 284px;}
+	.preco-destaque {font-size: 36px!important;}
+	.comprar-produto .de span {display: inline-block;}
+	.btn-comprar {width: 167px}
+
+	.info-produto{
+		ul {padding-left: 40px;}
+		li:nth-child(1) {margin-right: 50px}
+		li:nth-child(3) {margin-right: 65px}
+	}
+	
+	.description {
+		ul {margin-top: -6px;}
+		li {background: url(../img/seta.png) no-repeat -10px 0;padding-left: 18px;padding-top: 2px;}
+	}
+
+	.outras div.five span {margin: 13px 30px;}
+}
+
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen and (min-width: 768px) and (max-width: 959px) { }
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) { }
+
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+@media only screen and (min-width: 480px) and (max-width: 767px) { }
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@media only screen and (max-width: 479px) { }

@@ -1,0 +1,156 @@
+{% extends 'offer/base.html' %}
+
+{% load offer thumbnail %}
+
+{% block content %}
+<div class="container">
+	{% if category %}
+	<nav id="navigation" class="four columns">
+		<div>
+			<h5 id="header-nav">
+				<span id="top-nav"></span>
+				<span id="center-nav"></span>
+				<span id="bottom-nav"></span>
+				{{ category.name }}
+			</h5>
+		</div>
+
+		<ul>
+			{% for subcategory in subcategories %}
+				<li class="itens_nav subcategorias" data-slug="{{ subcategory.slug }}"><input type="checkbox" name="">
+					<a href="#"><p>{{ subcategory.name }}</p><span>{{ subcategory.total }}</span></a>
+				</li>
+			{% endfor %}
+			<li>
+				<div class="line"></div>
+			</li>
+
+			<li>
+				<h4 id="interesses">Interesses</h4>
+			</li>
+			<li class="itens_nav interesses_itens" data-slug="bares-e-restaurantes"><input type="checkbox" name=""> <a href="#"><p>Bares e Restaurantes </p><span>38</span></a></li>
+			<li class="itens_nav interesses_itens" data-slug="hosteis-e-pousadas"><input type="checkbox" name=""> <a href="#"><p>Hotéis e Pousadas </p><span>38</span></a></li>
+			<li class="itens_nav interesses_itens" data-slug="estetica"><input type="checkbox" name=""> <a href="#"><p>Estética </p><span>38</span></a></li>
+		</ul>
+
+
+		<aside class="mapa-listar">
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.832892413855!2d-34.847331400000016!3d-8.016162099999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ab22ba35e72209%3A0xe223c0d7faeb8fda!2sR.+do+Sol%2C+100+-+Carmo%2C+Olinda+-+PE!5e0!3m2!1spt-BR!2sbr!4v1412622830499" class="map" frameborder="0" style="border:0"></iframe>
+		</aside>
+	</nav>
+	<!-- END NAVIGATION -->	
+	{% else %}
+	<nav id="navigation" class="four columns">
+		<h5 id="header-nav">
+			<span id="top-nav"></span>
+			<span id="center-nav"></span>
+			<span id="bottom-nav"></span>
+			Navegue
+		</h5>
+
+		<ul>
+		<li><a href="{% url 'offer:offer_list' %}?category=ultimas-ofertas"><p class="color-destaque">Últimas Ofertas</p><span>{{ ultimas_count }}</span></a></li>
+		<li><a href="{% url 'offer:offer_list' %}?category=mais-vendidos"><p class="color-destaque">Mais Vendidos</p><span>{{ mais_vendidos_count }}</span></a></li>
+		{% for category in categories %}
+
+			{% if category.total > 0 %}
+			<li><a href="{% url 'offer:offer_list' %}?category={{ category.slug }}"><p class="color-destaque">{{ category.name }} </p><span>{{ category.total }}</span></a></li>
+			{% endif %}
+		{% endfor %}
+		</ul>
+	</nav>
+	{% endif %}														
+	<div class="twelve columns">
+		
+			<section id="slider">
+				<ul>
+				</ul>
+				{% for destaque in destaques %}
+					<figure>
+						{% thumbnail destaque.highlight_image "700x361" crop="center" as im %}
+						    <!-- <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"> -->
+							<img src="{{ im.url }}" alt="{{ destaque.title }}">
+						{% endthumbnail %}
+						<div>
+							<h6>{{ destaque.title }}</h6>
+							<a href="#">{{ destaque.partner }}</a>
+							<a href="#" class="localidade-slider">{{ destaque.city.name }}</a>
+						</div>
+					</figure>
+				{% endfor %}
+				
+			</section>
+			<!-- END SLIDER -->
+
+		<div id="listagem">
+			<div class="box-filtro">
+				<div>
+					<span>ordenar por</span>
+					<ul>
+						<li><a href="" data-slug="mais-recentes">Mais recentes</a></li>
+						<li><a href="" data-slug="menor-preco">Menor preço</a></li>
+						<li><a href="" data-slug="maior-preco">Maior preço</a></li>
+					</ul>
+				</div>
+
+				<p>45 ofertas locais</p>
+			</div>
+			
+			<div id="lista-div">
+			{% for offer in object_list %}
+				<section class="box-content listagem-produtos">
+					<article>
+							<figure>
+								<a href="{% url 'offer:offer_detail' offer.slug %}"><img src="{{ MEDIA_URL }}{{ offer.image_grid }}" alt=""></a>
+								<figcaption>
+									
+									<a href="{% url 'offer:offer_detail' offer.slug %}"><div class="desconto">{{ offer.first_option.discount }}% OFF</div></a>
+									<a href="{% url 'offer:offer_detail' offer.slug %}"><div class="compras">{{ offer.bought_total }} compraram</div></a>
+									<a href="{% url 'offer:offer_detail' offer.slug %}"><div class="volta">{{ offer.percent_cashback }}% de volta</div></a>
+									<a href="{% url 'offer:offer_detail' offer.slug %}"><div class="dias">{{ offer.first_option.time_remaining }} </div></a>
+								</figcaption>
+							</figure>
+						<header>
+							<h4>{{ offer.title }}</h4>
+							<a href="#"><h5>{{ offer.first_option.filial.partner.name }}</h5></a>
+							<a href="#"><span class="localidade-box">{{ offer.city.name }}</span></a>
+
+							<p class="riscado">De R$:{{ offer.first_option.old_price }}</p>
+							<p class="color-destaque">Por R$ {{ offer.first_option.new_price }}</p>
+						</header>
+					</article>
+				</section>
+			{% endfor %}
+
+			</div>
+			
+			
+			<aside>
+				<a href="#" id="carregar" class="cor-clara">Carregar mais ofertas</a>
+			</aside>
+
+			<!-- END BOX -->
+		</div>
+	</div>
+
+	<section id="cadastro">
+		<header class="five columns">
+			<h5>Cadastre-se</h5>
+			<p>E receba as nossas novidades no seu email</p>
+		</header>
+		<form action="" class="eleven columns">
+			<input type="text" placeholder="Digite seu email aqui">
+			<input type="submit">
+		</form>
+	</section>
+</div>
+
+<script type="text/javascript">
+	{% if category %}
+		var cat = "?category={{ category.slug }}";
+	{% else %}
+		var cat = "?category={{ request.GET.category }}";
+	{% endif %}
+</script>
+
+{% endblock content %}

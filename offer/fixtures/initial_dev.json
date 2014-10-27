@@ -1,0 +1,196 @@
+[
+{
+    "fields": {
+        "name": "Ofertas Locais",
+        "slug": "ofertas-locais"
+    },
+    "model": "offer.type",
+    "pk": 1
+},
+{
+    "fields": {
+        "name": "Produtos",
+        "slug": "produtos"
+    },
+    "model": "offer.type",
+    "pk": 2
+},
+{
+    "fields": {
+        "type": 1,
+        "name": "Produto"
+    },
+    "model": "offer.category",
+    "pk": 1
+},
+{
+    "fields": {
+        "type": 1,
+        "name": "Servi\u00e7o"
+    },
+    "model": "offer.category",
+    "pk": 2
+},
+{
+    "fields": {
+        "type": 1,
+        "name": "Viagens"
+    },
+    "model": "offer.category",
+    "pk": 3
+},
+{
+    "fields": {
+        "type": 1,
+        "name": "Fast Food"
+    },
+    "model": "offer.category",
+    "pk": 4
+},
+{
+    "fields": {
+        "category": 1,
+        "name": "teste"
+    },
+    "model": "offer.subcategory",
+    "pk": 1
+},
+{
+    "fields": {
+        "category": 1,
+        "name": "aloha"
+    },
+    "model": "offer.interest",
+    "pk": 1
+},
+{
+    "fields": {
+        "category": 2,
+        "name": "interesse 2"
+    },
+    "model": "offer.interest",
+    "pk": 2
+},
+{
+    "fields": {
+        "interests": [
+            1
+        ],
+        "city": 2,
+        "subcategory": 1,
+        "title": "teste",
+        "highlight_image": "oferta/slider01.png",
+        "description": "<p>Lorem Ipsum &eacute; simplesmente uma simula&ccedil;&atilde;o de texto da ind&uacute;stria tipogr&aacute;fica e de impressos, e vem sendo utilizado desde o s&eacute;culo XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos.</p>\r\n<p>Lorem Ipsum sobreviveu n&atilde;o s&oacute; a cinco s&eacute;culos, como tamb&eacute;m ao salto para a editora&ccedil;&atilde;o eletr&ocirc;nica, permanecendo essencialmente inalterado. Se popularizou na d&eacute;cada de 60, quando a Letraset lan&ccedil;ou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares de editora&ccedil;&atilde;o eletr&ocirc;nica como Aldus PageMaker.</p>",
+        "max_by_user": 10,
+        "percent_cashback": "5.00",
+        "image_grid": "oferta/wallpaper1.jpg",
+        "when_to_use": "<ul>\r\n<li>De 01 de Outubro a 31 de Dezembro (Exceto Domingos e Feriados) para ofertas com casais e crian&ccedil;as</li>\r\n<li>Segunda &agrave; sexta</li>\r\n</ul>",
+        "affiliate": 4,
+        "good_to_know": "<ul>\r\n<li>Ap&oacute;s a compra do cupom entre no site e valide seu c&oacute;digo</li>\r\n<li>p&oacute;s a compra do cupom entre no site e valide seu c&oacute;digo</li>\r\n<li>p&oacute;s a compra do cupom entre no site e valide seu c&oacute;digo</li>\r\n<li>p&oacute;s a compra do cupom entre no site e valide seu c&oacute;digo</li>\r\n<li>p&oacute;s a compra do cupom entre no site e valide seu c&oacute;digo</li>\r\n</ul>",
+        "highlight": true,
+        "percent_by_site": "20.00",
+        "bought_virtual": 0,
+        "date_created": "2014-09-19T18:57:07",
+        "slug": "teste",
+        "how_to_use": "<ul>\r\n<li>A&nbsp;reserva dever&aacute; ser feita pelo telefone ou e-mail</li>\r\n</ul>",
+        "bought": 13
+    },
+    "model": "offer.offer",
+    "pk": 1
+},
+{
+    "fields": {
+        "interests": [
+            1,
+            2
+        ],
+        "city": 2,
+        "subcategory": 1,
+        "title": "oferta 2",
+        "highlight_image": "oferta/slider02.gif",
+        "description": "<p>Lorem Ipsum &eacute; simplesmente uma simula&ccedil;&atilde;o de texto da ind&uacute;stria tipogr&aacute;fica e de impressos, e vem sendo utilizado desde o s&eacute;culo XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos.</p>\r\n<p>Lorem Ipsum sobreviveu n&atilde;o s&oacute; a cinco s&eacute;culos, como tamb&eacute;m ao salto para a editora&ccedil;&atilde;o eletr&ocirc;nica, permanecendo essencialmente inalterado. Se popularizou na d&eacute;cada de 60, quando a Letraset lan&ccedil;ou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares de editora&ccedil;&atilde;o eletr&ocirc;nica como Aldus PageMaker.</p>",
+        "max_by_user": 2,
+        "percent_cashback": "5.00",
+        "image_grid": "oferta/img-decorativa.png",
+        "when_to_use": "<ul>\r\n<li>De 01 de Outubro a 31 de Dezembro (Exceto Domingos e Feriados) para ofertas com casais e crian&ccedil;as</li>\r\n<li>S<span>egunda &agrave; sexta</span></li>\r\n</ul>",
+        "affiliate": null,
+        "good_to_know": "<ul>\r\n<li>A<span>p&oacute;s a compra do cupom entre no site e valide seu c&oacute;digo</span></li>\r\n<li><span>p&oacute;s a compra do cupom entre no site e valide seu c&oacute;digo</span></li>\r\n<li><span>p&oacute;s a compra do cupom entre no site e valide seu c&oacute;digo</span></li>\r\n<li><span>p&oacute;s a compra do cupom entre no site e valide seu c&oacute;digo</span></li>\r\n<li><span>p&oacute;s a compra do cupom entre no site e valide seu c&oacute;digo</span></li>\r\n</ul>",
+        "highlight": true,
+        "percent_by_site": "20.00",
+        "bought_virtual": 0,
+        "date_created": "2014-09-30T17:14:04",
+        "slug": "oferta-2",
+        "how_to_use": "<ul>\r\n<li>A&nbsp;<span>reserva dever&aacute; ser feita pelo telefone ou e-mail</span></li>\r\n</ul>",
+        "bought": 1
+    },
+    "model": "offer.offer",
+    "pk": 2
+},
+{
+    "fields": {
+        "name": "oferta/tenis_2Lwca3y.jpg",
+        "offer": 1
+    },
+    "model": "offer.image",
+    "pk": 4
+},
+{
+    "fields": {
+        "name": "oferta/paisagem_K9IYQ1i.jpg",
+        "offer": 2
+    },
+    "model": "offer.image",
+    "pk": 5
+},
+{
+    "fields": {
+        "subtitle": "Hospedagem + Caf\u00e9 da manh\u00e3",
+        "title": "dasdasdasd",
+        "start_time": "2014-10-08T21:11:27",
+        "offer": 1,
+        "old_price": "100.00",
+        "new_price": "80.00",
+        "date_expiration": "2014-12-29",
+        "end_time": "2015-10-07T12:11:29",
+        "date_created": "2014-09-29T21:11:52",
+        "filial": 7,
+        "quantity": 7
+    },
+    "model": "offer.option",
+    "pk": 2
+},
+{
+    "fields": {
+        "subtitle": "Hospedagem + Caf\u00e9 da manh\u00e3",
+        "title": "op\u00e7\u00e3o 2",
+        "start_time": "2014-10-09T17:11:34",
+        "offer": 1,
+        "old_price": "80.00",
+        "new_price": "70.00",
+        "date_expiration": "2014-12-30",
+        "end_time": "2014-12-30T17:11:36",
+        "date_created": "2014-09-30T17:11:49",
+        "filial": 6,
+        "quantity": 20
+    },
+    "model": "offer.option",
+    "pk": 3
+},
+{
+    "fields": {
+        "subtitle": "Subtitulo",
+        "title": "op\u00e7\u00e3o 1",
+        "start_time": "2014-09-30T17:13:11",
+        "offer": 2,
+        "old_price": "40.00",
+        "new_price": "25.00",
+        "date_expiration": "2014-12-30",
+        "end_time": "2014-12-30T17:13:12",
+        "date_created": "2014-09-30T17:14:04",
+        "filial": 6,
+        "quantity": 19
+    },
+    "model": "offer.option",
+    "pk": 4
+}
+]

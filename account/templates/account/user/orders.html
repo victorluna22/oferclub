@@ -1,0 +1,10 @@
+{% extends 'offer/base.html' %}
+
+{% block content %}
+<h2>Compras</h2>
+<ul>
+{% for order in order_list %}
+	<li>{{ order.option.title }}</li>
+{% endfor %}
+</ul>
+{% endblock content %}
