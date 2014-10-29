@@ -14,7 +14,7 @@ from django.views.generic.edit import UpdateView, FormView
 from django.views.generic.detail import DetailView
 from checkout.models import Coupon, Order, Operation
 from account.models import OferClubUser
-from offer.models import Offer, Category, Type, SubCategory
+from offer.models import Offer, Category, Type, SubCategory, PromotionCode
 from account.forms import OferClubUserForm, OferClubUserChangeForm
 
 class LoginRequiredMixin(object):
@@ -143,3 +143,11 @@ def change_product_type(request, slug):
     redirect_to = reverse_lazy('offer:home')
     return HttpResponseRedirect(redirect_to)
 
+
+def checks_code(request, code):
+    # import pdb;pdb.set_trace()
+    result = PromotionCode.objects.filter(code=code, start_time__lte=datetime.today(), end_time__gte=datetime.today())
+    if result:
+        return HttpResponse(json.dumps({'error': False, 'discount': float(result[0].discount)}), content_type='application/json')
+    else:
+        return HttpResponse(json.dumps({'error': True}), content_type='application/json')

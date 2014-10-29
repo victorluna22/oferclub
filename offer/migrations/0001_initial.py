@@ -8,7 +8,7 @@ import tinymce.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('account', '__first__'),
+        ('account', '0005_auto_20141029_1057'),
     ]
 
     operations = [
@@ -17,6 +17,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=255)),
+                ('slug', models.SlugField(unique=True, max_length=255, blank=True)),
             ],
             options={
                 'verbose_name': 'Categoria',
@@ -101,10 +102,24 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
+            name='PromotionCode',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('code', models.CharField(max_length=255, verbose_name='C\xf3digo')),
+                ('discount', models.DecimalField(verbose_name='Desconto', max_digits=10, decimal_places=2)),
+                ('start_time', models.DateTimeField(verbose_name='Come\xe7a em')),
+                ('end_time', models.DateTimeField(verbose_name='Termina em')),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
             name='SubCategory',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=255, verbose_name='Nome')),
+                ('slug', models.SlugField(unique=True, max_length=255, blank=True)),
                 ('category', models.ForeignKey(related_name=b'subcategories', to='offer.Category')),
             ],
             options={

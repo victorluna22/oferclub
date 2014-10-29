@@ -12,6 +12,8 @@ urlpatterns = patterns('',
     url(r'^oferta/listagem/$', OfferListView.as_view(), name='offer_list'),
     url(r'^oferta/(?P<slug>[\w_-]+)/$', OfferDetailView.as_view(), name='offer_detail'),
     url(r'^oferta/(?P<option_id>\d+)/comprar/$', OrderCreateViewView.as_view(), name='buy_offer'),
+    url(r'^verifica-codigo/(?P<code>[\w_-]+)/$', 'offer.views.checks_code', name='checks_code'),
+    url(r'^calcular-frete/(?P<cep>[\w_-]+)/$', 'checkout.views.calculate_shipping', name='calculate_shipping'),
 
 	    url(r'^usuario/', include(patterns('',
 	    	url(r'^meus-cupons/$', MyCouponsListView.as_view(), name='my_coupons'),

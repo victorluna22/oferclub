@@ -74,7 +74,11 @@ h2, h3, h4, h5 {
   background: #ff9a15; }
 
 /************************************** HEADER *****************************************/
+.show-presente, .show-presente body {
+  overflow: hidden !important; }
+
 #header {
+  z-index: 1;
   position: relative;
   margin-bottom: 20px; }
   #header .cor-clara {
@@ -1060,6 +1064,7 @@ article.info-produto:after {
     display: block; }
   #cupon #list-opcoes ul, #cupon #list-qtd ul {
     display: none;
+    z-index: 22;
     width: 240%;
     position: absolute;
     top: 36px;
@@ -1080,7 +1085,7 @@ article.info-produto:after {
   color: #fff;
   padding-left: 10px; }
 
-#presente {
+.presente {
   background: url(../img/presente.gif);
   width: 15px;
   height: 17px;
@@ -1088,10 +1093,10 @@ article.info-produto:after {
   margin-left: 20px;
   margin-top: 11px !important; }
 
-#vezes {
-  margin: 15px 10px;
+.vezes {
+  margin: 15px 10px !important;
   padding-left: 58px;
-  font-size: 12px; }
+  font-size: 12px !important; }
 
 .center-text, .bold-price {
   text-align: center; }
@@ -1101,6 +1106,13 @@ article.info-produto:after {
   text-align: center;
   font-family: "MyriadProBold", sans-serif;
   padding-top: 5px; }
+
+input.bg-area-clara {
+  width: 100%;
+  height: 32px;
+  margin-top: 5px;
+  line-height: 32px;
+  color: #737373; }
 
 .bd-bottom {
   padding-bottom: 20px;
@@ -1118,7 +1130,7 @@ article.info-produto:after {
 .sb-line:hover {
   box-shadow: 0 2px 0 #fbc617 !important; }
 
-.total, #total-price, .pagamento {
+.total, #total-price, .pagamento, #endereco-entrega #p-end {
   font-family: "MyriadProBold", sans-serif;
   font-size: 20px !important; }
 
@@ -1129,10 +1141,10 @@ article.info-produto:after {
   float: right;
   padding-right: 63px; }
 
-.mg {
+.mg, #endereco-entrega {
   margin-bottom: 15px; }
 
-.pd {
+.pd, #endereco-entrega {
   padding-left: 10px; }
 
 #footer-secundario {
@@ -1295,7 +1307,87 @@ span {
 .clear-double {
   clear: both; }
 
-#presente-box:before {
+.ativo-presente {
+  opacity: 1 !important;
+  visibility: visible !important; }
+
+.presente-box {
+  -webkit-transition: all ease-out 0.5s;
+  -moz-transition: all ease-out 0.5s;
+  -ms-transition: all ease-out 0.5s;
+  -o-transition: all ease-out 0.5s;
+  transition: all ease-out 0.5s;
+  opacity: 0;
+  visibility: hidden;
+  position: relative;
+  z-index: 22; }
+  .presente-box > div {
+    z-index: 22;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow-y: scroll;
+    padding-top: 40px; }
+    .presente-box > div > div {
+      position: relative;
+      z-index: 22;
+      padding-bottom: 40px; }
+      .presente-box > div > div > article:first-child {
+        padding-left: 80px; }
+    .presente-box > div > div:last-child {
+      margin-top: 20px;
+      padding: 30px 70px; }
+    .presente-box > div .prontinho {
+      float: left;
+      color: #fff;
+      background: #40cd28;
+      padding: 9px 27px;
+      border-radius: 5px;
+      font-size: 14px;
+      margin-right: 10px; }
+    .presente-box > div > div:before {
+      content: "";
+      position: absolute;
+      top: 78px;
+      width: 100%;
+      left: 0;
+      border-bottom: solid 1px #dcdcdc; }
+    .presente-box > div h2 {
+      font-family: "MyriadProBold", sans-serif;
+      font-size: 20px;
+      color: #737373;
+      margin-bottom: 20px; }
+    .presente-box > div header {
+      margin-bottom: 30px; }
+    .presente-box > div label {
+      padding-top: 20px;
+      display: block; }
+    .presente-box > div input, .presente-box > div textarea {
+      display: block;
+      background: #eee;
+      width: 81%;
+      margin-top: 5px;
+      color: #333;
+      border: none;
+      border-radius: 5px; }
+    .presente-box > div input[type="checkbox"] {
+      float: left;
+      display: inline-block;
+      width: 17px;
+      margin-top: 10px;
+      margin-right: 5px;
+      cursor: pointer; }
+    .presente-box > div textarea {
+      height: 100px; }
+
+.cancel-ps {
+  cursor: pointer;
+  margin-top: 10px !important;
+  text-decoration: underline; }
+
+.presente-box:before {
   width: 100%;
   height: 100%;
   position: fixed;
@@ -1304,6 +1396,62 @@ span {
   background: rgba(0, 0, 0, 0.5);
   content: "";
   z-index: 2; }
+
+.esconde-select {
+  display: none; }
+
+#calcular-frete {
+  float: left;
+  width: 229px; }
+
+#frete {
+  float: right;
+  margin: 20px 0 0; }
+
+#frete-price {
+  float: right;
+  margin: 20px 43px 0; }
+
+#endereco-entrega #p-end {
+  cursor: pointer; }
+
+#p-end:before, #p-end:after {
+  content: "";
+  border: solid 13px transparent; }
+
+#p-end:before {
+  border-top-color: #FF9A15;
+  position: absolute;
+  left: 210px;
+  top: 36px; }
+
+#p-end:after {
+  border-top-color: #fff;
+  position: absolute;
+  left: 210px;
+  top: 33px; }
+
+.esconde-endereco .subtitle {
+  margin: 35px 0 20px; }
+.esconde-endereco input[type="radio"] {
+  float: left;
+  margin-right: 10px;
+  outline: none; }
+.esconde-endereco label {
+  padding-top: 6px;
+  display: block;
+  overflow: hidden;
+  line-height: 23px; }
+.esconde-endereco div:last-child {
+  margin-top: 73px; }
+
+.salvar {
+  color: #fff;
+  background: #40cd28;
+  padding: 10px 13px 7px;
+  float: right;
+  border-radius: 5px;
+  font-size: 14px; }
 
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media only screen and (min-width: 768px) and (max-width: 959px) { }

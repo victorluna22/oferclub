@@ -1,7 +1,7 @@
 # coding: utf-8
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
-from offer.models import Offer, Category, Option, Image, SubCategory, Interest
+from offer.models import Offer, Category, Option, Image, SubCategory, Interest, PromotionCode
 from django import forms
 from tinymce.widgets import TinyMCE
 
@@ -53,7 +53,7 @@ class OfferForm(forms.ModelForm):
 
     class Meta:
         model = Offer
-        fields = ('title', 'slug', 'highlight', 'highlight_image', 'image_grid', 'subcategory', 'interests', 'affiliate', 'bought', 'bought_virtual', 'max_by_user', 'percent_by_site',
+        fields = ('title', 'slug', 'highlight', 'highlight_image', 'image_grid', 'subcategory', 'delivery', 'interests', 'affiliate', 'bought', 'bought_virtual', 'max_by_user', 'percent_by_site',
         		'percent_cashback', 'city', 'description', 'when_to_use', 'how_to_use', 'good_to_know')
 
 class OfferAdmin(admin.ModelAdmin):
@@ -89,6 +89,7 @@ class OfferAdmin(admin.ModelAdmin):
         return qs.filter(options__filial=request.user)
 
 
+admin.site.register(PromotionCode)
 admin.site.register(Offer, OfferAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(SubCategory)

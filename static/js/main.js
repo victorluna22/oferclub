@@ -24,7 +24,7 @@ if(document.querySelector("#propagandas")){
 '								<a href="'+json[key].ofertas[i].link+'"><div class="desconto">'+json[key].ofertas[i].discount+'% OFF</div></a>'+
 								'<a href="'+json[key].ofertas[i].link+'"><div class="compras">'+json[key].ofertas[i].quantity+' compraram</div></a>'+
 								'<a href="'+json[key].ofertas[i].link+'"><div class="volta">'+Math.floor(json[key].ofertas[i].cashback)+'% de volta</div></a>'+
-								'<a href="'+json[key].ofertas[i].link+'"><div class="dias">'+json[key].ofertas[i].day+' dias '+json[key].ofertas[i].hours+'</div></a>'+
+								'<a href="'+json[key].ofertas[i].link+'"><div class="dias">'+json[key].ofertas[i].remaining+'</div></a>'+
 							'</figcaption>'+
 						'</figure>'+
 					'<header>'+
@@ -75,7 +75,7 @@ if(document.querySelector("#propagandas")){
 		'								<a href="'+json[key].ofertas[n_itens].link+'"><div class="desconto">'+json[key].ofertas[n_itens].discount+'% OFF</div></a>'+
 										'<a href="'+json[key].ofertas[n_itens].link+'"><div class="compras">'+json[key].ofertas[n_itens].quantity+' compraram</div></a>'+
 										'<a href="'+json[key].ofertas[n_itens].link+'"><div class="volta">'+Math.floor(json[key].ofertas[n_itens].cashback)+'% de volta</div></a>'+
-										'<a href="'+json[key].ofertas[n_itens].link+'"><div class="dias">'+json[key].ofertas[n_itens].day+' dias '+json[key].ofertas[n_itens].hours+'</div></a>'+
+										'<a href="'+json[key].ofertas[n_itens].link+'"><div class="dias">'+json[key].ofertas[n_itens].remaining+'</div></a>'+
 									'</figcaption>'+
 								'</figure>'+
 							'<header>'+

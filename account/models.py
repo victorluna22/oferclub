@@ -156,12 +156,21 @@ class City(models.Model):
 
 
 class Address(models.Model):
+    cpf = models.CharField(max_length=14)
     cep = models.CharField(max_length=9)
     street = models.CharField(max_length=255)
     number = models.CharField(max_length=100)
-    complement = models.CharField(max_length=100)
+    complement = models.CharField(max_length=100, null=True, blank=True)
     neighborhood = models.CharField(max_length=100)
-    city = models.ForeignKey(City)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+
+    class Meta:
+        verbose_name = _(u'Endereço')
+        verbose_name_plural = _(u'Endereços')
+
+    def __unicode__(self):
+        return "%s,%s %s - %s" % (self.street, self.number, self.neighborhood, self.city)
 
 
 class OferClubUser(OferClubAbstractUser):
@@ -171,6 +180,7 @@ class OferClubUser(OferClubAbstractUser):
                                 help_text=_(u'Insira sua data de nascimento.'))
     credit = models.DecimalField(verbose_name=_(u'Saldo'), max_digits=9, decimal_places=2, default=0)
     inviter = models.ForeignKey('self', blank=True, null=True)
+    address = models.ManyToManyField(Address)
     objects = OferClubUserManager()
 
     class Meta:

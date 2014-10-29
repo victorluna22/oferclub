@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.admin import UserAdmin
-from account.models import Account, OferClubUser, Partner, Filial, Affiliate
+from account.models import Account, OferClubUser, Partner, Filial, Affiliate, Address
 
 
 
@@ -42,7 +42,7 @@ class OferClubUserChangeForm(UserChangeForm):
 class OferClubUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (_(u'Informações'), {'fields': ('full_name', 'gender', 'birthday', 'city', 'credit')}),
+        (_(u'Informações'), {'fields': ('full_name', 'gender', 'birthday', 'city', 'address', 'credit')}),
         (_(u'Permissões'), {'fields': ('is_active', 'is_staff', )}),
         (_(u'Datas importantes'), {'fields': ('last_login', 'date_joined')}),
     )
@@ -203,5 +203,5 @@ class FilialInline(admin.StackedInline):
 admin.site.register(OferClubUser, OferClubUserAdmin)
 admin.site.register(Filial, FilialAdmin)
 admin.site.register(Affiliate, AffiliateAdmin)
-# admin.site.register(Account)
+admin.site.register(Address)
 admin.site.register(Partner)
