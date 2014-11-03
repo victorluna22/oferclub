@@ -149,6 +149,9 @@ class LoginView(FormView):
 
         return HttpResponseRedirect(redirect_to)
 
+    def form_invalid(self, form):
+        return super(LoginView, self).form_invalid(form)
+
     def get_context_data(self, **kwargs):
         context = super(LoginView, self).get_context_data(**kwargs)
         context.update({

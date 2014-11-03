@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect, HttpResponse
 from pagseguro import PagSeguro
-from .models import Order, ORDER_AUTHORIZED
+from .models import Order, OrderItem, ORDER_AUTHORIZED
 from .forms import OrderCreateForm
 from offer.models import Option
 from offer.views import LoginRequiredMixin
@@ -61,31 +61,84 @@ class OrderCreateViewView(LoginRequiredMixin, CreateView):
 	def get_success_url(self):
 		return reverse_lazy('offer:user:my_orders', kwargs={})
 
+def order_create_view(request, option_id):
+	option = get_object_or_404(Option, pk=option_id)
 
-def calculate_shipping(request, cep):
+	if request.POST:
+		name_consumer = request.POST.get('name_consumer[]')
+		option_id = request.POST.get('option_id[]')
+		quantity = request.POST.get('quantity[]')
+		order_total = 0
+		offers_shipping = ""
+
+		#SUBTOTAIS
+		if len(name_consumer) == len(option_id) and len(option_id) == len(quantity):
+			order = Order.objects.create(user=request.user, status=2, total=0)
+			for i in range(len(name_consumer)):
+				opt = get_object_or_404(Option, pk=option_id[i])
+				item_total = int(quantity) * option.new_price
+				order_item = OrderItem.objects.create(order=order, name_consumer=name_consumer[i], option=opt, quantity=quantity[i], total=item_total)
+				order_total += item_total
+				offers_shipping += ",%s:%s" % (opt.id, quantity[i])
+
+		#FRETE
+		if option.offer.delivery and request.POST.get('cep'):
+			result = calculate_shipping(request.POST.get('cep'), offers_shipping[1:])
+			if result['error'] != 0:
+				return HttpResponse('erro frete: %s' % result['data'])
+			else:
+				order_total += float(result['data'])
+
+		#CUPOM DE DESCONTO
+		if request.POST.get('code_discount'):
+			result = PromotionCode.objects.filter(code=request.POST.get('code_discount'), start_time__lte=datetime.today(), end_time__gte=datetime.today())
+			if result:
+				order_total -= result[0].discount
+
+		# SALDO DE COMPRA
+		if request.POST.get('use_credit', False):
+			if request.user.credit <= order_total:
+				order_total -= request.user.credit
+			else:
+				request.user.credit -= order_total
+				request.user.save()
+				order_total = 0
+
+
+
+	context = {}
+	context['option'] = option
+	context['range_quantity'] = range(option.offer.max_by_user)
+	return render(request, 'checkout/order_create.html', context)
+
+
+def calculate_shipping_view(request, cep):
 	value = request.GET.get('ofertas')
 	if value:
-		ofertas = value.split(',')
-		package = Package(formato=CAIXA_PACOTE)
-		for oferta in ofertas:
-			option_id = oferta.split(':')[0]
-			qtd = oferta.split(':')[1]
-			option = get_object_or_404(Option, id=option_id)
-			if option.offer.delivery:
-				client = Client(cep_origem='01310-200')
-				for i in range(int(qtd)):
-					package.add_item(
-						weight = float(option.weight) if option.weight else 0,
-						height = float(option.height) if option.height else 0,
-						width  = float(option.width) if option.width else 0,
-						length = float(option.length) if option.length else 0
-					)
-			else:
-				return HttpResponse(json.dumps({'error': 1, 'data': 'Oferta não possui a opção de entrega'}), content_type='application/json')
-		servicos = client.calc_preco_prazo(package, cep, PAC)
-		# import pdb;pdb.set_trace()
-		if servicos[0].erro == 0:
-			return HttpResponse(json.dumps({'error': servicos[0].erro, 'data': servicos[0].valor}), content_type='application/json')
-		else:
-			return HttpResponse(json.dumps({'error': 1, 'data': servicos[0].msg_erro}), content_type='application/json')
+		result = calculate_shipping(cep, value)
+		return HttpResponse(json.dumps(result), content_type='application/json')
 	return HttpResponse(json.dumps({'error': 1, 'data': ''}), content_type='application/json')
+
+def calculate_shipping(cep, offers):
+	offers = offers.split(',')
+	package = Package(formato=CAIXA_PACOTE)
+	for offer in offers:
+		option_id = offer.split(':')[0]
+		qtd = offer.split(':')[1]
+		option = get_object_or_404(Option, id=option_id)
+		if option.offer.delivery:
+			client = Client(cep_origem='01310-200')
+			for i in range(int(qtd)):
+				package.add_item(
+					weight = float(option.weight) if option.weight else 0,
+					height = float(option.height) if option.height else 0,
+					width  = float(option.width) if option.width else 0,
+					length = float(option.length) if option.length else 0
+				)
+		else:
+			return {'error': 1, 'data': 'Oferta não possui a opção de entrega'}
+	services = client.calc_preco_prazo(package, cep, PAC)
+	if services[0].erro == 0:
+		return {'error': services[0].erro, 'data': services[0].valor}
+	else:
+		return {'error': 1, 'data': services[0].msg_erro}
