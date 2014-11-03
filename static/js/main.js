@@ -445,3 +445,45 @@ if(document.querySelector(".link")){
 	    },1000);
 	}
 }
+
+$(document).ready(function(){
+	$("#cupon-div input[type='text']").focus(function(){
+		if($(this).val() == "Digite o código"){
+			$(this).val("");
+			
+		}
+	});
+	$("#cupon-div input[type='text']").blur(function(){
+		if($(this).val() == ""){
+			$(this).val("Digite o código");
+		}
+	});
+
+	$("#cupon-div input[type='submit']").click(function(){
+		var $obj = $(this);
+		$.ajax({
+			type: "get",
+			url: "/verifica-codigo/"+$obj.prev().val()+"/",
+			success: function(data){
+				if(data.error){
+					alert("Código inválido");
+				}else {
+					$obj.next().next().text("- R$ "+data.discount.toFixed(2).replace(".",","));
+					setTotal(document.querySelectorAll("#cupon > .bd-bottom")[0].querySelectorAll(".bold-price"));
+				}
+			},
+		});
+		return false;
+	});
+
+	$("#cupon-div .cancel").click(function(){
+		var preco_desconto = parseFloat(document.querySelector("#cupon-div").querySelector(".bold-price").textContent.substr(4).replace(",",".")),
+		total = parseFloat(document.querySelector("#total-price").textContent.substr(3).replace(",",".")),
+		calculo = total + preco_desconto;
+
+		document.querySelector("#total-price").textContent = "R$ "+calculo.toFixed(2).replace(".",",");
+
+		$("#cupon-div input[type='text']").val("Digite o código");
+		return false;
+	});
+});
