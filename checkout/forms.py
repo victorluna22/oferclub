@@ -6,7 +6,7 @@ from .models import Order
 class OrderCreateForm(forms.ModelForm):
 	class Meta:
 		model = Order
-		fields = ('quantity', 'name_consumer')
+		# fields = ('quantity', 'name_consumer')
 
 	# def save(self, *args, **kwargs):
 	# 	import pdb;pdb.set_trace()

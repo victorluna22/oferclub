@@ -34,19 +34,11 @@ class Order(models.Model):
     """
     user = models.ForeignKey(OferClubUser, verbose_name=u'usuário', related_name='orders')
 
-    name_consumer = models.CharField(max_length=200, blank=True, null=True, verbose_name=u'nome completo')
-
-    option = models.ForeignKey(Option, related_name='orders')
-
-    quantity = models.IntegerField(u'Quantidade', default=1)
-
     total = models.DecimalField(decimal_places=2, max_digits=10, verbose_name=u'valor pago')
 
     code_pagseguro = models.CharField(u'Código PagSeguro', max_length=255, blank=True, null=True)
 
     status = models.PositiveSmallIntegerField(null=True, blank=True, choices=STATUS_CHOICES, default=2, verbose_name=u'situação')
-
-    send_gift = models.BooleanField(u'Enviar para presente', default=0)
 
     purchase_time = models.DateTimeField(auto_now_add=True, verbose_name=u'data')
 
@@ -86,8 +78,20 @@ class Order(models.Model):
         self.save()
         return response.payment_url
 
-class Coupon(models.Model):
+class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='get_coupons')
+    name_consumer = models.CharField(max_length=200, blank=True, null=True, verbose_name=u'nome completo')
+    option = models.ForeignKey(Option, related_name='orders')
+    quantity = models.IntegerField(u'Quantidade', default=1)
+    total = models.DecimalField(decimal_places=2, max_digits=10, verbose_name=u'valor pago')
+
+    def __unicode__(self):
+        return "%s (%s)" % (self.name_consumer, self.total)
+
+# class Gift(models.Model): DESENVOLVER
+
+class Coupon(models.Model):
+    order_item = models.ForeignKey(OrderItem, related_name='cupons')
     code = models.CharField(u'Código', max_length=255, unique=True)
     price = models.DecimalField(decimal_places=2, max_digits=10, verbose_name=u'valor pago')
     is_consumed = models.BooleanField(u'Foi consumido?', choices=CONSUME, default=NOT_CONSUMED)

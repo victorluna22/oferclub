@@ -19,9 +19,9 @@ class OrderAdmin(admin.ModelAdmin):
     ordering = ('-purchase_time',)
     readonly_fields = ('purchase_time',)
 
-    inlines = [
-	    CouponInline,
-	]
+ #    inlines = [
+	#     CouponInline,
+	# ]
 
 class CouponForm(forms.ModelForm):
     model = Coupon
@@ -55,8 +55,8 @@ class CouponValidationForm(forms.ModelForm):
 
 class CouponAdmin(admin.ModelAdmin):
     
-    list_display = ('order', 'price', 'is_consumed')
-    search_fields = ('order__name_consumer', )
+    # list_display = ('order', 'price', 'is_consumed')
+    # search_fields = ('order__name_consumer', )
     date_hierarchy = 'date_created'
     ordering = ('-date_created',)
     readonly_fields = ('code', 'price', 'date_created')
@@ -75,8 +75,8 @@ class CouponAdmin(admin.ModelAdmin):
             ))
             
             fields.remove('code')
-            fields.remove('order')
-            self.exclude = ('code', 'order')
+            # fields.remove('order')
+            # self.exclude = ('code', 'order')
             self.form = CouponValidationForm
             return fields
 
