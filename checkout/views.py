@@ -25,6 +25,7 @@ class OrderCreateViewView(LoginRequiredMixin, CreateView):
 		if self.kwargs.get('option_id', ''):
 			option = get_object_or_404(Option, pk=self.kwargs.get('option_id'))
 			context['option'] = option
+			context['other_options'] = option.offer.options.all()
 			context['total'] = max(0, option.new_price - self.request.user.credit)
 			# import pdb;pdb.set_trace()
 		context['range_quantity'] = range(option.offer.max_by_user)
@@ -108,6 +109,7 @@ def order_create_view(request, option_id):
 
 	context = {}
 	context['option'] = option
+	context['other_options'] = option.offer.options.all()
 	context['range_quantity'] = range(option.offer.max_by_user)
 	return render(request, 'checkout/order_create.html', context)
 

@@ -466,7 +466,7 @@ $(document).ready(function(){
 			url: "/verifica-codigo/"+$obj.prev().val()+"/",
 			success: function(data){
 				if(data.error){
-					alert("Código inválido");
+					mensagem("#cupom-info","Código inválido!","alert-danger");
 				}else {
 					$obj.next().next().text("- R$ "+data.discount.toFixed(2).replace(".",","));
 					setTotal(document.querySelectorAll("#cupon > .bd-bottom")[0].querySelectorAll(".bold-price"));
