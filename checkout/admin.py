@@ -2,11 +2,15 @@
 from datetime import datetime
 from django.contrib import admin
 from django import forms
-from checkout.models import Coupon, Order, Operation, CONSUMED
+from checkout.models import Coupon, Order, Operation, OrderItem, CONSUMED
 from django.contrib.admin.util import flatten_fieldsets
 
 class CouponInline(admin.StackedInline):
     model = Coupon
+    extra = 0
+
+class OrderItemInline(admin.StackedInline):
+    model = OrderItem
     extra = 0
 
 
@@ -19,9 +23,9 @@ class OrderAdmin(admin.ModelAdmin):
     ordering = ('-purchase_time',)
     readonly_fields = ('purchase_time',)
 
- #    inlines = [
-	#     CouponInline,
-	# ]
+    inlines = [
+        OrderItemInline,
+    ]
 
 class CouponForm(forms.ModelForm):
     model = Coupon

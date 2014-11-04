@@ -1,15 +1,17 @@
 #coding: utf-8
 import json
+from datetime import datetime
 from django.shortcuts import render
 from django.views.generic.edit import CreateView
 from django.shortcuts import get_object_or_404, redirect
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from pagseguro import PagSeguro
 from .models import Order, OrderItem, ORDER_AUTHORIZED
 from .forms import OrderCreateForm
-from offer.models import Option
+from offer.models import Option, PromotionCode
 from offer.views import LoginRequiredMixin
 from correios_frete.client import Client
 from correios_frete.package import Package
@@ -63,14 +65,15 @@ class OrderCreateViewView(LoginRequiredMixin, CreateView):
 	def get_success_url(self):
 		return reverse_lazy('offer:user:my_orders', kwargs={})
 
+@login_required
 @transaction.commit_on_success
 def order_create_view(request, option_id):
 	option = get_object_or_404(Option, pk=option_id)
 
 	if request.POST:
-		name_consumer = request.POST.get('name_consumer[]')
-		option_id = request.POST.get('option_id[]')
-		quantity = request.POST.get('quantity[]')
+		name_consumer = request.POST.getlist('name_consumer[]')
+		option_id = request.POST.getlist('option_id[]')
+		quantity = request.POST.getlist('quantity[]')
 		order_total = 0
 		offers_shipping = ""
 
@@ -79,10 +82,12 @@ def order_create_view(request, option_id):
 			order = Order.objects.create(user=request.user, status=2, total=0)
 			for i in range(len(name_consumer)):
 				opt = get_object_or_404(Option, pk=option_id[i])
-				item_total = int(quantity) * option.new_price
+				item_total = int(quantity[i]) * option.new_price
 				order_item = OrderItem.objects.create(order=order, name_consumer=name_consumer[i], option=opt, quantity=quantity[i], total=item_total)
 				order_total += item_total
 				offers_shipping += ",%s:%s" % (opt.id, quantity[i])
+
+		order_total = float(order_total)
 
 		#FRETE
 		if option.offer.delivery and request.POST.get('cep'):
@@ -91,21 +96,33 @@ def order_create_view(request, option_id):
 				return HttpResponse('erro frete: %s' % result['data'])
 			else:
 				order_total += float(result['data'])
+				order.shipping = float(result['data'])
 
+		# import pdb;pdb.set_trace()
 		#CUPOM DE DESCONTO
 		if request.POST.get('code_discount'):
 			result = PromotionCode.objects.filter(code=request.POST.get('code_discount'), start_time__lte=datetime.today(), end_time__gte=datetime.today())
 			if result:
-				order_total -= result[0].discount
+				order_total -= float(result[0].discount)
+				order.discount = float(result[0].discount)
 
 		# SALDO DE COMPRA
 		if request.POST.get('use_credit', False):
-			if request.user.credit <= order_total:
-				order_total -= request.user.credit
+			credit = float(request.user.credit)
+			if credit <= order_total:
+				order_total -= credit
+				request.user.credit = 0
+				
 			else:
-				request.user.credit -= order_total
-				request.user.save()
+				credit -= order_total
+				request.user.credit = credit
 				order_total = 0
+				order.status = ORDER_AUTHORIZED
+			order.balance = credit
+			request.user.save()
+
+		order.total = order_total
+		order.save()
 
 
 

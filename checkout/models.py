@@ -36,6 +36,12 @@ class Order(models.Model):
 
     total = models.DecimalField(decimal_places=2, max_digits=10, verbose_name=u'valor pago')
 
+    shipping = models.DecimalField(decimal_places=2, default=0, max_digits=10, verbose_name=u'Frete')
+
+    discount = models.DecimalField(decimal_places=2, default=0, max_digits=10, verbose_name=u'Desconto')
+
+    balance = models.DecimalField(decimal_places=2, default=0, max_digits=10, verbose_name=u'Saldo usado')
+
     code_pagseguro = models.CharField(u'Código PagSeguro', max_length=255, blank=True, null=True)
 
     status = models.PositiveSmallIntegerField(null=True, blank=True, choices=STATUS_CHOICES, default=2, verbose_name=u'situação')
@@ -149,5 +155,5 @@ class Operation(models.Model):
         return u'%s - R$%.2f (%s)' % (self.user.full_name, self.value, type_operation)
 
 
-post_save.connect(receiver_post_save, sender=Order, dispatch_uid='checkout.signals.post_save')
+# post_save.connect(receiver_post_save, sender=Order, dispatch_uid='checkout.signals.post_save')
 post_save.connect(update_credit, sender=Operation, dispatch_uid='checkout.signals.post_save')

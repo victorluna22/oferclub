@@ -2,10 +2,6 @@
 
 {% block content %}
 
-
-<p>Seus créditos: R$ {{ request.user.credit }}</p>
-<p>Total: R$ {{ total }}</p>
-
 <form action="." method="POST" id="form-carrinho">
 {% csrf_token %}
 
@@ -161,12 +157,12 @@
 	<div class="bd-bottom">
 		<div class="three columns omega">
 			<p>Saldo disponível</p>
-			<p class="bg-area-clara" id="saldo" data-saldo="2000">R$ 2.000,00</p>
+			<p class="bg-area-clara" id="saldo" data-saldo="{{ request.user.credit|floatformat }}">R$ {{ request.user.credit }}</p>
 		</div>
 		
 		<div class="thirteen columns alpha">
 			<label for="saldo-check">Usar saldo</label>
-			<input type="checkbox" id="saldo-check">
+			<input type="checkbox" name="use_credit" id="saldo-check">
 			<p class="bold-price" id="subtotal-price" data-price="00.00">- R$ 00,00</p>
 		</div>
 	</div>
@@ -218,7 +214,7 @@
 
 			<div class="four columns">
 				<label for="cep-endereco">CEP</label>
-				<input type="text" id="cep-endereco" name="cep" class="bg-area-clara mg">
+				<input type="text" id="cep-endereco" class="bg-area-clara mg">
 
 				<label for="bairro-endereco">Bairro</label>
 				<input type="text" id="bairro-endereco" name="neighborhood" class="bg-area-clara mg">
