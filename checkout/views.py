@@ -5,6 +5,7 @@ from django.views.generic.edit import CreateView
 from django.shortcuts import get_object_or_404, redirect
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect, HttpResponse
+from django.db import transaction
 from pagseguro import PagSeguro
 from .models import Order, OrderItem, ORDER_AUTHORIZED
 from .forms import OrderCreateForm
@@ -62,6 +63,7 @@ class OrderCreateViewView(LoginRequiredMixin, CreateView):
 	def get_success_url(self):
 		return reverse_lazy('offer:user:my_orders', kwargs={})
 
+@transaction.commit_on_success
 def order_create_view(request, option_id):
 	option = get_object_or_404(Option, pk=option_id)
 
