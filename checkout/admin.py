@@ -59,11 +59,11 @@ class CouponValidationForm(forms.ModelForm):
 
 class CouponAdmin(admin.ModelAdmin):
     
-    # list_display = ('order', 'price', 'is_consumed')
-    # search_fields = ('order__name_consumer', )
+    list_display = ('order_item', 'price', 'is_consumed')
+    search_fields = ('name_consumer', )
     date_hierarchy = 'date_created'
     ordering = ('-date_created',)
-    readonly_fields = ('code', 'price', 'date_created')
+    readonly_fields = ('code', 'price', 'date_created', 'is_consumed')
 
     def get_readonly_fields(self, request, obj=None):
         # import pdb;pdb.set_trace()

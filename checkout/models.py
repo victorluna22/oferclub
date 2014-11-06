@@ -8,7 +8,7 @@ from django.db import models
 from account.models import OferClubUser
 from offer.models import Option
 from account.models import Address
-from .signals import receiver_post_save, update_credit
+from .signals import receiver_post_save, update_credit, coupon_save
 
 # Create your models here.
 
@@ -85,7 +85,7 @@ class Order(models.Model):
         return response.payment_url
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, related_name='get_coupons')
+    order = models.ForeignKey(Order, related_name='itens')
     name_consumer = models.CharField(max_length=200, blank=True, null=True, verbose_name=u'nome completo')
     option = models.ForeignKey(Option, related_name='orders')
     quantity = models.IntegerField(u'Quantidade', default=1)
@@ -99,6 +99,7 @@ class OrderItem(models.Model):
 class Coupon(models.Model):
     order_item = models.ForeignKey(OrderItem, related_name='cupons')
     code = models.CharField(u'Código', max_length=255, unique=True)
+    name_consumer = models.CharField(max_length=200, blank=True, null=True, verbose_name=u'nome completo')
     price = models.DecimalField(decimal_places=2, max_digits=10, verbose_name=u'valor pago')
     is_consumed = models.BooleanField(u'Foi consumido?', choices=CONSUME, default=NOT_CONSUMED)
     address = models.ForeignKey(Address, blank=True, null=True, verbose_name=u'endereço')
@@ -120,7 +121,7 @@ class Coupon(models.Model):
         """This function generate 10 character long hash"""
         hash = hashlib.sha1()
         hash.update(str(time.time()))
-        hashstr = hash.hexdigest()[:12] + str(self.order.id) + str(random.randint(0,9))
+        hashstr = hash.hexdigest()[:12] + str(self.order_item.id) + str(random.randint(0,9))
         return hashstr.upper()
 
     def save(self, *args, **kwargs):
@@ -155,5 +156,6 @@ class Operation(models.Model):
         return u'%s - R$%.2f (%s)' % (self.user.full_name, self.value, type_operation)
 
 
-# post_save.connect(receiver_post_save, sender=Order, dispatch_uid='checkout.signals.post_save')
+post_save.connect(receiver_post_save, sender=Order, dispatch_uid='checkout.signals.post_save')
 post_save.connect(update_credit, sender=Operation, dispatch_uid='checkout.signals.post_save')
+post_save.connect(coupon_save, sender=Coupon, dispatch_uid='checkout.signals.post_save')

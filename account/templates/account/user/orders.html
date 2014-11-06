@@ -3,8 +3,8 @@
 {% block content %}
 <h2>Compras</h2>
 <ul>
-{% for order in order_list %}
-	<li>{{ order.option.title }}</li>
+{% for item in orderitem_list %}
+	<li>{{ item.option.title }}</li>
 {% endfor %}
 </ul>
 {% endblock content %}

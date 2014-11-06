@@ -4,7 +4,7 @@
 <h2>Cupons</h2>
 <ul>
 {% for coupon in coupon_list %}
-	<li>{{ coupon.order.option.title }}</li>
+	<li>{{ coupon.order_item.option.title }}</li>
 {% endfor %}
 </ul>
 

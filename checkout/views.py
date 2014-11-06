@@ -9,9 +9,11 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from pagseguro import PagSeguro
-from .models import Order, OrderItem, ORDER_AUTHORIZED
+from .models import Order, OrderItem, Operation, ORDER_AUTHORIZED, DEBIT
 from .forms import OrderCreateForm
 from offer.models import Option, PromotionCode
+from account.models import Address
+from account.forms import AddressForm
 from offer.views import LoginRequiredMixin
 from correios_frete.client import Client
 from correios_frete.package import Package
@@ -90,7 +92,7 @@ def order_create_view(request, option_id):
 		order_total = float(order_total)
 
 		#FRETE
-		if option.offer.delivery and request.POST.get('cep'):
+		if option.offer.delivery and option.offer.shipping and request.POST.get('cep'):
 			result = calculate_shipping(request.POST.get('cep'), offers_shipping[1:])
 			if result['error'] != 0:
 				return HttpResponse('erro frete: %s' % result['data'])
@@ -111,15 +113,25 @@ def order_create_view(request, option_id):
 			credit = float(request.user.credit)
 			if credit <= order_total:
 				order_total -= credit
-				request.user.credit = 0
+				Operation.objects.create(user=request.user, type_operation=DEBIT, description='compra: %s' % order.id, value=credit)
 				
 			else:
-				credit -= order_total
-				request.user.credit = credit
+				credit = order_total
+				Operation.objects.create(user=request.user, type_operation=DEBIT, description='compra: %s' % order.id, value=order_total)
 				order_total = 0
 				order.status = ORDER_AUTHORIZED
 			order.balance = credit
-			request.user.save()
+
+		import pdb;pdb.set_trace()
+		# ENDEREÇO
+		if option.offer.delivery and request.POST.get('address'):
+			if request.POST.get('address') == 'new':
+				form = AddressForm(request.POST)
+				if form.is_valid():
+					form.save()
+			else:
+				address = get_object_or_404(Address, id=request.POST.get('address'))
+				order.address = address
 
 		order.total = order_total
 		order.save()

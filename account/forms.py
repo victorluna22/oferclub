@@ -9,7 +9,7 @@ from django.template import loader
 from django.utils.http import int_to_base36
 from django.utils.translation import ugettext_lazy as _
 
-from .models import OferClubUser, Invite, NewsLetter
+from .models import OferClubUser, Invite, NewsLetter, Address
 
 
 class OferClubUserForm(forms.ModelForm):
@@ -255,3 +255,8 @@ class NewsLetterForm(forms.ModelForm):
     class Meta:
         model = NewsLetter
         fields = ('email',)
+
+
+class AddressForm(forms.ModelForm):
+    class Meta:
+        model = Address

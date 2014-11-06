@@ -30,7 +30,7 @@ from django.shortcuts import get_object_or_404
 
 from offer.views import LoginRequiredMixin
 from offer.models import Option
-from checkout.models import Coupon, Operation, Order
+from checkout.models import Coupon, Operation, Order, OrderItem
 from .models import OferClubUser, Account, Invite, City, NewsLetter, get_facebook_service
 from .forms import OferClubUserForm, OferClubUserChangeForm, InviteCreateForm, NewsLetterForm
 
@@ -41,7 +41,7 @@ class MyCouponsListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        return Coupon.objects.filter(order__user=user)
+        return Coupon.objects.select_related('order_item__option').filter(order_item__order__user=user)
 
 class MyOrdersListView(LoginRequiredMixin, ListView):
     model = Coupon
@@ -49,7 +49,7 @@ class MyOrdersListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        return Order.objects.filter(user=user)
+        return OrderItem.objects.select_related('option').filter(order__user=user)
 
 class MyOperationsListView(LoginRequiredMixin, ListView):
     model = Operation

@@ -135,6 +135,7 @@
 	</div>
 	<!-- END BD-BOTTOM -->
 
+{% if option.offer.delivery and option.offer.shipping %}
 	<div class="bd-bottom">
 		<!-- ALERTA DO AJAX -->
 		<div class="thirteen columns">
@@ -153,6 +154,7 @@
 			<p class="bold-price" id="frete-price" data-price="00.00">R$ 00,00</p>
 		</div>
 	</div>
+{% endif %}
 
 	<div class="bd-bottom">
 		<div class="three columns omega">
@@ -197,7 +199,7 @@
 
 			<div class="four columns">
 
-				<p class="subtitle"><input type="radio" name="address" value="0" id="endereco0">Novo Endereço</p>
+				<p class="subtitle"><input type="radio" name="address" value="new" id="endereco0">Novo Endereço</p>
 
 				<label for="cpf-endereco">CPF</label>
 				<input type="text" id="cpf-endereco" name="cpf" class="bg-area-clara mg">
