@@ -5,8 +5,6 @@
 <form action="." method="POST" id="form-carrinho">
 {% csrf_token %}
 
-{{ form.errors }}
-
 <section class="container internas" id="area-compra">
 	<article class="sixteen columns">
 		<header>
@@ -35,6 +33,14 @@
 		</ul>
 	</article>
 </section>
+
+{% if messages %}
+		<ul class="messages">
+			{% for message in messages %}
+				<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+			{% endfor %}
+		</ul>
+{% endif %}
 
 <aside class="container internas mg" id="cupon">
 	<div class="bd-bottom">

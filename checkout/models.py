@@ -47,6 +47,8 @@ class Order(models.Model):
 
     status = models.PositiveSmallIntegerField(null=True, blank=True, choices=STATUS_CHOICES, default=2, verbose_name=u'situação')
 
+    address = models.ForeignKey(Address, blank=True, null=True, verbose_name=u'endereço')
+
     purchase_time = models.DateTimeField(auto_now_add=True, verbose_name=u'data')
 
     date_approved = models.DateTimeField(u'Aprovado em', blank=True, null=True)
@@ -103,7 +105,6 @@ class Coupon(models.Model):
     name_consumer = models.CharField(max_length=200, blank=True, null=True, verbose_name=u'nome completo')
     price = models.DecimalField(decimal_places=2, max_digits=10, verbose_name=u'valor pago')
     is_consumed = models.BooleanField(u'Foi consumido?', choices=CONSUME, default=NOT_CONSUMED)
-    address = models.ForeignKey(Address, blank=True, null=True, verbose_name=u'endereço')
     date_expiration = models.DateField(u'Expira em')
     date_consumed = models.DateTimeField(blank=True, null=True, verbose_name=u'Consumido em')
     date_created = models.DateTimeField(auto_now_add=True, verbose_name=u'Gerado em')

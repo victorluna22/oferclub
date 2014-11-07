@@ -2,6 +2,7 @@
 import json
 from datetime import datetime
 from django.shortcuts import render
+from django.contrib import messages
 from django.views.generic.edit import CreateView
 from django.shortcuts import get_object_or_404, redirect
 from django.core.urlresolvers import reverse_lazy
@@ -119,23 +120,32 @@ def order_create_view(request, option_id):
 				credit = order_total
 				Operation.objects.create(user=request.user, type_operation=DEBIT, description='compra: %s' % order.id, value=order_total)
 				order_total = 0
-				order.status = ORDER_AUTHORIZED
+				# order.status = ORDER_AUTHORIZED
 			order.balance = credit
 
-		import pdb;pdb.set_trace()
+		# import pdb;pdb.set_trace()
 		# ENDEREÇO
 		if option.offer.delivery and request.POST.get('address'):
 			if request.POST.get('address') == 'new':
 				form = AddressForm(request.POST)
 				if form.is_valid():
-					form.save()
+					address = form.save()
 			else:
 				address = get_object_or_404(Address, id=request.POST.get('address'))
-				order.address = address
+			
+			order.address = address
 
 		order.total = order_total
 		order.save()
 
+		# messages.add_message(request, messages.INFO, 'Hello world.')		
+
+		if order.total == 0:
+			order.status = ORDER_AUTHORIZED
+			self.object.save()
+		elif order.total > 0:
+			return redirect(self.object.pay_pagseguro())
+		return HttpResponseRedirect(reverse_lazy('offer:user:my_orders', kwargs={}))
 
 
 	context = {}
