@@ -1,0 +1,92 @@
+{% extends 'offer/base.html' %}
+
+{% block content %}
+<section class="container" ng-app ng-controller="areaCliente">
+	<header id="titulo-cliente" class="sixteen columns">
+		<h2>Minhas informações</h2>
+	</header>
+
+	<nav id="sidebar-cliente" class="four columns">
+		<ul>
+			<li><a href="" class="cor-clara" ng-click="showCupons(1)">Meus Cupons</a></li>
+			<li><a href="" class="cor-clara" ng-click="showCreditos(2)">Meus Créditos</a></li>
+			<li><a href="" class="cor-clara" ng-click="showDadosPagamento(3)">Dados de Pagamento</a></li>
+			<li><a href="" class="cor-clara active-cliente" ng-click="showDadosPessoais(4)">Dados Pessoais</a></li>
+		</ul>
+	</nav>
+<article class="twelve columns" id="info-content">
+{% block interna %}{% endblock interna %}
+</article>
+
+</section>
+
+<script type="text/javascript" src="js/angular.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+	function areaCliente($scope){
+		$scope.showDadosPessoais = function(obj){
+			$scope.dados_pessoais = true;
+			$scope.dados_pagamento = false;
+			$scope.creditos = false;
+			$scope.cupons = false;
+			
+			setClass(obj);
+
+		}
+
+		$scope.showDadosPagamento = function(obj){
+			$scope.dados_pessoais = false;
+			$scope.dados_pagamento = true;
+			$scope.creditos = false;
+			$scope.cupons = false;
+
+			setClass(obj);
+		}
+
+
+		$scope.showCupons = function(obj){
+			$scope.dados_pessoais = false;
+			$scope.dados_pagamento = false;
+			$scope.creditos = false;
+			$scope.cupons = true;
+
+			setClass(obj);
+		}
+
+		$scope.showCreditos = function(obj){
+			$scope.dados_pessoais = false;
+			$scope.dados_pagamento = false;
+			$scope.creditos = true;
+			$scope.cupons = false;
+
+			setClass(obj);
+		}
+
+		function setClass(index){
+			document.querySelector(".active-cliente").classList.remove("active-cliente");
+			var index_elements = document.querySelectorAll("#sidebar-cliente li");
+			index_elements[(index-1)].querySelector("a").classList.add("active-cliente");
+		}
+ 	}
+
+	var opcoes = document.querySelectorAll(".dados-pessoais header a");
+	Array.prototype.forEach.call(opcoes, function(element) {
+		element.addEventListener("click",function(e){
+			e.preventDefault();
+			var id = this.dataset.value;
+
+			
+			document.querySelector(".active-header").classList.remove("active-header");
+			this.classList.add("active-header");
+
+			document.querySelector(".active-dados").classList.remove("active-dados");
+			document.querySelector("#"+id).classList.add("active-dados")
+		});
+	});
+
+	document.querySelector(".foto input").addEventListener("change",function(){
+		//procurar sobre file reader javascript
+	});
+</script>
+
+{% endblock content %}

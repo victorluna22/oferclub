@@ -86,13 +86,16 @@ class OferClubUserForm(forms.ModelForm):
             user.save()
         return user
 
+
+class OferClubAddressForm(forms.ModelForm):
+    class Meta:
+        model = Address
+
 class OferClubUserChangeForm(forms.ModelForm):
     class Meta:
         model = OferClubUser
-        fields = ('email', 'gender', 'birthday', 'city', 'full_name')
-        widgets = {
-            'email': forms.TextInput(attrs={'class': 'form-control'}),
-        }
+        fields = ('full_name', 'gender', 'birthday')
+
 
 class PasswordResetForm(forms.Form):
     email = forms.EmailField(label=_(u'email'), max_length=254,

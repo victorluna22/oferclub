@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView
 from offer.views import OfferDetailView, OfferListView
 from account.views import MyCouponsListView, MyOrdersListView, MyOperationsListView, OferClubUserEditView, \
-InviteCreateView, change_city
+InviteCreateView, OferClubAddressEditView, change_city
 from checkout.views import OrderCreateViewView
 
 urlpatterns = patterns('',
@@ -19,7 +19,8 @@ urlpatterns = patterns('',
 	    	url(r'^meus-cupons/$', MyCouponsListView.as_view(), name='my_coupons'),
 	    	url(r'^meus-creditos/$', MyOperationsListView.as_view(), name='my_operations'),
 	    	url(r'^minhas-compras/$', MyOrdersListView.as_view(), name='my_orders'),
-	    	url(r'^editar-dados/$', OferClubUserEditView.as_view(), name='change_user'),
+	    	url(r'^dados-pessoais/conta/$', OferClubUserEditView.as_view(), name='change_user'),
+	    	url(r'^dados-pessoais/endereco/$', OferClubAddressEditView.as_view(), name='change_user_address'),
 	    	url(r'^convidar/$', InviteCreateView.as_view(), name='invite'),
 	    	url(r'^mudar-cidade/$', change_city, name='change_city'),
 	    ), namespace='user')),

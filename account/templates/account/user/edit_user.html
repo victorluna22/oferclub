@@ -4,26 +4,9 @@
 <form class="signup forms-adm" id="signup_form" method="post" action="">
     {% csrf_token %}
     
-    <div class="box_input">
-        {{ form.full_name }}
-        {{ form.full_name.errors }}
-    </div>
-    <div class="box_input">
-        {{ form.email }}
-        {{ form.email.errors }}
-    </div>
-    <div class="box_input">
-        {{ form.gender }}
-        {{ form.gender.errors }}
-    </div>
-    <div class="box_input">
-        {{ form.birthday }}
-        {{ form.birthday.errors }}
-    </div>
-    <div class="box_input">
-        {{ form.city }}
-        {{ form.city.errors }}
-    </div>
+    {{form.as_p}}
+
+    <label>{{ request.user.email }}</label><br>
     
     <button type="submit" id="bt-cadastro" class="btn bt-cadastro btn-default"><span>Salvar</span></button>
 </form>

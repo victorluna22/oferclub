@@ -156,7 +156,6 @@ class City(models.Model):
 
 
 class Address(models.Model):
-    cpf = models.CharField(max_length=14)
     cep = models.CharField(max_length=9)
     street = models.CharField(max_length=255)
     number = models.CharField(max_length=100)
@@ -175,6 +174,7 @@ class Address(models.Model):
 
 class OferClubUser(OferClubAbstractUser):
     city = models.ForeignKey(City, blank=True, null=True)
+    avatar = models.ImageField(u'Avatar', upload_to='usuario/')
     gender = models.CharField(verbose_name=_(u'Sexo'), max_length=1, blank=True, null=True, choices=GENDER_CHOICES)
     birthday = models.DateField(verbose_name=_(u'Data de nascimento'), blank=True, null=True,
                                 help_text=_(u'Insira sua data de nascimento.'))
