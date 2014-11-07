@@ -126,7 +126,7 @@ STATIC_ROOT = '/home/victor/projetos/oferclub/static'
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = '/home/gloose-onix/projetos/oferclub/media'
+MEDIA_ROOT = '/var/www/oferclub/media'
 
 SEND_EMAIL = True
 EMAIL_HOST = 'smtp.gmail.com'

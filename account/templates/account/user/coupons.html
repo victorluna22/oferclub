@@ -1,10 +1,17 @@
 {% extends 'offer/base.html' %}
+{% load thumbnail %}
 
 {% block content %}
 <h2>Cupons</h2>
 <ul>
 {% for coupon in coupon_list %}
-	<li>{{ coupon.order_item.option.title }}</li>
+	<li>
+        {% thumbnail coupon.order_item.option.offer.image_grid "150x150" crop="center" as im %}
+
+         <img src="{{im.url}}">
+        {% endthumbnail %}
+        {{ coupon.order_item.option.title }}</li>
+
 {% endfor %}
 </ul>
 

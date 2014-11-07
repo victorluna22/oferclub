@@ -12,16 +12,16 @@ DE_POR = 1
 APARTIR_DE = 2
 
 TYPES = (
-	(DE_POR, "DE/POR"),
-	(APARTIR_DE, "A PARTIR DE"),
-	)
+    (DE_POR, "DE/POR"),
+    (APARTIR_DE, "A PARTIR DE"),
+)
 
 class Type(models.Model):
-	name = models.CharField(u'Nome', max_length=255)
-	slug = models.SlugField(max_length=255, unique=True, blank=True)
+    name = models.CharField(u'Nome', max_length=255)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
 
-	def __unicode__(self):
-		return self.name
+    def __unicode__(self):
+        return self.name
 
 class Category(models.Model):
 	name = models.CharField(max_length=255)
