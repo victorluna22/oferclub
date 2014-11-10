@@ -1,6 +1,6 @@
-{% extends 'offer/base.html' %}
+{% extends 'account/user/base_area_cliente.html' %}
 
-{% block content %}
+{% block interna %}
 <h2>Créditos</h2>
 <ul>
 {% for operation in operation_list %}
@@ -8,4 +8,4 @@
 {% endfor %}
 <li><b>Total: {{ request.user.credit }}</b></li>
 </ul>
-{% endblock content %}
+{% endblock interna %}

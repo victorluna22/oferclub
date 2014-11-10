@@ -9,6 +9,7 @@ from account.models import OferClubUser
 from offer.models import Option
 from account.models import Address
 from .signals import receiver_post_save, update_credit, coupon_save
+from datetime import date
 
 # Create your models here.
 
@@ -125,6 +126,16 @@ class Coupon(models.Model):
         hash.update(str(time.time()))
         hashstr = hash.hexdigest()[:12] + str(self.order_item.id) + str(random.randint(0,9))
         return hashstr.upper()
+
+    def get_status(self):
+        today = date.today()
+
+        if self.is_consumed:
+            return 'consumido'
+        elif today > self.date_expiration:
+            return 'vencido'
+        else:
+            return 'disponível'
 
     def save(self, *args, **kwargs):
         if not self.code:
