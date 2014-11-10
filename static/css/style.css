@@ -1505,7 +1505,7 @@ span {
 .dados-pessoais header {
   margin-top: 20px;
   background: 24px 8px url(../img/icone-cliente.png) no-repeat #ffa719;
-  height: 53px;
+  height: 48px;
   border-radius: 5px; }
   .dados-pessoais header li > a {
     float: left;
@@ -1689,7 +1689,7 @@ label[for="saldo-check"] {
   #cupons a {
     float: left;
     color: #fff;
-    margin: 18px 52px;
+    margin: 14px 52px;
     font-size: 18px; }
   #cupons p {
     margin: 24px 4px 0px !important; }
@@ -1738,6 +1738,39 @@ label[for="saldo-check"] {
 
 .active-cupons {
   color: #26485d !important; }
+
+#logado {
+  position: relative; }
+  #logado p {
+    float: left;
+    color: #fff;
+    font-size: 12px;
+    margin-top: 3px; }
+  #logado a {
+    margin-right: 60px;
+    margin-left: 5px; }
+  #logado img {
+    float: right;
+    position: absolute;
+    right: 5px;
+    top: -11px; }
+
+#creditos p {
+  color: #fff;
+  padding: 12px;
+  border-radius: 5px; }
+#creditos span {
+  color: #ffa719;
+  text-decoration: none; }
+#creditos header ~ p {
+  margin: 8px 0; }
+#creditos th {
+  font-weight: normal;
+  color: #666;
+  width: 248px;
+  text-align: left; }
+#creditos table {
+  margin: 30px 10px; }
 
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media only screen and (min-width: 768px) and (max-width: 959px) { }
