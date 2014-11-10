@@ -2,11 +2,15 @@
 from datetime import datetime
 from django.contrib import admin
 from django import forms
-from checkout.models import Coupon, Order, Operation, CONSUMED
+from checkout.models import Coupon, Order, Operation, OrderItem, CONSUMED
 from django.contrib.admin.util import flatten_fieldsets
 
 class CouponInline(admin.StackedInline):
     model = Coupon
+    extra = 0
+
+class OrderItemInline(admin.StackedInline):
+    model = OrderItem
     extra = 0
 
 
@@ -19,9 +23,9 @@ class OrderAdmin(admin.ModelAdmin):
     ordering = ('-purchase_time',)
     readonly_fields = ('purchase_time',)
 
- #    inlines = [
-	#     CouponInline,
-	# ]
+    inlines = [
+        OrderItemInline,
+    ]
 
 class CouponForm(forms.ModelForm):
     model = Coupon
@@ -55,11 +59,11 @@ class CouponValidationForm(forms.ModelForm):
 
 class CouponAdmin(admin.ModelAdmin):
     
-    # list_display = ('order', 'price', 'is_consumed')
-    # search_fields = ('order__name_consumer', )
+    list_display = ('order_item', 'price', 'is_consumed')
+    search_fields = ('name_consumer', )
     date_hierarchy = 'date_created'
     ordering = ('-date_created',)
-    readonly_fields = ('code', 'price', 'date_created')
+    readonly_fields = ('code', 'price', 'date_created', 'is_consumed')
 
     def get_readonly_fields(self, request, obj=None):
         # import pdb;pdb.set_trace()

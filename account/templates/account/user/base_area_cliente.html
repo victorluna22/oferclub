@@ -1,0 +1,78 @@
+{% extends 'offer/base.html' %}
+
+{% block content %}
+<section class="container" ng-app ng-controller="areaCliente">
+	<header id="titulo-cliente" class="sixteen columns">
+		<h2>Minhas informações</h2>
+	</header>
+
+	<nav id="sidebar-cliente" class="four columns">
+		<ul>
+			<li><a href="{% url 'offer:user:my_coupons' %}" class="cor-clara {% if 'meus-cupons' in request.path %} active-cliente {% endif %}" ng-click="showCupons(1)">Meus Cupons</a></li>
+			<li><a href="{% url 'offer:user:my_operations' %}" class="cor-clara {% if 'meus-creditos' in request.path %} active-cliente {% endif %}" ng-click="showCreditos(2)">Meus Créditos</a></li>
+			<li><a href="{% url 'offer:user:invite' %}" class="cor-clara {% if 'convidar' in request.path %} active-cliente {% endif %}" ng-click="showDadosPagamento(3)">Dados de Pagamento</a></li>
+			<li><a href="{% url 'offer:user:change_user' %}" class="cor-clara {% if 'dados-pessoais' in request.path %} active-cliente {% endif %}" ng-click="showDadosPessoais(4)">Dados Pessoais</a></li>
+		</ul>
+	</nav>
+<article class="twelve columns" id="info-content">
+{% block interna %}{% endblock interna %}
+</article>
+
+</section>
+
+<script type="text/javascript" src="js/angular.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+	function areaCliente($scope){
+		$scope.showDadosPessoais = function(obj){
+			$scope.dados_pessoais = true;
+			$scope.dados_pagamento = false;
+			$scope.creditos = false;
+			$scope.cupons = false;
+			
+			setClass(obj);
+
+		}
+
+		$scope.showDadosPagamento = function(obj){
+			$scope.dados_pessoais = false;
+			$scope.dados_pagamento = true;
+			$scope.creditos = false;
+			$scope.cupons = false;
+
+			setClass(obj);
+		}
+
+
+		$scope.showCupons = function(obj){
+			$scope.dados_pessoais = false;
+			$scope.dados_pagamento = false;
+			$scope.creditos = false;
+			$scope.cupons = true;
+
+			setClass(obj);
+		}
+
+		$scope.showCreditos = function(obj){
+			$scope.dados_pessoais = false;
+			$scope.dados_pagamento = false;
+			$scope.creditos = true;
+			$scope.cupons = false;
+
+			setClass(obj);
+		}
+
+		function setClass(index){
+			document.querySelector(".active-cliente").classList.remove("active-cliente");
+			var index_elements = document.querySelectorAll("#sidebar-cliente li");
+			index_elements[(index-1)].querySelector("a").classList.add("active-cliente");
+		}
+ 	}
+
+
+	document.querySelector(".foto input").addEventListener("change",function(){
+		//procurar sobre file reader javascript
+	});
+</script>
+
+{% endblock content %}

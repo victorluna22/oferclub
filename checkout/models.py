@@ -8,7 +8,8 @@ from django.db import models
 from account.models import OferClubUser
 from offer.models import Option
 from account.models import Address
-from .signals import receiver_post_save, update_credit
+from .signals import receiver_post_save, update_credit, coupon_save
+from datetime import date
 
 # Create your models here.
 
@@ -36,9 +37,17 @@ class Order(models.Model):
 
     total = models.DecimalField(decimal_places=2, max_digits=10, verbose_name=u'valor pago')
 
+    shipping = models.DecimalField(decimal_places=2, default=0, max_digits=10, verbose_name=u'Frete')
+
+    discount = models.DecimalField(decimal_places=2, default=0, max_digits=10, verbose_name=u'Desconto')
+
+    balance = models.DecimalField(decimal_places=2, default=0, max_digits=10, verbose_name=u'Saldo usado')
+
     code_pagseguro = models.CharField(u'Código PagSeguro', max_length=255, blank=True, null=True)
 
     status = models.PositiveSmallIntegerField(null=True, blank=True, choices=STATUS_CHOICES, default=2, verbose_name=u'situação')
+
+    address = models.ForeignKey(Address, blank=True, null=True, verbose_name=u'endereço')
 
     purchase_time = models.DateTimeField(auto_now_add=True, verbose_name=u'data')
 
@@ -79,7 +88,7 @@ class Order(models.Model):
         return response.payment_url
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, related_name='get_coupons')
+    order = models.ForeignKey(Order, related_name='itens')
     name_consumer = models.CharField(max_length=200, blank=True, null=True, verbose_name=u'nome completo')
     option = models.ForeignKey(Option, related_name='orders')
     quantity = models.IntegerField(u'Quantidade', default=1)
@@ -93,9 +102,9 @@ class OrderItem(models.Model):
 class Coupon(models.Model):
     order_item = models.ForeignKey(OrderItem, related_name='cupons')
     code = models.CharField(u'Código', max_length=255, unique=True)
+    name_consumer = models.CharField(max_length=200, blank=True, null=True, verbose_name=u'nome completo')
     price = models.DecimalField(decimal_places=2, max_digits=10, verbose_name=u'valor pago')
     is_consumed = models.BooleanField(u'Foi consumido?', choices=CONSUME, default=NOT_CONSUMED)
-    address = models.ForeignKey(Address, blank=True, null=True, verbose_name=u'endereço')
     date_expiration = models.DateField(u'Expira em')
     date_consumed = models.DateTimeField(blank=True, null=True, verbose_name=u'Consumido em')
     date_created = models.DateTimeField(auto_now_add=True, verbose_name=u'Gerado em')
@@ -114,8 +123,18 @@ class Coupon(models.Model):
         """This function generate 10 character long hash"""
         hash = hashlib.sha1()
         hash.update(str(time.time()))
-        hashstr = hash.hexdigest()[:12] + str(self.order.id) + str(random.randint(0,9))
+        hashstr = hash.hexdigest()[:12] + str(self.order_item.id) + str(random.randint(0,9))
         return hashstr.upper()
+
+    def get_status(self):
+        today = date.today()
+
+        if self.is_consumed:
+            return 'consumido'
+        elif today > self.date_expiration:
+            return 'vencido'
+        else:
+            return 'disponível'
 
     def save(self, *args, **kwargs):
         if not self.code:
@@ -151,3 +170,4 @@ class Operation(models.Model):
 
 post_save.connect(receiver_post_save, sender=Order, dispatch_uid='checkout.signals.post_save')
 post_save.connect(update_credit, sender=Operation, dispatch_uid='checkout.signals.post_save')
+post_save.connect(coupon_save, sender=Coupon, dispatch_uid='checkout.signals.post_save')

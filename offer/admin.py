@@ -53,7 +53,7 @@ class OfferForm(forms.ModelForm):
 
     class Meta:
         model = Offer
-        fields = ('title', 'slug', 'highlight', 'highlight_image', 'image_grid', 'subcategory', 'delivery', 'interests', 'affiliate', 'bought', 'bought_virtual', 'max_by_user', 'percent_by_site',
+        fields = ('title', 'slug', 'highlight', 'highlight_image', 'image_grid', 'subcategory', 'delivery', 'shipping', 'interests', 'affiliate', 'bought', 'bought_virtual', 'max_by_user', 'percent_by_site',
         		'percent_cashback', 'city', 'description', 'when_to_use', 'how_to_use', 'good_to_know')
 
 class OfferAdmin(admin.ModelAdmin):

@@ -12,16 +12,16 @@ DE_POR = 1
 APARTIR_DE = 2
 
 TYPES = (
-	(DE_POR, "DE/POR"),
-	(APARTIR_DE, "A PARTIR DE"),
-	)
+    (DE_POR, "DE/POR"),
+    (APARTIR_DE, "A PARTIR DE"),
+)
 
 class Type(models.Model):
-	name = models.CharField(u'Nome', max_length=255)
-	slug = models.SlugField(max_length=255, unique=True, blank=True)
+    name = models.CharField(u'Nome', max_length=255)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
 
-	def __unicode__(self):
-		return self.name
+    def __unicode__(self):
+        return self.name
 
 class Category(models.Model):
 	name = models.CharField(max_length=255)
@@ -101,6 +101,7 @@ class Offer(models.Model):
 	subcategory = models.ForeignKey(SubCategory, verbose_name=u'Sub Categoria')
 	interests = models.ManyToManyField(Interest, verbose_name=u'Interesses')
 	delivery = models.BooleanField(u'Entrega', default=0)
+	shipping = models.BooleanField(u'Cobra Frete', default=0)
 	cep_delivery = models.CharField(u'CEP de Origem', max_length=9, blank=True, null=True)
 	highlight = models.BooleanField(u'Destaque', default=False)
 	highlight_image = models.ImageField(verbose_name=u'Imagem Destaque', upload_to='oferta/')

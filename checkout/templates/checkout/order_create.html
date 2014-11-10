@@ -2,14 +2,8 @@
 
 {% block content %}
 
-
-<p>Seus créditos: R$ {{ request.user.credit }}</p>
-<p>Total: R$ {{ total }}</p>
-
 <form action="." method="POST" id="form-carrinho">
 {% csrf_token %}
-
-{{ form.errors }}
 
 <section class="container internas" id="area-compra">
 	<article class="sixteen columns">
@@ -40,31 +34,43 @@
 	</article>
 </section>
 
+{% if messages %}
+		<ul class="messages">
+			{% for message in messages %}
+				<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+			{% endfor %}
+		</ul>
+{% endif %}
+
 <aside class="container internas mg" id="cupon">
 	<div class="bd-bottom">
 		<div>
-			<div>
+			<div class="clones">
 				<div class="five columns">
 					<p>Nome de quem vai usar o cupon</p>
-					<input type="text" name="name_consumer" value="" class="bg-area-clara">
+					<input type="text" name="name_consumer[]" value="" class="bg-area-clara">
 				</div>
 
 				<div class="four columns">
 					<p>Outras opções</p>
-					<ul id="list-opcoes">
+					<ul class="list-opcoes">
 						<li class="current-opcoes preco-valor-atual bg-area-clara">1 - R$ {{ option.new_price }}</li>
+
+						<!-- FAKE -->
 						<li>
 							<ul>
-							{% for opt in option.offer.options.all %}
-								<li class="bg-area-clara sub-itens preco-itens"><a href="#" data-valor="1" data-texto="{{ forloop.counter }} - R$ {{opt.new_price}}"><p>{{ forloop.counter }} - R$ {{opt.new_price}} - {{opt.title}}</p></a></li>
+							{% for opt in other_options %}
+								<li class="bg-area-clara sub-itens preco-itens"><a href="#" data-valor="{{opt.id}}" data-texto="{{ forloop.counter }} - R$ {{opt.new_price}}"><p>{{ forloop.counter }} - R$ {{opt.new_price}} - {{opt.title}}</p></a></li>
 							{% endfor %}
 								
 							</ul>
 						</li>
+
 					</ul>
-					<select name="preco" class="esconde-select">
-					{% for i in range_quantity %}
-						<option value="{{ i }}">{{ i }}</option>
+					<!-- SELECT DE PRECO QUE VAI PRA O BANCO -->
+					<select name="option_id[]" class="esconde-select">
+					{% for opt in other_options %}
+						<option {%if opt.id == option.id%}selected{%endif%} value="{{ opt.id }}">{{ opt.new_price }}</option>
 					{% endfor %}
 					</select>
 
@@ -74,10 +80,11 @@
 
 				<div class="four columns">
 					<p>Quantos ein?</p>
-					<ul id="list-qtd">
+					<ul class="list-qtd">
 						<li class="current-opcoes bg-area-clara qtd-valor-atual">1
 						</li>
-
+						
+						<!-- FAKE -->
 						<li>
 							<ul>
 								<li class="bg-area-clara sub-itens"><a href="#" data-valor="1" data-texto="1"><p>1</p></a></li>
@@ -86,9 +93,12 @@
 							</ul>
 						</li>
 					</ul>
-					<select name="preco" class="esconde-select">
+
+					<!-- SELECT DE QUANTIDADE -->
+					<select name="quantity[]" class="esconde-select">
 						{% for i in range_quantity %}
-							<option value="{{ i }}">{{ i }}</option>
+
+							<option {% if i == 1 %}selected{%endif%} value="{{ i }}">{{ i }}</option>
 						{% endfor %}
 					</select>
 
@@ -108,7 +118,13 @@
 	<!-- END BD-BOTTOM -->
 
 	<div class="bd-bottom">
+		<div class="ten columns">
+			<div id="cupom-info"></div>
+			
+		</div>
+
 		<div class="sixteen columns">
+
 			<a href="#" class="sb-line mostrar">Cupom de desconto</a>
 			
 			<div class="esconde-compra" id="cupon-div">
@@ -125,8 +141,15 @@
 	</div>
 	<!-- END BD-BOTTOM -->
 
+{% if option.offer.delivery and option.offer.shipping %}
 	<div class="bd-bottom">
+		<!-- ALERTA DO AJAX -->
+		<div class="thirteen columns">
+			<div id="myAlert"></div>
+		</div>	
+
 		<div class="five columns omega">
+
 			<p>Calcule o frete</p>
 			<input type="text" id="calcular-frete" name="cep" class="bg-area-clara" placeholder="Informe o seu cep">
 			<a href="/verifica-codigo/1234/" id="frete">Calcular</a>
@@ -135,6 +158,20 @@
 		
 		<div class="eleven columns alpha">
 			<p class="bold-price" id="frete-price" data-price="00.00">R$ 00,00</p>
+		</div>
+	</div>
+{% endif %}
+
+	<div class="bd-bottom">
+		<div class="three columns omega">
+			<p>Saldo disponível</p>
+			<p class="bg-area-clara" id="saldo" data-saldo="{{ request.user.credit|floatformat }}">R$ {{ request.user.credit }}</p>
+		</div>
+		
+		<div class="thirteen columns alpha">
+			<label for="saldo-check">Usar saldo</label>
+			<input type="checkbox" name="use_credit" id="saldo-check">
+			<p class="bold-price" id="subtotal-price" data-price="00.00">- R$ 00,00</p>
 		</div>
 	</div>
 
@@ -161,14 +198,14 @@
 					<br>
 					{{ address.neighborhood }} - {{ address.city }} - {{ address.state }}
 					<br>
-					CEP: {{ address.cep }}
+					CEP: <span class="ceps">{{ address.cep }}</span>
 				</label>
 				{% endfor %}
 			</div>
 
 			<div class="four columns">
 
-				<p class="subtitle"><input type="radio" name="address" value="0" id="endereco0">Novo Endereço</p>
+				<p class="subtitle"><input type="radio" name="address" value="new" id="endereco0">Novo Endereço</p>
 
 				<label for="cpf-endereco">CPF</label>
 				<input type="text" id="cpf-endereco" name="cpf" class="bg-area-clara mg">
@@ -185,7 +222,7 @@
 
 			<div class="four columns">
 				<label for="cep-endereco">CEP</label>
-				<input type="text" id="cep-endereco" name="cep" class="bg-area-clara mg">
+				<input type="text" id="cep-endereco" class="bg-area-clara mg">
 
 				<label for="bairro-endereco">Bairro</label>
 				<input type="text" id="bairro-endereco" name="neighborhood" class="bg-area-clara mg">
@@ -209,10 +246,16 @@
 	<div class="sixteen columns">
 		<p class="pagamento">Pagamento</p>
 		<br>
-		<img src="{{ STATIC_URL }}img/pagseguro.gif" alt="">
+		<div id="pagamento-final">
+			<img src="{{ STATIC_URL }}img/pagseguro.gif" alt="">
+			<input type="submit" value="Pagar com pagseguro">
+		</div>
 	</div>
 </aside>
-<input type="submit" value="Pagar com pagseguro">
+
+<!-- ALLOYUI -->
+<script src="http://cdn.alloyui.com/3.0.0/aui/aui-min.js"></script>
+<!-- END -->
 
 <script type="text/javascript" src="{{ STATIC_URL }}js/handlebars-v2.0.0.js"></script>
 <!-- END TEMPLATE ENGINE -->
@@ -264,15 +307,15 @@
 </script>
 
 <script type="text/javascript">
-if(document.getElementById("endereco-entrega")){
-	document.querySelector(".salvar").addEventListener("click",function(e){
-		e.preventDefault();
-	});
-}
+	if(document.getElementById("endereco-entrega")){
+		document.querySelector(".salvar").addEventListener("click",function(e){
+			e.preventDefault();
+		});
+	}
 
 
 	var opc = document.querySelectorAll(".current-opcoes"),
-	presente_item = document.querySelectorAll(".presente");
+	presente_item = document.querySelectorAll(".presente"), campos_precos_totais = document.querySelector("#cupon").querySelectorAll(".bd-bottom")[0].querySelectorAll(".bold-price");
 
 	clickPresente(presente_item);
 	abrirOpcoes(opc);
@@ -315,6 +358,10 @@ if(document.getElementById("endereco-entrega")){
 
 	document.querySelector(".cancel").addEventListener("click",function(e){
 		e.preventDefault();
+
+		this.nextElementSibling.textContent = "- R$ 00,00";
+		setTotal(campos_precos_totais)
+
 		this.parentNode.style.display = "none";
 	});
 
@@ -395,20 +442,191 @@ if(document.getElementById("endereco-entrega")){
 		});
 	}
 
+	//seta o valor total da compra
 	function setTotal(obj){
 		var valorTotal = 0;
 		Array.prototype.forEach.call(obj,function(element,i){
 			valorTotal += parseFloat(element.textContent.substr(3).replace(",","."));
 		});
 
-		valorTotal += parseFloat(document.querySelector("#frete-price").dataset.price);
+		if((document.querySelector("#frete-price")) && (document.querySelector("#frete-price").dataset.price != "00.00")){
+			alert();
+			valorTotal += parseFloat(document.querySelector("#frete-price").dataset.price);
+		}
 
 		if(document.querySelector("#cupon-div").style.display == "block"){
 			valorTotal -= parseFloat(document.querySelector("#cupon-div").querySelector(".bold-price").textContent.substr(4).replace(",","."));
 		}
 
-		document.querySelector("#total-price").textContent = "R$ "+valorTotal.toFixed(2).replace(".",",");
+		//checa se a opção de descontar no saldo está ativada
+		if(document.querySelector("#saldo-check").classList.contains("saldo-checado")){
+			saldoExist(valorTotal);
+		}else{
+			document.querySelector("#total-price").textContent = "R$ "+valorTotal.toFixed(2).replace(".",",");
+		}
+
 	}	
+
+	//colocando a função de clique no frete
+	document.querySelector("#frete").addEventListener("click",function(e){
+		e.preventDefault();
+
+		//pega o cep
+		var cep = this.previousElementSibling.value;
+
+		//variavel que armazena todas as div's que contém o preço e a quantidade
+		var cupons = document.querySelector("#cupon").querySelectorAll(".bd-bottom")[0].querySelectorAll(".clones"),url = "/calcular-frete/"+cep+"/?ofertas=";
+			
+		//For each nos cupons
+		Array.prototype.forEach.call(cupons, function(element,index){
+			var preco = element.querySelector(".list-opcoes").nextElementSibling.value;
+			var qtd = element.querySelector(".list-qtd").nextElementSibling.value;
+
+			url += cupons.length-1 == index?preco+":"+qtd:preco+":"+qtd+",";
+		});
+
+
+		// //simula a função do ajax
+		// function simulador(){
+		// 	mensagem("#myAlert","Carregando...","alert-info");
+		// 	setTimeout(function(){
+		// 		mensagem("#myAlert","CEP encontrado com sucesso","alert-info");
+	 // 		});
+	 // 	}
+
+		// //chama a função que simula o ajax
+		// simulador();
+
+
+		var frete = document.querySelector("#frete-price");
+
+		//AJAX
+		YUI().use('aui-io-request', function (Y) {
+		    Y.io.request(url,{
+  				dataType: 'json',
+		        on: {
+		        	//se tudo ocorrer bem
+		          success: function() {
+		            var data = this.get('responseData');
+
+		            //veirifa se é inválido ou não
+		            if(data.error){
+		            	mensagem("#myAlert","CEP inválido! informe outro cep","alert-danger");
+
+		            	//atualiza os campos
+		            	frete.textContent = "R$ 00,00";
+		            	frete.dataset.price = "00.00";
+
+		            }else{
+		            	mensagem("#myAlert","CEP encontrado com sucesso","alert-info");
+		            	
+		            	
+		            	//atualiza os campos
+		            	frete.textContent = "R$ "+parseFloat(data.data).toFixed(2).replace(".",",");
+		            	frete.dataset.price = data.data;
+		            }
+
+	            	//chama a função que atualiza o valor da compra
+					setTotal(document.querySelector("#cupon").querySelectorAll(".bd-bottom")[0].querySelectorAll(".bold-price"));
+		          },//end success
+
+		          //caso der erro
+		          failure: function(){
+		            mensagem("#myAlert","Falha ao se conectar com o servidor... verifique se o campo CEP está em branco e tente novamente","alert-danger");
+
+	            	//atualiza os campos
+	            	frete.textContent = "R$ 00,00";
+	            	frete.dataset.price = "00.00";
+
+
+	            	//chama a função que atualiza o valor da compra
+					setTotal(document.querySelector("#cupon").querySelectorAll(".bd-bottom")[0].querySelectorAll(".bold-price"))
+		          },//end failure
+
+		          start: function(){
+		            mensagem("#myAlert","Carregando...","alert-info");
+		          }
+		        }
+		    });//end request
+		});
+		//end use request
+
+
+
+	});
+
+	//função que mostra os alertas
+	function mensagem(obj, mensagem, classe){
+    	YUI().use('aui-alert',function(Y) {
+		    new Y.Alert({
+		        animated: true,
+		        bodyContent: mensagem,
+		        boundingBox: obj,
+		        closeable: true,
+		        cssClass: classe,
+		        destroyOnHide: false,
+		        duration: 1,
+		        render: true
+		    })
+		});
+	}
+
+	//guarda o saldo do usuario para caso ele cancele a compra no saldo
+	var saldo_antigo = document.querySelector("#saldo").dataset.saldo;
+
+	//função do saldo
+	document.querySelector("#saldo-check").addEventListener("change",function(){
+		obj_saldo = document.querySelector("#saldo");
+
+		if(this.classList.contains("saldo-checado")){
+			this.classList.remove("saldo-checado");
+
+			document.querySelector("#subtotal-price").textContent = "- R$ 00,00";
+			
+			obj_saldo.dataset.saldo = saldo_antigo;
+			obj_saldo.textContent = "R$ "+parseFloat(saldo_antigo).toFixed(2).replace(".",",");
+
+			setTotal(campos_precos_totais);
+		}else {
+			this.classList.add("saldo-checado");
+
+			var subtotal =  parseFloat(document.querySelector("#total-price").textContent.substr(3).replace(",","."));
+
+			saldoExist(subtotal);
+		}
+	});
+
+	function saldoExist(subtotal){
+		obj_saldo = document.querySelector("#saldo");
+		var saldo = parseFloat(saldo_antigo);
+		var subtotal =  parseFloat(subtotal);
+
+		if(saldo >= subtotal){
+			saldo = saldo - subtotal;
+			
+			//total
+			obj_saldo.dataset.saldo = saldo;
+			obj_saldo.textContent = "R$ "+saldo.toFixed(2).replace(".",",");
+
+			//subtotal
+			document.querySelector("#subtotal-price").textContent = "- R$ "+subtotal.toFixed(2).replace(".",",");
+
+			//total
+			document.querySelector("#total-price").textContent = "R$ 00,00 ";
+		}else {
+			total = subtotal - saldo;
+			
+			//total
+			obj_saldo.dataset.saldo = 0;
+			obj_saldo.textContent = "R$ 00,00";
+
+			//subtotal
+			document.querySelector("#subtotal-price").textContent = "- R$ "+subtotal.toFixed(2).replace(".",",");
+
+			//total
+			document.querySelector("#total-price").textContent = "R$ "+total.toFixed(2).replace(".",",");
+		}
+	}
 </script>
 </form>
 

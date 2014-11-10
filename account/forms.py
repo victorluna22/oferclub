@@ -9,7 +9,7 @@ from django.template import loader
 from django.utils.http import int_to_base36
 from django.utils.translation import ugettext_lazy as _
 
-from .models import OferClubUser, Invite, NewsLetter
+from .models import OferClubUser, Invite, NewsLetter, Address
 
 
 class OferClubUserForm(forms.ModelForm):
@@ -86,13 +86,16 @@ class OferClubUserForm(forms.ModelForm):
             user.save()
         return user
 
+
+class OferClubAddressForm(forms.ModelForm):
+    class Meta:
+        model = Address
+
 class OferClubUserChangeForm(forms.ModelForm):
     class Meta:
         model = OferClubUser
-        fields = ('email', 'gender', 'birthday', 'city', 'full_name')
-        widgets = {
-            'email': forms.TextInput(attrs={'class': 'form-control'}),
-        }
+        fields = ('full_name', 'gender', 'birthday', 'avatar')
+
 
 class PasswordResetForm(forms.Form):
     email = forms.EmailField(label=_(u'email'), max_length=254,
@@ -255,3 +258,8 @@ class NewsLetterForm(forms.ModelForm):
     class Meta:
         model = NewsLetter
         fields = ('email',)
+
+
+class AddressForm(forms.ModelForm):
+    class Meta:
+        model = Address

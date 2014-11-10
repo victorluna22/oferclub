@@ -7,7 +7,6 @@ from datetime import timedelta
 from datetime import datetime
 from urlparse import parse_qs
 from django.shortcuts import render
-from account.forms import EmailAuthenticationForm
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.views.generic.edit import FormView, UpdateView, CreateView
@@ -28,10 +27,11 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import base36_to_int
 from django.shortcuts import get_object_or_404
 
+from account.forms import EmailAuthenticationForm, OferClubAddressForm
 from offer.views import LoginRequiredMixin
-from offer.models import Option
-from checkout.models import Coupon, Operation, Order
-from .models import OferClubUser, Account, Invite, City, NewsLetter, get_facebook_service
+from offer.models import Option, Offer
+from checkout.models import Coupon, Operation, Order, OrderItem
+from .models import OferClubUser, Account, Invite, City, NewsLetter, Address, get_facebook_service
 from .forms import OferClubUserForm, OferClubUserChangeForm, InviteCreateForm, NewsLetterForm
 
 
@@ -41,7 +41,12 @@ class MyCouponsListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        return Coupon.objects.filter(order__user=user)
+        return Coupon.objects.select_related('order_item__option').filter(order_item__order__user=user)
+
+    def get_context_data(self, *args, **kwargs):
+        context =  super(MyCouponsListView, self).get_context_data(*args, **kwargs)
+        context['destaques'] = Offer.objects.select_related('city').filter(highlight=True, options__start_time__lte=datetime.today(), options__end_time__gte=datetime.today()).distinct()
+        return context
 
 class MyOrdersListView(LoginRequiredMixin, ListView):
     model = Coupon
@@ -49,7 +54,7 @@ class MyOrdersListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        return Order.objects.filter(user=user)
+        return OrderItem.objects.select_related('option').filter(order__user=user)
 
 class MyOperationsListView(LoginRequiredMixin, ListView):
     model = Operation
@@ -63,7 +68,7 @@ class OferClubUserEditView(LoginRequiredMixin, UpdateView):
     model = OferClubUser
     form_class = OferClubUserChangeForm
     template_name = 'account/user/edit_user.html'
-    success_url = '/usuario/editar-dados/'
+    success_url = reverse_lazy('offer:user:change_user')
 
     def get_object(self):
         return self.request.user
@@ -72,6 +77,19 @@ class OferClubUserEditView(LoginRequiredMixin, UpdateView):
         # import pdb;pdb.set_trace()
         return super(OferClubUserEditView, self).form_invalid(form)
 
+
+
+class OferClubAddressEditView(LoginRequiredMixin, UpdateView):
+    model = Address
+    form_class = OferClubAddressForm
+    template_name = 'account/user/edit_address.html'
+    success_url = reverse_lazy('offer:user:change_user_address')
+
+    def get_object(self):
+        try:
+            return self.request.user.address.all()[0]
+        except:
+            return None
 
 class OferClubCreateView(FormView):
     form_class = OferClubUserForm

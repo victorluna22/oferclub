@@ -1,11 +1,41 @@
-{% extends 'offer/base.html' %}
+{% extends 'account/user/base_area_cliente.html' %}
+{% load thumbnail %}
 
-{% block content %}
-<h2>Cupons</h2>
-<ul>
-{% for coupon in coupon_list %}
-	<li>{{ coupon.order.option.title }}</li>
-{% endfor %}
-</ul>
+{% block interna %}
+<div class="dados-pessoais" ng-show="cupons">
+				<header class="cor-clara2" id="cupons">
+					<a href="#" data-group="disponivel">Disponíveis</a>
+					<a href="#" data-group="validado">Válidados</a>
+					<a href="#" data-group="vencido">Vencidos</a>
+					<a href="#" class="active-cupons">Todos</a>
+					
+					<p>Confira todas as ofertas que você comprou</p>
+				</header>
+				
+				<div id="ofertas-cupon">
 
-{% endblock content %}
+				{% for coupon in coupon_list %}
+					
+				    <div class="picture-item" data-groups='{{ coupon.get_status }}'>
+						<figure>
+							{% thumbnail coupon.order_item.option.offer.image_grid "218x143" crop="center" as im %}
+							<a href="produto.php"><img src="{{im.url}}" alt=""></a>
+							{% endthumbnail %}
+						</figure>
+
+						<div>
+							<p class="titulo-cupon">{{ coupon.order_item.option.title }}</p>
+							<a href="#" class="nome-lugar">{{coupon.order_item.option.filial.partner.name }}</a>
+							<a href="#"><span class="localidade-box">{{coupon.order_item.option.offer.city.name }}</span></a>
+
+							<div class="line"></div>
+							<p class="validados">{{coupon.get_status|title}}</p>
+						</div>
+					</div>
+
+				{% endfor %}
+
+				</div>
+		</div>
+
+{% endblock interna %}

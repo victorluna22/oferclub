@@ -75,6 +75,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.core.context_processors.static',
     'django.core.context_processors.media',
+    'django.contrib.messages.context_processors.messages',
     )
 
 MIDDLEWARE_CLASSES = (
@@ -126,7 +127,8 @@ STATIC_ROOT = '/home/victor/projetos/oferclub/static'
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = '/home/gloose-onix/projetos/oferclub/media'
+MEDIA_ROOT = '/var/www/oferclub/media'
+# MEDIA_ROOT = '/home/gloose-onix/projetos/oferclub/media'
 
 SEND_EMAIL = True
 EMAIL_HOST = 'smtp.gmail.com'

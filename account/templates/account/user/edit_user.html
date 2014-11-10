@@ -1,30 +1,59 @@
-{% extends 'offer/base.html' %}
+{% extends 'account/user/base_area_cliente.html' %}
+{% load thumbnail %}
 
-{% block content %}
-<form class="signup forms-adm" id="signup_form" method="post" action="">
-    {% csrf_token %}
-    
-    <div class="box_input">
-        {{ form.full_name }}
-        {{ form.full_name.errors }}
-    </div>
-    <div class="box_input">
-        {{ form.email }}
-        {{ form.email.errors }}
-    </div>
-    <div class="box_input">
-        {{ form.gender }}
-        {{ form.gender.errors }}
-    </div>
-    <div class="box_input">
-        {{ form.birthday }}
-        {{ form.birthday.errors }}
-    </div>
-    <div class="box_input">
-        {{ form.city }}
-        {{ form.city.errors }}
-    </div>
-    
-    <button type="submit" id="bt-cadastro" class="btn bt-cadastro btn-default"><span>Salvar</span></button>
-</form>
-{% endblock content %}
+{% block interna %}
+
+	<article class="twelve columns" id="info-content">
+		<div class="dados-pessoais">
+				{% include 'account/user/edit_header.html' %}
+
+				<div class="box-info">
+					<form action="." method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+						<div id="conta" class="active-dados">
+							<div class="four columns">
+								<p class="title-dados">Pessoais</p>
+
+								<label for="primeiro-nome">Nome completo</label>
+								<input type="text" name="full_name" id="primeiro-nome" class="bg-area-clara" value="{{form.full_name.value}}"  />
+
+								<div class="double omega">
+									<label for="data-nascimento">Data de Nasc.</label>
+									<input type="text" name="birthday" class="bg-area-clara" id="data-nascimento" placeholder="00/00/0000" value="{{form.birthday.value|date:"d/m/Y"}}">
+								</div>
+
+								<div class="double">
+									<label for="sexo">Sexo:</label>
+									<select name="gender" id="sexo" class="bg-area-clara">
+										<option {%if form.gender.value == "M"%}selected{%endif%} value="M">Masculino</option>
+										<option {%if form.gender.value == "F"%}selected{%endif%} value="F">Feminino</option>
+									</select>
+								</div>
+							</div>
+							<!-- END FOUR -->
+
+							<div class="four columns omega alpha">
+								<p class="title-dados centered">Foto</p>
+								<figure class="foto">
+									<img src="{{ MEDIA_URL }}{{ form.avatar.value }}" alt="">
+									<figcaption></figcaption>
+									<input type="file" name="avatar">
+								</figure>
+								<input type="submit" value="Salvar" class="salvar">
+							</div>
+
+							
+
+						</div>
+						<!-- END CONTA -->
+					</form>
+					
+					
+				</div>
+				<!-- END BOX INFO -->
+		</div>
+		<!-- END DADOS PESSOAIS -->
+
+
+
+{% endblock interna %}

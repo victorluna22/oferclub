@@ -1,11 +1,53 @@
-{% extends 'offer/base.html' %}
+{% extends 'account/user/base_area_cliente.html' %}
 
-{% block content %}
-<h2>Créditos</h2>
+{% block interna %}
+<div class="dados-pessoais" ng-show="creditos" id="creditos">
+	<header class="cor-clara2">
+		<h3>Consulte todos os seus créditos</h3>
+	</header>
+	<p class="cor-clara subtitle-dados six columns">Saldo disponível: <span>R$ {{ request.user.credit }}</span></p>
+
+	<div class="box-info">
+		<table>
+			<thead>
+				<tr>
+					<th>Data</th>
+					<th>Descrição</th>
+					<th>Valor</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="date">09/02/1995</td>
+					<td class="descricao">Um produto feito para você de 99% de desconto</td>
+					<td class="disponivel-cupon">R$ 1,00</td>
+				</tr>
+				<tr>
+					<td class="date">09/02/1995</td>
+					<td class="descricao">Um produto feito para você de 99% de desconto</td>
+					<td class="vencido-cupon">- R$ 2,00</td>
+				</tr>
+				<tr>
+					<td class="date">09/02/1995</td>
+					<td class="descricao">Um produto feito para você de 99% de desconto</td>
+					<td class="disponivel-cupon">R$ 1,00</td>
+				</tr>
+				<tr>
+					<td class="date">09/02/1995</td>
+					<td class="descricao">Um produto feito para você de 99% de desconto</td>
+					<td class="disponivel-cupon">R$ 1,00</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+{% comment %}
 <ul>
 {% for operation in operation_list %}
 	<li>{{ operation.description }} - {{ operation.value }}</li>
 {% endfor %}
 <li><b>Total: {{ request.user.credit }}</b></li>
 </ul>
-{% endblock content %}
+{% endcomment %}
+</div>
+
+{% endblock interna %}
