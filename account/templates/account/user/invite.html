@@ -1,6 +1,6 @@
-{% extends 'offer/base.html' %}
+{% extends 'account/user/base_area_cliente.html' %}
 
-{% block content %}
+{% block interna %}
 <form class="signup forms-adm" id="signup_form" method="post" action="">
     {% csrf_token %}
     
@@ -8,4 +8,4 @@
     
     <button type="submit" id="bt-cadastro" class="btn bt-cadastro btn-default"><span>Convidar</span></button>
 </form>
-{% endblock content %}
+{% endblock interna %}

@@ -8,10 +8,10 @@
 
 	<nav id="sidebar-cliente" class="four columns">
 		<ul>
-			<li><a href="" class="cor-clara" ng-click="showCupons(1)">Meus Cupons</a></li>
-			<li><a href="" class="cor-clara" ng-click="showCreditos(2)">Meus Créditos</a></li>
-			<li><a href="" class="cor-clara" ng-click="showDadosPagamento(3)">Dados de Pagamento</a></li>
-			<li><a href="" class="cor-clara active-cliente" ng-click="showDadosPessoais(4)">Dados Pessoais</a></li>
+			<li><a href="{% url 'offer:user:my_coupons' %}" class="cor-clara {% if 'meus-cupons' in request.path %} active-cliente {% endif %}" ng-click="showCupons(1)">Meus Cupons</a></li>
+			<li><a href="{% url 'offer:user:my_operations' %}" class="cor-clara {% if 'meus-creditos' in request.path %} active-cliente {% endif %}" ng-click="showCreditos(2)">Meus Créditos</a></li>
+			<li><a href="{% url 'offer:user:invite' %}" class="cor-clara {% if 'convidar' in request.path %} active-cliente {% endif %}" ng-click="showDadosPagamento(3)">Dados de Pagamento</a></li>
+			<li><a href="{% url 'offer:user:change_user' %}" class="cor-clara {% if 'conta' in request.path %} active-cliente {% endif %}" ng-click="showDadosPessoais(4)">Dados Pessoais</a></li>
 		</ul>
 	</nav>
 <article class="twelve columns" id="info-content">
@@ -69,20 +69,6 @@
 		}
  	}
 
-	var opcoes = document.querySelectorAll(".dados-pessoais header a");
-	Array.prototype.forEach.call(opcoes, function(element) {
-		element.addEventListener("click",function(e){
-			e.preventDefault();
-			var id = this.dataset.value;
-
-			
-			document.querySelector(".active-header").classList.remove("active-header");
-			this.classList.add("active-header");
-
-			document.querySelector(".active-dados").classList.remove("active-dados");
-			document.querySelector("#"+id).classList.add("active-dados")
-		});
-	});
 
 	document.querySelector(".foto input").addEventListener("change",function(){
 		//procurar sobre file reader javascript

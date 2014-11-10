@@ -94,7 +94,7 @@ class OferClubAddressForm(forms.ModelForm):
 class OferClubUserChangeForm(forms.ModelForm):
     class Meta:
         model = OferClubUser
-        fields = ('full_name', 'gender', 'birthday')
+        fields = ('full_name', 'gender', 'birthday', 'avatar')
 
 
 class PasswordResetForm(forms.Form):

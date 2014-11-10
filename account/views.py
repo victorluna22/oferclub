@@ -78,6 +78,7 @@ class OferClubUserEditView(LoginRequiredMixin, UpdateView):
         return super(OferClubUserEditView, self).form_invalid(form)
 
 
+
 class OferClubAddressEditView(LoginRequiredMixin, UpdateView):
     model = Address
     form_class = OferClubAddressForm
