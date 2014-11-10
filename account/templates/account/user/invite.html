@@ -1,11 +1,66 @@
 {% extends 'account/user/base_area_cliente.html' %}
 
 {% block interna %}
-<form class="signup forms-adm" id="signup_form" method="post" action="">
+<div class="dados-pessoais" ng-show="creditos" id="convite-email">
+	<header class="cor-clara2">
+		<h3>Convite por e-mail</h3>
+		<ul>
+			<li>
+				<p>Convide seus amigos para se cadastrar no Ofer.Club e ganhe créditos nas próximas compras dele. <a href="#">Saiba mais</a></p>
+			</li>	
+		</ul>
+	</header>
+
+	<div class="box-info">
+			<form class="signup forms-adm" id="signup_form" method="post" action="">
+				<div id="endereco"  class="active-dados">
+					<div class="five columns" id="margin-endereco-left">
+						<ul>
+							<li>
+								<label for="email-amigo">E-mail do amigo</label>
+								<input type="text" id="email-amigo" class="bg-area-clara mg">
+							</li>
+						</ul>
+						<a href="#" class="add-mail">Adicionar e-mail</a>
+					</div>
+
+					<div class="five columns" id="margin-endereco-right">
+						<ul>
+							<li>
+								<label for="nome-amigo">Nome do amigo</label>
+								<input type="text" id="nome-amigo" class="bg-area-clara mg">
+							</li>
+						</ul>
+						
+						<a href="#" class="salvar">Salvar</a>
+					</div>
+				</div>
+				<!-- END CONTA -->
+			</form>
+		</div>
+</div>
+
+	<script type="text/javascript">
+		document.querySelector(".add-mail").addEventListener("click",function(e){
+			e.preventDefault();
+			var email_amigo = this.previousElementSibling.querySelectorAll("li")[0].cloneNode(true);
+			var nome_amigo = document.querySelectorAll("#margin-endereco-right li")[0].cloneNode(true);
+
+			email_amigo.querySelector("input").value = "";
+			nome_amigo.querySelector("input").value = "";
+			
+			document.querySelector("#margin-endereco-right ul").appendChild(nome_amigo);
+			document.querySelector("#margin-endereco-left ul").appendChild(email_amigo);
+		});
+	</script>
+
+	
+	{% comment %}	
+
     {% csrf_token %}
     
     {{form}}
+
+    {% endcomment %}
     
-    <button type="submit" id="bt-cadastro" class="btn bt-cadastro btn-default"><span>Convidar</span></button>
-</form>
 {% endblock interna %}
