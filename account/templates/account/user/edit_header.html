@@ -1,11 +1,11 @@
 <header class="cor-clara2">
-	<h3>E"dite as informações pessoais</h3>
+	<h3>Edite as informações pessoais</h3>
 		<ul>
 			<li>
-				<a href="{% url 'offer:user:change_user' %}" data-value="conta" class="active-header">Conta</a>
+				<a href="{% url 'offer:user:change_user' %}" data-value="conta" class="{% if 'dados-pessoais/conta/' in request.path %} active-header {% endif %}" >Conta</a>
 			</li>
 			<li>
-				<a href="{% url 'offer:user:change_user_address' %}" data-value="endereco">Endereço</a>
+				<a href="{% url 'offer:user:change_user_address' %}" data-value="endereco" class="{% if 'dados-pessoais/endereco/' in request.path %} active-header {% endif %}">Endereço</a>
 			</li>
 		</ul>
 </header>
