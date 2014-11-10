@@ -89,8 +89,6 @@ h2, h3, h4, h5, .saldo-creditos, .disponivel {
   color: #fff;
   background: #ff9a15; }
 
-#conta, #endereco {
-  display: none; }
 
 div.active-dados {
   display: block !important; }

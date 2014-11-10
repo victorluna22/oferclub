@@ -1,3 +1,4 @@
+{% load thumbnail %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,11 +36,23 @@
 					<ul>
 						<li><a href="{% url 'offer:customer_service' %}">Atendimento</a></li>
 						<li><a href="#">Blog</a></li>
+						{% if request.user.is_authenticated %}
+						<li id="logado">
+                                <p>Olá {{ request.user.full_name }},</p>
+                                <a href="{% url 'account:logout' %}">Sair</a>
+
+                                {% thumbnail request.user.avatar "43x41" crop="center" as im %}
+                                	<img src="{{im.url}}" alt="{{ request.user.full_name }}">
+								{% endthumbnail %}
+                        </li>
+						{% else %}
 						<li><a href="{% url 'account:signup' %}">Cadastre-se</a></li>
 						<li><a href="{% url 'account:login' %}">Login</a></li>
+						{% endif %}
 						<li class="redes face"><a href="#"></a></li>
 						<li class="redes"><a href="#" class="twitter"></a></li>
 					</ul>
+					
 				</div>
 			</div>
 		</div>

@@ -1,11 +1,57 @@
-{% extends 'offer/base.html' %}
+{% extends 'account/user/base_area_cliente.html' %}
+{% load thumbnail %}
 
-{% block content %}
-<form class="signup forms-adm" id="signup_form" method="post" action="">
-    {% csrf_token %}
-    
-   {{form.as_p}}
-    
-    <button type="submit" id="bt-cadastro" class="btn bt-cadastro btn-default"><span>Salvar</span></button>
-</form>
-{% endblock content %}
+{% block interna %}
+
+<article class="twelve columns" id="info-content">
+		<div class="dados-pessoais">
+				{% include 'account/user/edit_header.html' %}
+			
+			<div class="box-info">
+				<form class="signup forms-adm" id="signup_form" method="post" action=".">
+				    {% csrf_token %}
+
+							<div id="endereco">
+								<div class="five columns" id="margin-endereco-left">
+									<label for="cep-endereco">CEP</label>
+									<input type="text" name="cep" id="cep-endereco" class="bg-area-clara mg" value="{{form.cep.value}}" >
+
+									<label for="rua-endereco">Nome da rua</label>
+									<input type="text" name="street" id="rua-endereco" class="bg-area-clara mg" value="{{form.street.value}}" >
+
+									<label for="numero-endereco">Número da casa</label>
+									<input type="text" name="number" id="numero-endereco" class="bg-area-clara mg"
+									value="{{form.number.value}}" >
+
+									<label for="complemento-endereco">Complemento</label>
+									<input type="text" name="complement" id="complemento-endereco" class="bg-area-clara mg" value="{{form.complement.value}}" >
+								</div>
+
+								<div class="five columns" id="margin-endereco-right">
+									
+
+									<label for="bairro-endereco">Bairro</label>
+									<input type="text" name="neighborhood" id="bairro-endereco" class="bg-area-clara mg" value="{{form.neighborhood.value}}" >
+
+									<label for="cidade-endereco">Cidade</label>
+									<input type="text" name="city" id="cidade-endereco" class="bg-area-clara mg" value="{{form.city.value}}">
+
+									<label for="estado-endereco">Estado</label>
+									<input type="text" name="state" id="estado-endereco" class="bg-area-clara mg" value="{{form.state.value}}">
+
+									<a href="#" class="salvar">Salvar</a>
+								</div>
+							</div>
+							<!-- END CONTA -->
+				    
+				    <!-- <button type="submit" id="bt-cadastro" class="btn bt-cadastro btn-default"><span>Salvar</span></button> -->
+				</form>
+			</div>	
+		</div>
+<script type="text/javascript">
+	document.querySelector(".salvar").addEventListener("click",function(e){
+		e.preventDefault();
+		document.querySelector("#signup_form").submit();
+	});
+</script>
+{% endblock interna %}
