@@ -17,9 +17,11 @@
 
 		<ul>
 			{% for subcategory in subcategories %}
+			{% if subcategory.total > 0 %}
 				<li class="itens_nav subcategorias" data-slug="{{ subcategory.slug }}"><input type="checkbox" name="">
 					<a href="#"><p>{{ subcategory.name }}</p><span>{{ subcategory.total }}</span></a>
 				</li>
+			{% endif %}
 			{% endfor %}
 			<li>
 				<div class="line"></div>
