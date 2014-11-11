@@ -49,7 +49,9 @@ class ImageInline(admin.TabularInline):
     extra = 1
 
 class OfferForm(forms.ModelForm):
-    description = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
+    description = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}), label=u'Descrição')
+    delivery = forms.BooleanField(initial=False, label='Entrega')
+    shipping = forms.BooleanField(initial=False, label='Frete')
 
     class Meta:
         model = Offer

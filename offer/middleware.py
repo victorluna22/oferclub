@@ -14,7 +14,7 @@ class CitiesMiddleware(object):
 				cities.append({'id': city.id, 'name': city.name})
 			request.session['cities'] = cities
 		if not request.session.get('city'):
-			request.session['city'] = 2 # recife
+			request.session['city'] = 1 # recife
 		# import pdb;pdb.set_trace()
 		if not request.session.get('typeoffer'):
 			request.session['typeoffer'] = 1 # Ofertas Locais

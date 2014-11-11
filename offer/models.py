@@ -77,7 +77,7 @@ class OfferManager(models.Manager):
 		for offer in offers:
 			option = offer.first_option()
 			fields = {}
-			fields["title"] = str(offer.title)
+			fields["title"] = offer.title
 			fields["partner"] = str(option.filial.partner.name)
 			fields["link"] = reverse_lazy('offer:offer_detail', kwargs={"slug": offer.slug}).__str__()
 			fields["imagem"] = "/media/" + str(offer.image_grid)
@@ -108,14 +108,14 @@ class Offer(models.Model):
 	affiliate = models.ForeignKey(Affiliate, verbose_name=u'Franqueado', blank=True, null=True)
 	bought = models.IntegerField(u'Comprados', default=0)
 	bought_virtual = models.IntegerField(u'Quantidade virtual')
-	max_by_user = models.IntegerField(u'Máximo por pessoa', blank=True, null=True)
+	max_by_user = models.IntegerField(u'Máximo por pessoa', blank=True, null=True, help_text=u"Deixar vazio para não ter limite")
 	percent_by_site = models.DecimalField(u'Percentual do site', decimal_places=2, max_digits=10)
 	percent_cashback = models.DecimalField(u'Percentual de CashBack', decimal_places=2, max_digits=10)
 	city = models.ForeignKey(City, verbose_name=u'Cidade')
 	description = tinymce_models.HTMLField(verbose_name=u'Descrição')
-	when_to_use = tinymce_models.HTMLField()
-	how_to_use = tinymce_models.HTMLField()
-	good_to_know = tinymce_models.HTMLField()
+	when_to_use = tinymce_models.HTMLField(verbose_name=u'Quando usar')
+	how_to_use = tinymce_models.HTMLField(verbose_name=u'Como usar')
+	good_to_know = tinymce_models.HTMLField(verbose_name=u'Bom saber')
 	date_created = models.DateTimeField(auto_now_add=True)
 
 	my_first_option = None
@@ -197,7 +197,7 @@ class Option(models.Model):
 		return False
 
 	def discount(self):
-		return 100 - (100 * self.new_price / self.old_price)
+		return "%.2f" % (100 - (100 * self.new_price / self.old_price))
 
 	def time_remaining(self):
 		date = self.end_time - timezone.now()
