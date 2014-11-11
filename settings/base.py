@@ -39,10 +39,6 @@ AUTH_USER_MODEL = 'account.OferClubAbstractUser'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
 
-FACEBOOK_APP_ID = '340736239438743'
-FACEBOOK_APP_SECRET = 'eac89cdcf746cbb69397be018ccaf071'
-FACEBOOK_CALLBACK_URL = 'http://localhost:8000/new/facebook/callback/'
-
 # SITE_ID = 1
 SLUGFIELD_SEPARATOR = ''
 
