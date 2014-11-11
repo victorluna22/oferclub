@@ -64,34 +64,6 @@
                 </form>
             </div>
 
-            <div class="recolhe">
-                <form action="{% url 'account:signup' %}" method="POST">
-                    {% csrf_token %}
-                    <label for="nome">Nome</label>
-                    <input type="text" name="full_name" id="nome">
-                    {{ form.full_name.errors }}
-
-                    <label for="email">E-mail</label>
-                    <input type="mail" name="email" id="email">
-                    {{ form.email.errors }}
-
-                    <div class="double column alpha clear-double">
-                        <label for="password">Senha</label>
-                        <input type="password" name="password" id="password">
-                        {{ form.password.errors }}
-                    </div>
-
-                    <div class="double column">
-                        <label for="confirm-pass">Repita a senha</label>
-                        <input type="password" name="confirm_password" id="confirm-pass">
-                        {{ form.confirm_password.errors }}
-                    </div>
-                    
-                    <input type="submit" value="Entrar">
-                </form>
-            </div>
-                
-            <p><a href="#" class="link">Cadastre-se</a>, é rapidinho</p>
         </div>
 
     </aside>
