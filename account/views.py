@@ -115,7 +115,7 @@ class OferClubCreateView(FormView):
         auth_login(self.request, user)
         subject = 'Ofer Club - Bem Vindo!'
         message = 'Texto de bem vindo'
-        send_mail(subject, message, 'contato@ofer.club', [self.email])
+        send_mail(subject, message, 'contato@ofer.club', [email])
         return super(OferClubCreateView, self).form_valid(form)
 
     def get_initial(self):
