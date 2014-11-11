@@ -25,6 +25,6 @@ STATIC_ROOT = '/home/ubuntu/statics/oferclub/static'
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = '/home/ubuntu/statics/oferclub/media'
+MEDIA_ROOT = '/var/www/statics/oferclub/media'
 
 INTERNAL_IPS = ['54.172.25.31',]
