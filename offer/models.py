@@ -53,6 +53,7 @@ class SubCategory(models.Model):
 
 class Interest(models.Model):
 	name = models.CharField(u'Nome', max_length=255)
+	slug = models.SlugField(max_length=255, unique=True, blank=True)
 	category = models.ForeignKey(Category, related_name='interests')
 
 	def __unicode__(self):

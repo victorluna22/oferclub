@@ -30,9 +30,10 @@
 			<li>
 				<h4 id="interesses">Interesses</h4>
 			</li>
-			<li class="itens_nav interesses_itens" data-slug="bares-e-restaurantes"><input type="checkbox" name=""> <a href="#"><p>Bares e Restaurantes </p><span>38</span></a></li>
-			<li class="itens_nav interesses_itens" data-slug="hosteis-e-pousadas"><input type="checkbox" name=""> <a href="#"><p>Hotéis e Pousadas </p><span>38</span></a></li>
-			<li class="itens_nav interesses_itens" data-slug="estetica"><input type="checkbox" name=""> <a href="#"><p>Estética </p><span>38</span></a></li>
+			{% for interest in interests %}
+				<li class="itens_nav interesses_itens" data-slug="{{ interest.slug }}"><input type="checkbox" name=""> <a href="#"><p>{{ interest.name }}</p><span>{{ interest.total }}</span></a></li>
+			{% endfor %}
+			
 		</ul>
 
 
