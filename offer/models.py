@@ -77,7 +77,7 @@ class OfferManager(models.Manager):
 		for offer in offers:
 			option = offer.first_option()
 			fields = {}
-			fields["title"] = str(offer.title)
+			fields["title"] = offer.title
 			fields["partner"] = str(option.filial.partner.name)
 			fields["link"] = reverse_lazy('offer:offer_detail', kwargs={"slug": offer.slug}).__str__()
 			fields["imagem"] = "/media/" + str(offer.image_grid)
