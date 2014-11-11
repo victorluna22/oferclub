@@ -154,6 +154,10 @@ class City(models.Model):
     def __unicode__(self):
         return u'%s' % (self.name)
 
+    class Meta:
+        verbose_name = _(u'Cidade')
+        verbose_name_plural = _(u'Cidades')
+
 
 class Address(models.Model):
     cep = models.CharField(max_length=9)

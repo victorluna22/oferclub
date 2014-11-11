@@ -69,7 +69,7 @@ class OrderCreateViewView(LoginRequiredMixin, CreateView):
 		return reverse_lazy('offer:user:my_orders', kwargs={})
 
 @login_required
-@transaction.commit_on_success
+@transaction.non_atomic_requests
 def order_create_view(request, option_id):
 	option = get_object_or_404(Option, pk=option_id)
 
@@ -144,7 +144,7 @@ def order_create_view(request, option_id):
 			order.status = ORDER_AUTHORIZED
 			self.object.save()
 		elif order.total > 0:
-			return redirect(self.object.pay_pagseguro())
+			return redirect(order.pay_pagseguro())
 		return HttpResponseRedirect(reverse_lazy('offer:user:my_orders', kwargs={}))
 
 
