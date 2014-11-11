@@ -81,6 +81,11 @@
 									<label for="cidade">{{ city.name }}</label>
 								{% endif %}
 							{% endfor %}
+							<ul>
+								{% for city in request.session.cities %}
+									<li>{{ city.name }}</li>
+								{% endfor %}
+							</ul>
 							<select name="city" id="change-city">
 								<option value="">Selecione</option>
 							{% for city in request.session.cities %}

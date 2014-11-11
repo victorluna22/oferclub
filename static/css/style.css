@@ -103,7 +103,7 @@ div.active-dados {
   color: #FF8D11 !important; }
 
 #header {
-  z-index: 1;
+  z-index: 10;
   position: relative;
   margin-bottom: 20px; }
   #header .cor-clara, #header #titulo-cliente {
@@ -190,14 +190,14 @@ div.active-dados {
     float: left;
     margin-top: 25px;
     padding-left: 30px;
-    color: #c8c8c8;
     font-family: "Myriad Pro", sans-serif;
     font-size: 14px;
     line-height: 37px; }
   #header label {
     background: no-repeat url(../img/localidade.png) 6px center;
     background-color: #fff;
-    margin-left: 15px; }
+    margin-left: 15px;
+    cursor: pointer; }
   #header label:before {
     content: "";
     display: block;
@@ -216,7 +216,21 @@ div.active-dados {
     border-radius: 3px;
     width: 206px;
     height: 34px;
-    opacity: 0; }
+    display: none; }
+  #header label ~ ul {
+    position: absolute;
+    left: 15px;
+    top: 54px;
+    background: #fff;
+    width: 190px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding: 6px 0;
+    display: none; }
+    #header label ~ ul li {
+      padding-left: 15px;
+      padding-top: 6px;
+      font-size: 14px; }
 
 #bg-top {
   background-image: url(../img/bg-topo.jpg);
@@ -271,18 +285,20 @@ div.active-dados {
   display: inline-block; }
   #navigation a p {
     float: left;
-    color: #9e9e9e;
+    color: #737373;
     margin-right: 11px;
     padding-top: 1px; }
   #navigation a span {
     width: 19px;
     height: 19px;
+    color: #9e9e9e;
     display: inline-block;
     background: #eeeeee;
     border-radius: 3px;
     padding: 4px 2px;
     margin-left: 5px;
-    font-size: 12px; }
+    font-size: 12px;
+    text-decoration: none; }
 #navigation a:hover p {
   color: #ff9a15; }
 #navigation input[type="checkbox"] {
@@ -1867,9 +1883,6 @@ label[for="saldo-check"] {
 
 .log-cad input[type="password"], .log-cad input[type="mail"], .log-cad input[type="text"] {
   color: #333; }
-
-#header label {
-  color: #7B7B7B; }
 
 #header input, #header label {
   width: 190px; }
