@@ -78,9 +78,12 @@
 						<div>
 							{% for city in request.session.cities %}
 								{% if city.id|stringformat:"s" == request.session.city|stringformat:"s" %}
-									<label for="cidade">{{ city.name }}</label>
+									<label for="cidade-check">{{ city.name }}</label>
 								{% endif %}
 							{% endfor %}
+
+							<input type="checkbox" id="cidade-check">
+							
 							<ul>
 								{% for city in request.session.cities %}
 									<li>{{ city.name }}</li>
