@@ -27,4 +27,8 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = '/var/www/statics/oferclub/media'
 
-INTERNAL_IPS = ['54.172.25.31',]
+
+FACEBOOK_APP_ID = '340736239438743'
+FACEBOOK_APP_SECRET = 'eac89cdcf746cbb69397be018ccaf071'
+FACEBOOK_CALLBACK_URL = 'http://ofer.gloose.me/new/facebook/callback/'
+
