@@ -112,6 +112,9 @@ class OferClubCreateView(FormView):
         OferClubUser.objects.create_user(email=email, password=password, full_name=full_name, city=city, gender=gender, birthday=birthday, inviter=inviter)
         user = authenticate(email=email, password=password)
         auth_login(self.request, user)
+        subject = 'Ofer Club - Bem Vindo!'
+        message = 'Texto de bem vindo'
+        send_mail(subject, message, 'contato@ofer.club', [self.email])
         return super(OferClubCreateView, self).form_valid(form)
 
     def get_initial(self):
