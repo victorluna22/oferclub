@@ -8,7 +8,7 @@
 	<p class="cor-clara subtitle-dados six columns">Saldo disponível: <span>R$ {{ request.user.credit }}</span></p>
 
 	<div class="box-info">
-		<table>
+		<table collspacing="0" cellspacing="0">
 			<thead>
 				<tr>
 					<th>Data</th>
@@ -19,33 +19,33 @@
 			<tbody>
 				<tr>
 					<td class="date">09/02/1995</td>
-					<td class="descricao">Um produto feito para você de 99% de desconto</td>
+					<td class="descricao">Crédito pousada nova</td>
 					<td class="disponivel-cupon">R$ 1,00</td>
 				</tr>
 				<tr>
 					<td class="date">09/02/1995</td>
-					<td class="descricao">Um produto feito para você de 99% de desconto</td>
+					<td class="descricao">Crédito pousada nova</td>
 					<td class="vencido-cupon">- R$ 2,00</td>
 				</tr>
 				<tr>
 					<td class="date">09/02/1995</td>
-					<td class="descricao">Um produto feito para você de 99% de desconto</td>
+					<td class="descricao">Crédito pousada nova</td>
 					<td class="disponivel-cupon">R$ 1,00</td>
 				</tr>
 				<tr>
 					<td class="date">09/02/1995</td>
-					<td class="descricao">Um produto feito para você de 99% de desconto</td>
+					<td class="descricao">Crédito pousada nova</td>
 					<td class="disponivel-cupon">R$ 1,00</td>
 				</tr>
 			</tbody>
 		</table>
+		<p id="saldo-creditos">Saldo: {{ request.user.credit }}</p>
 	</div>
 {% comment %}
 <ul>
 {% for operation in operation_list %}
 	<li>{{ operation.description }} - {{ operation.value }}</li>
 {% endfor %}
-<li><b>Total: {{ request.user.credit }}</b></li>
 </ul>
 {% endcomment %}
 </div>
