@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.admin import UserAdmin
-from account.models import Account, OferClubUser, Partner, Filial, Affiliate, Address, City
+from account.models import Account, OferClubUser, Partner, Filial, Affiliate, Address, City, State
 
 
 
@@ -206,3 +206,4 @@ admin.site.register(Affiliate, AffiliateAdmin)
 admin.site.register(Address)
 admin.site.register(Partner)
 admin.site.register(City)
+admin.site.register(State)
