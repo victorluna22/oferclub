@@ -487,3 +487,13 @@ $(document).ready(function(){
 		return false;
 	});
 });
+
+var itens_topo = document.querySelectorAll("#header label ~ ul li");
+
+Array.prototype.forEach.call(itens_topo,function(element){
+	element.addEventListener("click", function(){
+		this.parentNode.style.display = "none";
+		this.parentNode.parentNode.querySelector("select").value = this.dataset.id;
+		document.querySelector("#form-change-city").submit();
+	});
+})

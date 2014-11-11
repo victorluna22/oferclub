@@ -83,10 +83,10 @@
 							{% endfor %}
 
 							<input type="checkbox" id="cidade-check">
-							
+
 							<ul>
 								{% for city in request.session.cities %}
-									<li>{{ city.name }}</li>
+									<li data-id="{{ city.id }}">{{ city.name }}</li>
 								{% endfor %}
 							</ul>
 							<select name="city" id="change-city">
