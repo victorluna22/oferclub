@@ -8,6 +8,7 @@ from datetime import datetime
 from urlparse import parse_qs
 from django.shortcuts import render
 from django.conf import settings
+from django.core.mail import send_mail
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.views.generic.edit import FormView, UpdateView, CreateView
 from django.views.generic.list import ListView
@@ -114,7 +115,7 @@ class OferClubCreateView(FormView):
         auth_login(self.request, user)
         subject = 'Ofer Club - Bem Vindo!'
         message = 'Texto de bem vindo'
-        send_mail(subject, message, 'contato@ofer.club', [self.email])
+        send_mail(subject, message, 'contato@ofer.club', [email])
         return super(OferClubCreateView, self).form_valid(form)
 
     def get_initial(self):
