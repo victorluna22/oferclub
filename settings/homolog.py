@@ -10,7 +10,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'oferclub',
         'USER': 'root',
-        'PASSWORD': 'gloose*123',
+        'PASSWORD': 'root',
     }
 }
 
