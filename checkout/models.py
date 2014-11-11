@@ -80,7 +80,8 @@ class Order(models.Model):
         }
         pg.reference_prefix = None
         pg.reference = self.id
-        pg.add_item(id=self.option.id, description=self.option.title, amount=self.total, quantity=1, weight=0)
+        for item in self.itens.all():
+            pg.add_item(id=item.option.id, description=item.option.title, amount=item.option.new_price, quantity=item.quantity, weight=0)
         # pg.redirect_url = "http://meusite.com/obrigado"
         response = pg.checkout()
         self.code_pagseguro = response.code

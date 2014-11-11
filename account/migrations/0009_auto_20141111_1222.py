@@ -7,12 +7,12 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('account', '0006_auto_20141030_1838'),
+        ('account', '0008_oferclubuser_avatar'),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='address',
-            name='cpf',
+        migrations.AlterModelOptions(
+            name='city',
+            options={'verbose_name': 'Cidade', 'verbose_name_plural': 'Cidades'},
         ),
     ]
