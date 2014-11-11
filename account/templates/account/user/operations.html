@@ -17,37 +17,17 @@
 				</tr>
 			</thead>
 			<tbody>
+			{% for operation in operation_list %}
 				<tr>
-					<td class="date">09/02/1995</td>
-					<td class="descricao">Crédito pousada nova</td>
-					<td class="disponivel-cupon">R$ 1,00</td>
+					<td class="date">{{ operation.created_at|date:"d/m/Y" }}</td>
+					<td class="descricao">{{ operation.description }}</td>
+					<td class="{% if operation.type_operation %} disponivel-cupon {% else %} vencido-cupon {% endif %}">R$ {% if operation.type_operation == False %}-{% endif %}{{ operation.value }}</td>
 				</tr>
-				<tr>
-					<td class="date">09/02/1995</td>
-					<td class="descricao">Crédito pousada nova</td>
-					<td class="vencido-cupon">- R$ 2,00</td>
-				</tr>
-				<tr>
-					<td class="date">09/02/1995</td>
-					<td class="descricao">Crédito pousada nova</td>
-					<td class="disponivel-cupon">R$ 1,00</td>
-				</tr>
-				<tr>
-					<td class="date">09/02/1995</td>
-					<td class="descricao">Crédito pousada nova</td>
-					<td class="disponivel-cupon">R$ 1,00</td>
-				</tr>
+			{% endfor %}
 			</tbody>
 		</table>
 		<p id="saldo-creditos">Saldo: {{ request.user.credit }}</p>
 	</div>
-{% comment %}
-<ul>
-{% for operation in operation_list %}
-	<li>{{ operation.description }} - {{ operation.value }}</li>
-{% endfor %}
-</ul>
-{% endcomment %}
 </div>
 
 {% endblock interna %}
