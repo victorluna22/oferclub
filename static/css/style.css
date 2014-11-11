@@ -69,7 +69,7 @@ h2, h3, h4, h5, .saldo-creditos, .disponivel {
 .cor-clara2 {
   background-color: #ffa719; }
 
-#carregar:hover, .btn-top:hover, #cadastro input[type="submit"]:hover {
+#carregar:hover, #cadastro input[type="submit"]:hover {
   box-shadow: inset 0 100px 0 #ff9a15; }
 
 #header li.redes:hover a {
@@ -89,6 +89,8 @@ h2, h3, h4, h5, .saldo-creditos, .disponivel {
   color: #fff;
   background: #ff9a15; }
 
+#conta, #endereco {
+  display: none; }
 
 div.active-dados {
   display: block !important; }
@@ -97,12 +99,16 @@ div.active-dados {
 .show-presente, .show-presente body {
   overflow: hidden !important; }
 
+.btn-top:hover {
+  color: #FF8D11 !important; }
+
 #header {
   z-index: 1;
   position: relative;
   margin-bottom: 20px; }
   #header .cor-clara, #header #titulo-cliente {
-    height: 40px; }
+    height: 40px;
+    position: relative; }
     #header .cor-clara ul, #header .cor-clara #titulo-cliente {
       float: right; }
     #header .cor-clara li:first-child, #header .cor-clara #titulo-cliente {
@@ -116,6 +122,28 @@ div.active-dados {
       font-size: 12px; }
     #header .cor-clara a:hover, #header .cor-clara #titulo-cliente {
       text-decoration: underline; }
+  #header a.cor-clara:before, #header a#titulo-cliente:before, #header a.cor-clara:after, #header a#titulo-cliente:after {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    top: 7px;
+    left: 6px;
+    background-repeat: no-repeat; }
+  #header .btn-top:first-child:before {
+    background-image: url(../img/locais-menu-hover.png); }
+  #header .btn-top:nth-child(2):before {
+    background-image: url(../img/viagens-menu.png); }
+  #header .btn-top:nth-child(3):before {
+    background-image: url(../img/sacola-menu.png); }
+  #header a.cor-clara:after, #header a#titulo-cliente:after {
+    opacity: 0; }
+  #header .btn-top:first-child:after {
+    background-image: url(../img/locais-menu.png); }
+  #header .btn-top:nth-child(2):after {
+    background-image: url(../img/viagens-menu-hover.png); }
+  #header .btn-top:nth-child(3):after {
+    background-image: url(../img/sacola-menu-hover.png); }
   #header a {
     color: #fff; }
   #header li.redes {
@@ -202,14 +230,13 @@ div.active-dados {
 
 .btn-top {
   position: relative;
-  font-size: 18px;
-  padding: 0 12px;
+  padding: 0 12px 0 28px;
   height: 34px !important;
   line-height: 36px;
   float: left;
   border-radius: 3px;
   margin-top: 25px;
-  margin-right: 15px; }
+  margin-right: 10px; }
 
 /************************************** NAVIGATION *****************************************/
 #navigation > div {
@@ -1046,22 +1073,22 @@ article.info-produto:after {
     transition: all ease-out 0.5s; }
   #cupon a:hover {
     box-shadow: 0 2px 0; }
-  #cupon #list-opcoes, #cupon #list-qtd {
+  #cupon .list-opcoes, #cupon .list-qtd {
     position: relative;
     float: left; }
-  #cupon #list-opcoes {
+  #cupon .list-opcoes {
     width: 140px; }
-  #cupon #list-qtd {
+  #cupon .list-qtd {
     width: 58px; }
-  #cupon #list-qtd .bg-area-clara {
+  #cupon .list-qtd .bg-area-clara {
     padding-left: 10px; }
-  #cupon #list-opcoes li.current-opcoes, #cupon #list-qtd li.current-opcoes {
+  #cupon .list-opcoes li.current-opcoes, #cupon .list-qtd li.current-opcoes {
     cursor: pointer;
     width: 100%;
     position: relative;
     overflow: hidden;
     margin-top: 5px; }
-  #cupon #list-opcoes li.current-opcoes:after, #cupon #list-qtd li.current-opcoes:after {
+  #cupon .list-opcoes li.current-opcoes:after, #cupon .list-qtd li.current-opcoes:after {
     content: "";
     position: absolute;
     width: 30px;
@@ -1069,7 +1096,7 @@ article.info-produto:after {
     top: 0;
     right: 0;
     background: #dfdfdf; }
-  #cupon #list-opcoes li.current-opcoes:before, #cupon #list-qtd li.current-opcoes:before {
+  #cupon .list-opcoes li.current-opcoes:before, #cupon .list-qtd li.current-opcoes:before {
     cursor: pointer;
     content: "";
     position: absolute;
@@ -1080,21 +1107,21 @@ article.info-produto:after {
     border: solid 5px transparent;
     border-top-color: #7d7d7d;
     z-index: 2; }
-  #cupon #list-opcoes a, #cupon #list-qtd a {
+  #cupon .list-opcoes a, #cupon .list-qtd a {
     display: block; }
-  #cupon #list-opcoes ul, #cupon #list-qtd ul {
+  #cupon .list-opcoes ul, #cupon .list-qtd ul {
     display: none;
     z-index: 22;
     width: 240%;
     position: absolute;
     top: 36px;
     left: 0; }
-    #cupon #list-opcoes ul a, #cupon #list-opcoes ul p, #cupon #list-qtd ul a, #cupon #list-qtd ul p {
+    #cupon .list-opcoes ul a, #cupon .list-opcoes ul p, #cupon .list-qtd ul a, #cupon .list-qtd ul p {
       margin: 0;
       font-size: 12px; }
-    #cupon #list-opcoes ul a:hover, #cupon #list-qtd ul a:hover {
+    #cupon .list-opcoes ul a:hover, #cupon .list-qtd ul a:hover {
       box-shadow: 0 0 0 transparent; }
-    #cupon #list-opcoes ul li, #cupon #list-qtd ul li {
+    #cupon .list-opcoes ul li, #cupon .list-qtd ul li {
       margin-top: 2px; }
 
 .internas input {
@@ -1129,6 +1156,7 @@ article.info-produto:after {
 
 input.bg-area-clara {
   width: 100%;
+  line-height: 32px;
   height: 32px;
   margin-top: 5px;
   color: #737373; }
@@ -1753,7 +1781,97 @@ label[for="saldo-check"] {
     right: 5px;
     top: -11px; }
 
+#saldo-creditos {
+  float: right;
+  margin-right: 155px;
+  margin-top: -14px;
+  color: #05c700;
+  font-size: 18px; }
 
+#creditos .box-info {
+  margin-top: 13px;
+  float: left; }
+
+#creditos > p {
+  color: #fff;
+  padding: 12px;
+  border-radius: 5px; }
+
+#creditos span {
+  color: #ffa719;
+  text-decoration: none; }
+
+#creditos header ~ p {
+  margin: 8px 0; }
+
+#creditos th {
+  font-size: 18px;
+  font-weight: normal;
+  color: #666;
+  height: 26px;
+  width: 248px;
+  text-align: left; }
+
+#creditos td {
+  border-bottom: solid 1px #d2d2d2;
+  padding: 10px 40px 10px 0px;
+  font-size: 14px; }
+
+.disponivel-cupon {
+  color: #05c700; }
+
+.vencido-cupon {
+  color: #e90000; }
+
+#creditos table {
+  margin: 20px 20px 30px; }
+
+#convite-email p {
+  margin: 11px 4px; }
+
+.add-mail {
+  float: right;
+  color: #009cde; }
+
+.yui3-skin-sam {
+  z-index: 2222;
+  position: relative; }
+
+.modal-dialog {
+  margin: 30px auto;
+  width: 600px; }
+
+.modal-content {
+  margin-top: -240px;
+  position: relative;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border-radius: 6px;
+  text-align: center;
+  outline: 0; }
+
+.yui3-resize {
+  outline: none !important; }
+
+.yui3-skin-sam .close {
+  position: absolute;
+  font-size: 21px;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+  top: 20px;
+  color: #fff;
+  background: transparent;
+  right: 135px; }
+
+.log-cad input[type="password"], .log-cad input[type="mail"], .log-cad input[type="text"] {
+  color: #333; }
+
+#header label {
+  color: #7B7B7B; }
+
+#header input, #header label {
+  width: 190px; }
 
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media only screen and (min-width: 768px) and (max-width: 959px) { }
@@ -1767,37 +1885,4 @@ label[for="saldo-check"] {
 /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
 @media only screen and (max-width: 479px) { }
 
-#saldo-creditos {
-float: right;
-margin-right: 155px;
-margin-top: -14px;
-color: #05c700;
-font-size: 18px;}
-
-#creditos .box-info {margin-top: 13px;float: left;}
-
-#creditos > p {
-  color: #fff;
-  padding: 12px;
-  border-radius: 5px; }
-#creditos span {
-  color: #ffa719;
-  text-decoration: none; }
-#creditos header ~ p {
-  margin: 8px 0; }
-#creditos th {
-  font-size: 18px;
-  font-weight: normal; 
-  color: #666;height: 26px;
-  width: 248px;
-  text-align: left; }
-#creditos td {border-bottom: solid 1px #d2d2d2; padding: 10px 40px 10px 0px; font-size: 14px;}
-.disponivel-cupon {color: #05c700;}
-.vencido-cupon {color: #e90000}
-
-#creditos table {
-  margin: 20px 20px 30px; }
-
-#convite-email p{margin: 11px 4px;}
-
-.add-mail {float: right;color: #009cde;}
+/*# sourceMappingURL=style.css.map */

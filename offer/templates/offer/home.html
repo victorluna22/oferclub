@@ -3,6 +3,11 @@
 {% load offer thumbnail %}
 
 {% block content %}
+
+<div class="yui3-skin-sam">
+  <div id="modal"></div>
+</div>
+
 <div class="container">
 		<nav id="navigation" class="four columns">
 			<div>
@@ -79,6 +84,31 @@
 			</form>
 		</section>
 	</div>
+
+
+<!-- ALLOYUI -->
+<script src="http://cdn.alloyui.com/3.0.0/aui/aui-min.js"></script>
+<script type="text/javascript">
+	if(location.hash){
+		YUI().use(
+		  'aui-modal',
+		  function(Y) {
+		    var modal = new Y.Modal(
+		      {
+		        bodyContent: '<img src="{{ STATIC_URL }}img/boas-vindas.png" alt="">',
+		        centered: true,
+		        modal: true,
+		        render: '#modal',
+		        width: 450,
+		        resizable: false
+		      }
+		    ).render();
+		  }
+		);
+	}
+</script>
+<!-- END -->
+
 
 <script type="text/javascript">
 	var json = {{ json|safe }};

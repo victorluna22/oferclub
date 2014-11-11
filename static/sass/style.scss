@@ -116,8 +116,8 @@ h2,h3,h4,h5 {font-family:'MyriadProBold',sans-serif; }
 		div {position: relative;float: left;}
 	}
 	input {background: no-repeat url(../img/busca.png) 6px center;background-color: #fff;}
-	input,label {width: 206px;height: 34px;border: none;border-radius: $radius;float: left;margin-top: 25px;padding-left: 30px; color: #c8c8c8;font-family: "Myriad Pro",sans-serif;font-size: 14px; line-height: 37px;}
-	label {background: no-repeat url(../img/localidade.png) 6px center;background-color: #fff; margin-left: 15px;}
+	input,label {width: 197px;height: 34px;border: none;border-radius: $radius;float: left;margin-top: 25px;padding-left: 30px; color: #c8c8c8;font-family: "Myriad Pro",sans-serif;font-size: 14px; line-height: 37px;}
+	label {background: no-repeat url(../img/localidade.png) 6px center;background-color: #fff; color: #7B7B7B; margin-left: 15px;}
 	label:before {content: "";display: block; @include seta(6px, #828282);position: absolute;top: 40px;right: 10px;}
 	select {cursor: pointer; position: absolute;top: 25px;left: 15px;border-radius: $radius;width: 206px;height: 34px;opacity: 0;}
 }
@@ -425,6 +425,69 @@ article.info-produto:after {
 
 	.outras div.five span {margin: 13px 30px;}
 }
+
+
+
+#saldo-creditos {
+float: right;
+margin-right: 155px;
+margin-top: -14px;
+color: #05c700;
+font-size: 18px;}
+
+#creditos .box-info {margin-top: 13px;float: left;}
+
+#creditos > p {
+  color: #fff;
+  padding: 12px;
+  border-radius: 5px; }
+#creditos span {
+  color: #ffa719;
+  text-decoration: none; }
+#creditos header ~ p {
+  margin: 8px 0; }
+#creditos th {
+  font-size: 18px;
+  font-weight: normal; 
+  color: #666;height: 26px;
+  width: 248px;
+  text-align: left; }
+#creditos td {border-bottom: solid 1px #d2d2d2; padding: 10px 40px 10px 0px; font-size: 14px;}
+.disponivel-cupon {color: #05c700;}
+.vencido-cupon {color: #e90000}
+
+#creditos table {
+  margin: 20px 20px 30px; }
+
+#convite-email p{margin: 11px 4px;}
+
+.add-mail {float: right;color: #009cde;}
+.yui3-skin-sam {z-index: 2222; position: relative;}
+.modal-dialog {margin: 30px auto;width: 600px;}.modal-content {
+  margin-top:-240px;
+position: relative;
+-webkit-background-clip: padding-box;
+background-clip: padding-box;
+border-radius: 6px;
+text-align: center;
+outline: 0;
+}
+
+.yui3-resize {outline: none!important}
+.yui3-skin-sam .close {
+
+position: absolute;
+font-size: 21px;
+border: none;
+cursor: pointer;
+line-height: 1;
+top: 20px;
+color: #fff;
+background: transparent;
+right: 135px;
+}
+
+.log-cad input[type="password"], .log-cad input[type="mail"], .log-cad input[type="text"] {color: #333;}
 
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media only screen and (min-width: 768px) and (max-width: 959px) { }
