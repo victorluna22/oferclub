@@ -14,7 +14,7 @@ from django.views.generic.edit import UpdateView, FormView
 from django.views.generic.detail import DetailView
 from checkout.models import Coupon, Order, Operation
 from account.models import OferClubUser
-from offer.models import Offer, Category, Type, SubCategory, PromotionCode
+from offer.models import Offer, Category, Type, SubCategory, PromotionCode, Interest
 from account.forms import OferClubUserForm, OferClubUserChangeForm
 
 class LoginRequiredMixin(object):
@@ -89,6 +89,7 @@ class OfferListView(ListView):
         if self.category:
             context['category'] = self.category
             context['subcategories'] = SubCategory.objects.filter(category=self.category).annotate(total=Count('offer'))
+            context['interests'] = Interest.objects.filter(category=self.category).annotate(total=Count('offer'))
         else:
             id_type = self.request.session.get('typeoffer')
             id_city = self.request.session.get('city')
