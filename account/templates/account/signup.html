@@ -1,37 +1,82 @@
 {% extends 'offer/base.html' %}
 
+{% load thumbnail %}
+
 {% block content %}
-<form class="signup forms-adm" id="signup_form" method="post" action="{% url 'account:signup' %}">
-    {% csrf_token %}
-    <div class="box_input">
-        {{ form.full_name }}
-        {{ form.full_name.errors }}
-    </div>
-    <div class="box_input">
-        {{ form.email }}
-        {{ form.email.errors }}
-    </div>
-    <div class="box_input">
-        {{ form.password }}
-        {{ form.password.errors }}
-    </div>
-    <div class="box_input">
-        {{ form.confirm_password }}
-        {{ form.confirm_password.errors }}
-    </div>
-    <div class="box_input">
-        {{ form.gender }}
-        {{ form.gender.errors }}
-    </div>
-    <div class="box_input">
-        {{ form.birthday }}
-        {{ form.birthday.errors }}
-    </div>
-    <div class="box_input">
-        {{ form.city }}
-        {{ form.city.errors }}
-    </div>
-    <button type="submit" id="bt-cadastro" class="btn bt-cadastro btn-default"><span>Cadastrar</span></button>
-    <p id="cadstrado">Já é cadastrado? <a href="{% url 'account:login' %}" class="login">Faça o login.</a></p>
-</form>
+{% if option%}
+<section class="container internas" id="area-compra">
+        <article class="sixteen columns">
+            <header>
+                <h2 class="sixteen columns">Sua compra</h2> 
+            </header>
+
+            <ul id="lista-compra">  
+
+                <li>
+                    <figure>
+                        <div class="three columns omega">
+                        {% thumbnail option.offer.image_grid "131x84" crop="center" as im %}
+                            <img src="{{ im.url }}" alt="{{ option.offer.title }}">
+                        {% endthumbnail %}
+                        </div>
+
+                        <figcaption class="ten columns omega">
+                            <p>{{ option.offer.title }}</p>
+                            <a href="{% url 'offer:offer_detail' option.offer.slug %}">Detalhes da oferta</a>
+                        </figcaption>
+                    </figure>
+
+                    <div class="three columns"> 
+                        <p class="color-destaque">R$ {{ option.new_price }}</p>
+                        <img src="{{ STATIC_URL }}img/off.png" alt="">
+                        <span>{{ option.discount }}% OFF</span>
+                    </div>
+                </li>
+            </ul>
+        </article>
+    </section>
+{% endif %}
+
+    <aside class="container internas mg-double">
+        <div class="nine columns" id="face-login">
+            <p>Eita, você ainda não está cadastrado ou ainda não entrou</p>
+
+            <a href="{% url 'account:accounts_facebook_new' %}"><img src="{{ STATIC_URL }}img/facebook-login.gif" alt="entre com o facebook"></a>
+        </div>
+
+
+        <div class="seven columns log-cad">
+            
+            <div>
+                <form action="{% url 'account:signup' %}" method="POST">
+                    {% csrf_token %}
+                    <label for="nome">Nome</label>
+                    <input type="text" name="full_name" id="nome">
+                    {{ form.full_name.errors }}
+
+                    <label for="email">E-mail</label>
+                    <input type="mail" name="email" id="email">
+                    {{ form.email.errors }}
+
+                    <div class="double column alpha clear-double">
+                        <label for="password">Senha</label>
+                        <input type="password" name="password" id="password">
+                        {{ form.password.errors }}
+                    </div>
+
+                    <div class="double column">
+                        <label for="confirm-pass">Repita a senha</label>
+                        <input type="password" name="confirm_password" id="confirm-pass">
+                        {{ form.confirm_password.errors }}
+                    </div>
+                    
+                    <input type="submit" value="Entrar">
+                </form>
+            </div>
+                
+        </div>
+
+    </aside>
+
 {% endblock content %}
+

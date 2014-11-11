@@ -121,7 +121,8 @@ div.active-dados {
     #header .cor-clara a, #header .cor-clara #titulo-cliente {
       font-size: 12px; }
     #header .cor-clara a:hover, #header .cor-clara #titulo-cliente {
-      text-decoration: underline; }
+      text-decoration: underline;
+      color: #FF8D11 !important; }
   #header a.cor-clara:before, #header a#titulo-cliente:before, #header a.cor-clara:after, #header a#titulo-cliente:after {
     content: "";
     position: absolute;
@@ -230,7 +231,7 @@ div.active-dados {
 
 .btn-top {
   position: relative;
-  padding: 0 12px 0 28px;
+  padding: 0 12px 0 26px;
   height: 34px !important;
   line-height: 36px;
   float: left;

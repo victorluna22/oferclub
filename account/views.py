@@ -94,7 +94,7 @@ class OferClubAddressEditView(LoginRequiredMixin, UpdateView):
 class OferClubCreateView(FormView):
     form_class = OferClubUserForm
     context_object_name = 'object'
-    template_name = 'account/login.html'
+    template_name = 'account/signup.html'
     success_url = reverse_lazy('offer:home')
 
     def form_valid(self, form):
