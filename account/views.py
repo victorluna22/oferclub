@@ -8,6 +8,7 @@ from datetime import datetime
 from urlparse import parse_qs
 from django.shortcuts import render
 from django.conf import settings
+from django.core.mail import send_mail
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.views.generic.edit import FormView, UpdateView, CreateView
 from django.views.generic.list import ListView
