@@ -226,6 +226,8 @@ class Filial(OferClubAbstractUser):
     number_home = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'Número')
     complement = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'Complemento')
     neighborhood = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'Bairro')
+    latitude = models.CharField(u'Latitude', max_length=100, null=True, blank=True)
+    longitude = models.CharField(u'Latitude', max_length=100, null=True, blank=True)
 
     owner_name = models.CharField(
         verbose_name=_(u'Nome do Titular'),

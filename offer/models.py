@@ -92,6 +92,8 @@ class OfferManager(models.Manager):
 			fields["discount"] = float(option.discount())
 			fields["remaining"] = option.time_remaining()
 			fields["quantity"] = int(offer.bought + offer.bought_virtual)
+			fields["latitude"] = option.filial.latitude
+			fields["longitude"] = option.filial.longitude
 			data.append(fields)
 		return data
 

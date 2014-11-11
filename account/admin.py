@@ -1,4 +1,7 @@
 # coding: utf-8
+import json
+import urllib
+import urllib2
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.forms import UserCreationForm
@@ -89,6 +92,21 @@ class FilialChangeForm(UserChangeForm):
         kwargs['initial'] = {'is_staff': True}
         super(FilialChangeForm, self).__init__(*args, **kwargs)
         del self.fields['username']
+
+    def save(self, commit=True):
+        obj = super(FilialChangeForm, self).save(commit=commit)
+        # try:
+        address = "{0} {1} {2} {3} {4}".format(str(obj.street), str(obj.number_home), str(obj.neighborhood), str(obj.city.name), str(obj.cep))
+        # import pdb;pdb.set_trace()
+        data = urllib2.urlopen('http://maps.google.com/maps/api/geocode/json?address=%s' % urllib.quote_plus(address))
+        response = json.load(data)
+        if response['status'] == 'OK':
+            obj.latitude = response['results'][0]['geometry']['location']['lat']
+            obj.longitude = response['results'][0]['geometry']['location']['lng']
+            obj.save()
+        # except:
+        #     pass
+        return obj
 
     class Meta:
         model = Filial
