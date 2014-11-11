@@ -37,6 +37,7 @@
 						<li><a href="{% url 'offer:customer_service' %}">Atendimento</a></li>
 						<li><a href="#">Blog</a></li>
 						{% if request.user.is_authenticated %}
+						<li><a href="{% url 'offer:user:my_coupons' %}">Área do cliente</a></li>
 						<li id="logado">
                                 <p>Olá {{ request.user.full_name }},</p>
                                 <a href="{% url 'account:logout' %}">Sair</a>

@@ -3,7 +3,7 @@
 
 {% block interna %}
 
-	<article class="twelve columns" id="info-content">
+	
 		<div class="dados-pessoais">
 				{% include 'account/user/edit_header.html' %}
 
@@ -29,6 +29,12 @@
 										<option {%if form.gender.value == "F"%}selected{%endif%} value="F">Feminino</option>
 									</select>
 								</div>
+
+								<div class="four columns">		
+									<label>Endereço de e-mail</label>
+									<p class="titulo-cupon">{{request.user.email}}</p>
+								</div>
+									
 							</div>
 							<!-- END FOUR -->
 
@@ -41,7 +47,7 @@
 								</figure>
 								<input type="submit" value="Salvar" class="salvar">
 							</div>
-
+						
 							
 
 						</div>
