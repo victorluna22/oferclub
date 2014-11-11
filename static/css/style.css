@@ -222,7 +222,7 @@ div.active-dados {
     left: 15px;
     top: 54px;
     background: #fff;
-    width: 190px;
+    width: 186px;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
     padding: 6px 0;
@@ -230,7 +230,11 @@ div.active-dados {
     #header label ~ ul li {
       padding-left: 15px;
       padding-top: 6px;
+      cursor: pointer;
       font-size: 14px; }
+    #header label ~ ul li:hover {
+      background: #ff8d11;
+      color: #fff; }
 
 #bg-top {
   background-image: url(../img/bg-topo.jpg);
@@ -1268,7 +1272,7 @@ span {
   transition: all 0.5s ease-out;
   position: relative; }
 .log-cad div:first-child {
-  max-height: 230px; }
+  margin-bottom: 20px; }
 .log-cad .recolhe {
   max-height: 0 !important; }
 .log-cad label {
@@ -1885,7 +1889,13 @@ label[for="saldo-check"] {
   color: #333; }
 
 #header input, #header label {
-  width: 190px; }
+  width: 186px; }
+
+#cidade-check {
+  display: none; }
+
+#cidade-check:checked ~ ul {
+  display: block; }
 
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media only screen and (min-width: 768px) and (max-width: 959px) { }
