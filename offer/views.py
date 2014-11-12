@@ -76,7 +76,7 @@ class OfferListView(ListView):
             for interest in self.request.GET.get("interesses").split(','):
                 obj = get_object_or_404(Interest, slug=interest)
                 interests.append(obj)
-            query = query.filter(interests__in=interests)
+            query = query.filter(interests__in=interests).distinct()
 
         if self.request.GET.get("order"):
             order = self.request.GET.get("order")
