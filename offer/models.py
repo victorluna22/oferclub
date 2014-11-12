@@ -172,7 +172,7 @@ class Option(models.Model):
 	offer = models.ForeignKey(Offer, related_name='options')
 	filial = models.ForeignKey(Filial, related_name='offers')
 	title = models.CharField(u'Título', max_length=255)
-	subtitle = models.CharField(u'Sub Título', max_length=255)
+	subtitle = models.CharField(u'Sub Título', max_length=255, blank=True, null=True)
 	old_price = models.DecimalField(u'Preço sem desconto', decimal_places=2, max_digits=10, blank=True, null=True)
 	new_price = models.DecimalField(u'Preço com desconto', decimal_places=2, max_digits=10)
 	weight = models.DecimalField(u'Peso', decimal_places=2, max_digits=10, blank=True, null=True, help_text=u"kg")
