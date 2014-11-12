@@ -21,7 +21,7 @@ INSTALLED_APPS += (
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = '/home/ubuntu/statics/oferclub/static'
+STATIC_ROOT = '/var/www/statics/oferclub/static'
 
 MEDIA_URL = '/media/'
 
