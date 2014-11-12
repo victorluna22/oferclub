@@ -184,5 +184,6 @@ def checks_code(request, code):
         return HttpResponse(json.dumps({'error': True}), content_type='application/json')
 
 def email(request):
+    
     send_mail('assunto', 'message', 'contato@ofer.club', ['victorluna22@gmail.com'])
     return HttpResponse('ok')

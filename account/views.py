@@ -114,7 +114,10 @@ class OferClubCreateView(FormView):
         user = authenticate(email=email, password=password)
         auth_login(self.request, user)
         subject = 'Ofer Club - Bem Vindo!'
-        message = 'Texto de bem vindo'
+        message = """Olá, %s. \n\nFicamos felizes por você se cadastrar no Clube de Ofertas mais regional,arretado e presente – O Ofer.Club. \o/\n\n
+        Mas calminha, não se preocupe, não iremos encher você com toneladas de e-mails. Não se aperreie.\n\n
+        Seja bem-vindo e boas compras. =)""" % full_name
+        
         send_mail(subject, message, 'contato@ofer.club', [email])
         return super(OferClubCreateView, self).form_valid(form)
 
