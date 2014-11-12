@@ -239,12 +239,12 @@ div.active-dados {
       color: #fff; }
 
 #bg-top {
-  background-image: url(../img/bg-topo.jpg);
-  width: 120%;
+  background-image: url(../img/bg-topo.png);
   height: 88px;
+  width: 139%;
   position: absolute;
   z-index: 1;
-  left: -350px; }
+  left: -638px; }
 
 .btn-top, #header h1 {
   z-index: 2; }
@@ -822,6 +822,11 @@ article.info-produto:after {
   border-top: solid 1px #e5e5e5;
   padding-top: 25px;
   margin-top: 30px; }
+
+#mapa-listar {
+  width: 100%;
+  height: 250px;
+  margin-top: 19px; }
 
 .description {
   padding-left: 10px; }
@@ -1909,4 +1914,6 @@ label[for="saldo-check"] {
 @media only screen and (min-width: 480px) and (max-width: 767px) { }
 
 /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
-@media only screen and (max-width: 479px)
+@media only screen and (max-width: 479px) { }
+
+/*# sourceMappingURL=style.css.map */
