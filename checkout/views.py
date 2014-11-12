@@ -151,7 +151,7 @@ def order_create_view(request, option_id):
 	context = {}
 	context['option'] = option
 	context['other_options'] = option.offer.options.all()
-	context['range_quantity'] = range(option.offer.max_by_user)
+	context['range_quantity'] = range(option.offer.max_by_user or 10)
 	return render(request, 'checkout/order_create.html', context)
 
 
