@@ -8,6 +8,7 @@ from checkout.views import OrderCreateViewView
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'offer.views.home', name='home'),
+    url(r'^email/$', 'offer.views.email', name='email'),
     url(r'^selecionar/(?P<slug>[\w_-]+)/$', 'offer.views.change_product_type', name='change_product_type'),
     url(r'^oferta/listagem/$', OfferListView.as_view(), name='offer_list'),
     url(r'^oferta/(?P<slug>[\w_-]+)/$', OfferDetailView.as_view(), name='offer_detail'),

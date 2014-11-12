@@ -3,6 +3,7 @@ import json
 from datetime import datetime
 from django.http import HttpResponse
 from django.db.models import Count
+from django.core.mail import send_mail
 from django.core import serializers
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, get_object_or_404
@@ -159,3 +160,7 @@ def checks_code(request, code):
         return HttpResponse(json.dumps({'error': False, 'discount': float(result[0].discount)}), content_type='application/json')
     else:
         return HttpResponse(json.dumps({'error': True}), content_type='application/json')
+
+def email(request):
+    send_mail('assunto', 'message', 'contato@ofer.club', ['victorluna22@gmail.com'])
+    return HttpResponse('ok')
