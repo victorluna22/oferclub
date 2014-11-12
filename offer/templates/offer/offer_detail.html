@@ -9,16 +9,17 @@
 		</header>
 
 		<article class="eleven columns produto">
-		{% for image in images %}
-			<img src="{{ MEDIA_URL }}{{ image.name }}" alt="">
-		{% endfor %}
 
-			<figure>
+			<figure><!-- 
 			{% for image in images %}
 				<img src="{{ MEDIA_URL }}{{ image.name }}" alt="" width="50px" height="50px">
-			{% endfor %}
-				
+			{% endfor %} -->
 			</figure>	
+			
+			{% for image in images %}
+				<img src="{{ MEDIA_URL }}{{ image.name }}" alt="">
+			{% endfor %}
+
 		</article>
 
 		<article class="comprar-produto five columns">
@@ -74,63 +75,64 @@
 			</div>
 		</article>
 
-		<article class="eight columns description">
-			<div class="bd">
-				<h3>Resumo da Oferta</h3>
-				
-				{{ offer.description|safe }}
-			</div>
-
-			<div class="bd">
-				<h3>A empresa</h3>
-				
-				{{ partner.about|safe }}
-			</div>
-		</article>
-
-		<article class="eight columns description">
-			<h3>Quando usar:</h3>
-			
-			{{ offer.when_to_use|safe }}
-
-			<h3>Como usar:</h3>
-			{{ offer.how_to_use|safe }}
-
-			<h3>Bom saber:</h3>
-			{{ offer.good_to_know|safe }}
-		</article>
-
-		<article class="description sixteen columns map-box">
-			<h3>Localização</h3>
-
-			<address>
-				<p>Endereço: {{ first_option.filial.street|default:'' }}, {{ first_option.filial.number_home|default:'' }} - CEP: {{ first_option.filial.cep|default:'' }} - {{ first_option.filial.complement|default:'' }} - {{ first_option.filial.neighborhood|default:'' }} - {{ first_option.filial.city.state.acronym|default:'' }}</p>
-			</address>
-			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.832892413855!2d-34.847331400000016!3d-8.016162099999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ab22ba35e72209%3A0xe223c0d7faeb8fda!2sR.+do+Sol%2C+100+-+Carmo%2C+Olinda+-+PE!5e0!3m2!1spt-BR!2sbr!4v1412622830499" class="map" frameborder="0" style="border:0"></iframe>
-		</article>
-
-		{% if other_options %}
-		<article class="outras">
-			<h3>Outras opções</h3>
-
-			{% for option in other_options %}
-				<div class="eleven columns alpha omega">
-					<p class="title-outras">{{ option.title }}</p>
-					<span>{{ option.subtitle }}</span>
+		<div id="overflow-produto">
+			<article class="eight columns description">
+				<div class="bd">
+					<h3>Resumo da Oferta</h3>
+					
+					{{ offer.description|safe }}
 				</div>
-			<div class="five columns alpha omega">
-				<p class="de"><span class="riscado">R$ {{ option.old_price }}</span></p>
-				<span>R$ {{ option.new_price }}</span>
-				<a href="{% url 'offer:buy_offer' option.id %}">Comprar</a>
-			</div>
 
-			{% endfor %}
-			
-		</article>
-		<!-- END OUTRAS -->
+				<div class="bd">
+					<h3>A empresa</h3>
+					
+					{{ partner.about|safe }}
+				</div>
+			</article>
 
+			<article class="eight columns description">
+				<h3>Quando usar:</h3>
+				
+				{{ offer.when_to_use|safe }}
+
+				<h3>Como usar:</h3>
+				{{ offer.how_to_use|safe }}
+
+				<h3>Bom saber:</h3>
+				{{ offer.good_to_know|safe }}
+			</article>
+
+			<article class="description sixteen columns map-box">
+				<h3>Localização</h3>
+
+				<address>
+					<p>Endereço: {{ first_option.filial.street|default:'' }}, {{ first_option.filial.number_home|default:'' }} - CEP: {{ first_option.filial.cep|default:'' }} - {{ first_option.filial.complement|default:'' }} - {{ first_option.filial.neighborhood|default:'' }} - {{ first_option.filial.city.state.acronym|default:'' }}</p>
+				</address>
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.832892413855!2d-34.847331400000016!3d-8.016162099999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ab22ba35e72209%3A0xe223c0d7faeb8fda!2sR.+do+Sol%2C+100+-+Carmo%2C+Olinda+-+PE!5e0!3m2!1spt-BR!2sbr!4v1412622830499" class="map" frameborder="0" style="border:0"></iframe>
+			</article>
+
+			{% if other_options %}
+			<article class="outras">
+				<h3>Outras opções</h3>
+
+				{% for option in other_options %}
+					<div class="eleven columns alpha omega">
+						<p class="title-outras">{{ option.title }}</p>
+						<span>{{ option.subtitle }}</span>
+					</div>
+				<div class="five columns alpha omega">
+					<p class="de"><span class="riscado">R$ {{ option.old_price }}</span></p>
+					<span>R$ {{ option.new_price }}</span>
+					<a href="{% url 'offer:buy_offer' option.id %}">Comprar</a>
+				</div>
+
+				{% endfor %}
+				
+			</article>
+			<!-- END OUTRAS -->
+			{% endif %}
+		</div>
 		<a href="#" class="ver-mais">Ver mais detalhes</a>
-		{% endif %}
 	</section>
 
 	<div class="container">
@@ -172,6 +174,17 @@
 		</section>
 		<!-- END BOX -->
 	</div>
+<script type="text/javascript">
+		document.querySelector(".ver-mais").addEventListener("click",function(e){
+			e.preventDefault();
+
+			this.previousElementSibling.style.maxHeight = "4000px";
+
+			setTimeout(function(){
+				arguments[0].style.display = "none";
+			},1000,this);
+		});
+	</script>
 
 
 {% endblock content %}

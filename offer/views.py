@@ -5,6 +5,7 @@ from datetime import datetime
 from django.db.models import Q
 from django.http import HttpResponse
 from django.db.models import Count
+from django.core.mail import send_mail
 from django.core import serializers
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, get_object_or_404
@@ -98,7 +99,7 @@ class OfferListView(ListView):
             for interest in self.request.GET.get("interesses").split(','):
                 obj = get_object_or_404(Interest, slug=interest)
                 interests.append(obj)
-            query = query.filter(interests__in=interests)
+            query = query.filter(interests__in=interests).distinct()
 
         if self.request.GET.get("order"):
             order = self.request.GET.get("order")
@@ -181,3 +182,7 @@ def checks_code(request, code):
         return HttpResponse(json.dumps({'error': False, 'discount': float(result[0].discount)}), content_type='application/json')
     else:
         return HttpResponse(json.dumps({'error': True}), content_type='application/json')
+
+def email(request):
+    send_mail('assunto', 'message', 'contato@ofer.club', ['victorluna22@gmail.com'])
+    return HttpResponse('ok')

@@ -52,13 +52,13 @@
                 <form action="." method="POST">
                     {% csrf_token %}
                     {% if form.errors %}
-                        {{ form.error_messages.invalid_login }}
+                        <p class="error-form">{{ form.error_messages.invalid_login }}</p>
                     {% endif %}
                     <label for="email">E-mail</label>
-                    <input type="mail" name="email" id="email">
+                    <input type="mail" name="email" required id="email">
 
                     <label for="password">Senha</label>
-                    <input type="password" name="password" id="password">
+                    <input type="password" required name="password" id="password">
                     
                     <input type="submit" value="Entrar">
                 </form>

@@ -679,7 +679,7 @@ div.active-dados {
   padding-bottom: 15px;
   background: #fff;
   border-radius: 3px; }
-  .internas header.sixteen.columns, .internas .produto {
+  .internas header.sixteen.columns {
     padding: 0 10px; }
   .internas h2 {
     font-family: "Myriad Pro", sans-serif;
@@ -711,7 +711,11 @@ div.active-dados {
 .produto {
   position: relative;
   min-height: 358px;
-  margin-top: 5px; }
+  margin-top: 5px;
+  overflow: hidden;
+  margin-left: 20px !important;
+  margin-right: 0 !important;
+  border-radius: 5px; }
   .produto > img {
     position: absolute;
     top: 0;
@@ -720,7 +724,8 @@ div.active-dados {
     -ms-transition: all ease-out 1s;
     -o-transition: all ease-out 1s;
     transition: all ease-out 1s;
-    opacity: 0; }
+    opacity: 0;
+    width: 100%; }
   .produto > img, .produto figure {
     border-radius: 3px; }
   .produto figure {
@@ -1244,10 +1249,9 @@ input.bg-area-clara {
   #cupon-div p {
     float: right;
     margin-right: 66px; }
-
-span {
-  cursor: pointer;
-  text-decoration: underline; }
+  #cupon-div span {
+    cursor: pointer;
+    text-decoration: underline; }
 
 .btn {
   background: #40cd28; }
@@ -1270,8 +1274,6 @@ span {
   margin-top: 130px; }
 
 .log-cad div {
-  overflow: hidden;
-  max-height: 300px;
   -webkit-transition: all 0.5s ease-out;
   -moz-transition: all 0.5s ease-out;
   -ms-transition: all 0.5s ease-out;
@@ -1292,11 +1294,11 @@ span {
 .log-cad input[type="password"], .log-cad input[type="mail"], .log-cad input[type="text"] {
   background: #eeeeee;
   float: left; }
-.log-cad input[type="password"] {
-  margin-bottom: 20px; }
 .log-cad input[type="submit"] {
   cursor: pointer;
   margin-top: 20px;
+  margin-bottom: 20px;
+  float: left;
   background: #f6b65d;
   font-size: 18px;
   position: relative;
@@ -1903,6 +1905,26 @@ label[for="saldo-check"] {
 
 #cidade-check:checked ~ ul {
   display: block; }
+
+.error-form, .errorlist {
+  font-size: 14px;
+  max-width: 258px;
+  border-radius: 3px; }
+
+.error-form {
+  background: #e75252;
+  color: #fff;
+  padding: 10px;
+  margin: 10px 0; }
+
+.errorlist {
+  padding: 10px 0 0;
+  clear: both;
+  margin-bottom: 0 !important; }
+  .errorlist li {
+    margin-top: -8px;
+    color: red;
+    text-align: right; }
 
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media only screen and (min-width: 768px) and (max-width: 959px) { }
