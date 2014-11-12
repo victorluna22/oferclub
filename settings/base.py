@@ -128,8 +128,8 @@ MEDIA_ROOT = '/var/www/oferclub/media'
 
 SEND_EMAIL = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USER = 'victorluna22@gmail.com'
-EMAIL_PASSWORD = 'v183729465'
+EMAIL_USER = 'no-reply@ofer.club'
+EMAIL_PASSWORD = 'gloose*123'
 EMAIL_PORT = 587
 EMAIL_TLS = True
 
