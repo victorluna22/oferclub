@@ -369,6 +369,8 @@ var navegacao = {
 					url: url_concatenada,
 					success: function(data){
 						$(".box-content").remove();
+						var marcadores = [];
+
 						for(i=0; i<= data.length - 1; i++){
 							$("#lista-div").append('<section class="box-content listagem-produtos">'+
 							'<article>'+
@@ -391,15 +393,18 @@ var navegacao = {
 							'</article>'+
 					'</section>');
 
-							cordenadas[i] = {
-								latitude: -18.8800397,
-								longitude: -47.05878999999999
-							};
+							marcadores[0] = {
+						      lat:data[i].latitude,
+						      lng: data[i].longitude,
+						      nome: data[i].title,
+						      morada1:data[i].partner,
+						      morada2: data[i].city
+							}
 						}
 
 						$("#lista-div").slideDown(2000);
 
-						initialize(cordenadas);
+						initialize(marcadores);
 
 						pagina = 1;
 						
@@ -415,46 +420,96 @@ var navegacao = {
 }
 }
 
+var markersData = [];
 
-		var map, cordenadas = [];
+// Esta função vai percorrer a informação contida na variável markersData
+// e cria os marcadores através da função createMarker
+function displayMarkers(markersData){
 
-		function initialize(json) {
- 
-        	// $.each(json, function(index, ponto) {
-	        //     var marker = new google.maps.Marker({
-	        //         position: new google.maps.LatLng(ponto.latitude, ponto.longitude),
-	        //         title: "Meu ponto personalizado! :-D",
-	        //         map: map
-	        //     });
-	 
-	        // });
+   // esta variável vai definir a área de mapa a abranger e o nível do zoom
+   // de acordo com as posições dos marcadores
+   var bounds = new google.maps.LatLngBounds();
 
-			var mapCanvas = document.getElementById('mapa-listar');
-	    	var lat =  -18.8800397;
-	    	var lng =  -47.05878999999999;
+   // Loop que vai percorrer a informação contida em markersData 
+   // para que a função createMarker possa criar os marcadores 
+   for (var i = 0; i < markersData.length; i++){
 
-		    var mapOptions = {
-		      center: new google.maps.LatLng(lat, lng),
-		      zoom: 5,
-		      mapTypeId: google.maps.MapTypeId.ROADMAP
-		    }
+      var latlng = new google.maps.LatLng(markersData[i].lat, markersData[i].lng);
+      var nome = markersData[i].nome;
+      var morada1 = markersData[i].morada1;
+      var morada2 = markersData[i].morada2;
 
-		    var map = new google.maps.Map(mapCanvas, mapOptions);
+      createMarker(latlng, nome, morada1, morada2);
 
-		    var contentString = "<div style='width:300px;height:110px;' id='content'><h1 id='firstHeading' class='firstHeading'>Cabana Praia Hotel</h1><p>Avenida Roberto Freire</p></div>";
+      // Os valores de latitude e longitude do marcador são adicionados à
+      // variável bounds
+      bounds.extend(latlng); 
+   }
 
-		    var infowindow = new google.maps.InfoWindow({
-			      content: contentString
-			  });
-		    var marker = new google.maps.Marker({
-			      position: new google.maps.LatLng(lat, lng),
-			      map: map,
-			      title:"Cabana Praia Hotel",
-			  });
+   // Depois de criados todos os marcadores,
+   // a API, através da sua função fitBounds, vai redefinir o nível do zoom
+   // e consequentemente a área do mapa abrangida de acordo com
+   // as posições dos marcadores
+   map.fitBounds(bounds);
+}
 
-		    infowindow.open(map,marker);
-		 
-		}
+// Função que cria os marcadores e define o conteúdo de cada Info Window.
+function createMarker(latlng, nome, morada1, morada2){
+   var marker = new google.maps.Marker({
+      map: map,
+      position: latlng,
+      title: nome
+   });
+
+   // Evento que dá instrução à API para estar alerta ao click no marcador.
+   // Define o conteúdo e abre a Info Window.
+   google.maps.event.addListener(marker, 'click', function() {
+      
+      // Variável que define a estrutura do HTML a inserir na Info Window.
+      var iwContent = '<div id="iw_container">' +
+      '<div class="iw_title">' + nome + '</div>' +
+      '<div class="iw_content">' + morada1 + '<br />' +
+      morada2;
+      
+      // O conteúdo da variável iwContent é inserido na Info Window.
+      infoWindow.setContent(iwContent);
+
+      // A Info Window é aberta com um click no marcador.
+      infoWindow.open(map, marker);
+   });
+}
+
+function initialize(markersData) {
+   var mapOptions = {
+      center: new google.maps.LatLng(-19.212355602107472, -44.20234468749999),
+      zoom: 5,
+      mapTypeId: 'roadmap',
+   };
+
+   map = new google.maps.Map(document.getElementById('mapa-listar'), mapOptions);
+
+   // Cria a nova Info Window com referência à variável infoWindow.
+   // O conteúdo da Info Window é criado na função createMarker.
+   infoWindow = new google.maps.InfoWindow();
+
+   // Evento que fecha a infoWindow com click no mapa.
+   google.maps.event.addListener(map, 'click', function() {
+      infoWindow.close();
+   });
+
+   // Chamada para a função que vai percorrer a informação
+   // contida na variável markersData e criar os marcadores a mostrar no mapa
+   displayMarkers(markersData);
+}
+
+  // {
+  //     lat: 40.6386333,
+  //     lng: -8.745,
+  //     nome: "oferta 2",
+  //     morada1:"walmart",
+  //     morada2: "Recife"
+  //  }
+
 
 if(document.querySelector(".link")){
 	document.querySelector(".link").addEventListener("click",function(e){
