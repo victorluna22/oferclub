@@ -53,6 +53,7 @@ class SubCategory(models.Model):
 
 class Interest(models.Model):
 	name = models.CharField(u'Nome', max_length=255)
+	slug = models.SlugField(max_length=255, unique=True, blank=True)
 	category = models.ForeignKey(Category, related_name='interests')
 
 	def __unicode__(self):
@@ -91,6 +92,8 @@ class OfferManager(models.Manager):
 			fields["discount"] = float(option.discount())
 			fields["remaining"] = option.time_remaining()
 			fields["quantity"] = int(offer.bought + offer.bought_virtual)
+			fields["latitude"] = option.filial.latitude
+			fields["longitude"] = option.filial.longitude
 			data.append(fields)
 		return data
 
