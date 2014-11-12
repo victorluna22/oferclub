@@ -679,7 +679,7 @@ div.active-dados {
   padding-bottom: 15px;
   background: #fff;
   border-radius: 3px; }
-  .internas header.sixteen.columns, .internas .produto {
+  .internas header.sixteen.columns {
     padding: 0 10px; }
   .internas h2 {
     font-family: "Myriad Pro", sans-serif;
@@ -711,7 +711,11 @@ div.active-dados {
 .produto {
   position: relative;
   min-height: 358px;
-  margin-top: 5px; }
+  margin-top: 5px;
+  overflow: hidden;
+  margin-left: 20px !important;
+  margin-right: 0 !important;
+  border-radius: 5px; }
   .produto > img {
     position: absolute;
     top: 0;
@@ -720,7 +724,8 @@ div.active-dados {
     -ms-transition: all ease-out 1s;
     -o-transition: all ease-out 1s;
     transition: all ease-out 1s;
-    opacity: 0; }
+    opacity: 0;
+    width: 100%; }
   .produto > img, .produto figure {
     border-radius: 3px; }
   .produto figure {
