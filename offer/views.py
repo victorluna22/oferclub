@@ -1,8 +1,11 @@
 #coding: utf-8
 import json
+import operator
 from datetime import datetime
+from django.db.models import Q
 from django.http import HttpResponse
 from django.db.models import Count
+from django.core.mail import send_mail
 from django.core import serializers
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, get_object_or_404
@@ -27,6 +30,26 @@ class LoginRequiredMixin(object):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
+
+class OfferSearchListView(ListView):
+    model = Offer
+    template_name = u"offer/search.html"
+
+    def get_queryset(self):
+        search = self.request.GET.get('search')
+        words = search.split(' ')
+        query = reduce(operator.and_, (Q(title__icontains = item) for item in words))
+        offers = Offer.objects.filter(query)
+        return offers
+
+    def get_context_data(self, *args, **kwargs):
+        id_type = self.request.session.get('typeoffer')
+        id_city = self.request.session.get('city')
+        context = super(OfferSearchListView , self).get_context_data(*args, **kwargs)
+        context['destaques'] = Offer.objects.select_related('city').filter(highlight=True, options__start_time__lte=datetime.today(), options__end_time__gte=datetime.today()).distinct()
+        context['categories'] = Category.objects.filter(type__id=id_type).annotate(total=Count('subcategories__offer'))
+        return context
+
 
 
 class OfferListView(ListView):
@@ -76,7 +99,7 @@ class OfferListView(ListView):
             for interest in self.request.GET.get("interesses").split(','):
                 obj = get_object_or_404(Interest, slug=interest)
                 interests.append(obj)
-            query = query.filter(interests__in=interests)
+            query = query.filter(interests__in=interests).distinct()
 
         if self.request.GET.get("order"):
             order = self.request.GET.get("order")
@@ -159,3 +182,7 @@ def checks_code(request, code):
         return HttpResponse(json.dumps({'error': False, 'discount': float(result[0].discount)}), content_type='application/json')
     else:
         return HttpResponse(json.dumps({'error': True}), content_type='application/json')
+
+def email(request):
+    send_mail('assunto', 'message', 'contato@ofer.club', ['victorluna22@gmail.com'])
+    return HttpResponse('ok')
