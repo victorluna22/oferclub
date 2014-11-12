@@ -354,8 +354,11 @@ var navegacao = {
 						}
 						
 						$(".esconde-lista").slideDown("slow");
+
+
 					}
 				});
+
 		}else{
 			var url_concatenada = cat+subcategorias+interesses+ordem+"&page=1";
 
@@ -388,10 +391,16 @@ var navegacao = {
 							'</article>'+
 					'</section>');
 
-
+							cordenadas[i] = {
+								latitude: -18.8800397,
+								longitude: -47.05878999999999
+							};
 						}
 
 						$("#lista-div").slideDown(2000);
+
+						initialize(cordenadas);
+
 						pagina = 1;
 						
 					}
@@ -405,6 +414,47 @@ var navegacao = {
 	}//fim do setUrl
 }
 }
+
+
+		var map, cordenadas = [];
+
+		function initialize(json) {
+ 
+        	// $.each(json, function(index, ponto) {
+	        //     var marker = new google.maps.Marker({
+	        //         position: new google.maps.LatLng(ponto.latitude, ponto.longitude),
+	        //         title: "Meu ponto personalizado! :-D",
+	        //         map: map
+	        //     });
+	 
+	        // });
+
+			var mapCanvas = document.getElementById('mapa-listar');
+	    	var lat =  -18.8800397;
+	    	var lng =  -47.05878999999999;
+
+		    var mapOptions = {
+		      center: new google.maps.LatLng(lat, lng),
+		      zoom: 5,
+		      mapTypeId: google.maps.MapTypeId.ROADMAP
+		    }
+
+		    var map = new google.maps.Map(mapCanvas, mapOptions);
+
+		    var contentString = "<div style='width:300px;height:110px;' id='content'><h1 id='firstHeading' class='firstHeading'>Cabana Praia Hotel</h1><p>Avenida Roberto Freire</p></div>";
+
+		    var infowindow = new google.maps.InfoWindow({
+			      content: contentString
+			  });
+		    var marker = new google.maps.Marker({
+			      position: new google.maps.LatLng(lat, lng),
+			      map: map,
+			      title:"Cabana Praia Hotel",
+			  });
+
+		    infowindow.open(map,marker);
+		 
+		}
 
 if(document.querySelector(".link")){
 	document.querySelector(".link").addEventListener("click",function(e){
