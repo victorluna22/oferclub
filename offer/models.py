@@ -200,7 +200,7 @@ class Option(models.Model):
 		return False
 
 	def discount(self):
-		return "%.2f" % (100 - (100 * self.new_price / self.old_price))
+		return int(100 - (100 * self.new_price / self.old_price))
 
 	def time_remaining(self):
 		date = self.end_time - timezone.now()
