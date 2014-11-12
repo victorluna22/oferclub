@@ -70,8 +70,9 @@
 					<a href="{% url 'offer:change_product_type' 'ofertas-locais' %}" class="btn-top cor-clara">Locais</a>
 					<a href="{% url 'offer:change_product_type' 'produtos' %}" class="btn-top cor-clara">Produtos</a>
 					<a href="{% url 'offer:change_product_type' 'viagens' %}" class="btn-top cor-clara">Viagens</a>
-					<form action="">
-						<input type="text" placeholder="O que você procura?">
+					<form action="{% url 'offer:search' %}" method="GET">
+					{% csrf_token %}
+						<input type="text" name="search" placeholder="O que você procura?">
 					</form>
 					<form id="form-change-city" action="{% url 'offer:user:change_city' %}" method="POST" >
 					{% csrf_token %}

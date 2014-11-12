@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView
-from offer.views import OfferDetailView, OfferListView
+from offer.views import OfferDetailView, OfferListView, OfferSearchListView
 from account.views import MyCouponsListView, MyOrdersListView, MyOperationsListView, OferClubUserEditView, \
 InviteCreateView, OferClubAddressEditView, change_city
 from checkout.views import OrderCreateViewView
@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     url(r'^$', 'offer.views.home', name='home'),
     url(r'^selecionar/(?P<slug>[\w_-]+)/$', 'offer.views.change_product_type', name='change_product_type'),
     url(r'^oferta/listagem/$', OfferListView.as_view(), name='offer_list'),
+    url(r'^oferta/pesquisa/$', OfferSearchListView.as_view(), name='search'),
     url(r'^oferta/(?P<slug>[\w_-]+)/$', OfferDetailView.as_view(), name='offer_detail'),
     url(r'^oferta/(?P<option_id>\d+)/comprar/$', 'checkout.views.order_create_view', name='buy_offer'),
     url(r'^verifica-codigo/(?P<code>[\w_-]+)/$', 'offer.views.checks_code', name='checks_code'),
