@@ -67,9 +67,9 @@
 				</div>
 				
 				<div class="twelve columns">
-					<a href="{% url 'offer:change_product_type' 'ofertas-locais' %}" class="btn-top cor-clara">Locais</a>
-					<a href="{% url 'offer:change_product_type' 'produtos' %}" class="btn-top cor-clara">Produtos</a>
-					<a href="{% url 'offer:change_product_type' 'viagens' %}" class="btn-top cor-clara">Viagens</a>
+					<a href="{% url 'offer:change_product_type' 'ofertas-locais' %}" class="btn-top cor-clara"><span>Locais</span></a>
+					<a href="{% url 'offer:change_product_type' 'produtos' %}" class="btn-top cor-clara"><span>Produtos</span></a>
+					<a href="{% url 'offer:change_product_type' 'viagens' %}" class="btn-top cor-clara"><span>Viagens</span></a>
 					<form action="{% url 'offer:search' %}" method="GET">
 					{% csrf_token %}
 						<input type="text" name="search" placeholder="O que você procura?">
