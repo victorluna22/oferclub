@@ -123,13 +123,13 @@ STATIC_ROOT = '/home/victor/projetos/oferclub/static'
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = '/var/www/oferclub/media'
+MEDIA_ROOT = '/var/www/statics/oferclub/media'
 # MEDIA_ROOT = '/home/gloose-onix/projetos/oferclub/media'
 
 SEND_EMAIL = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USER = 'victorluna22@gmail.com'
-EMAIL_PASSWORD = 'v183729465'
+EMAIL_USER = 'noreply@ofer.club'
+EMAIL_PASSWORD = 'gloose*123'
 EMAIL_PORT = 587
 EMAIL_TLS = True
 
