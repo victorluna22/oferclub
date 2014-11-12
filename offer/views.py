@@ -1,6 +1,8 @@
 #coding: utf-8
 import json
+import operator
 from datetime import datetime
+from django.db.models import Q
 from django.http import HttpResponse
 from django.db.models import Count
 from django.core.mail import send_mail
@@ -28,6 +30,26 @@ class LoginRequiredMixin(object):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
+
+class OfferSearchListView(ListView):
+    model = Offer
+    template_name = u"offer/search.html"
+
+    def get_queryset(self):
+        search = self.request.GET.get('search')
+        words = search.split(' ')
+        query = reduce(operator.and_, (Q(title__icontains = item) for item in words))
+        offers = Offer.objects.filter(query)
+        return offers
+
+    def get_context_data(self, *args, **kwargs):
+        id_type = self.request.session.get('typeoffer')
+        id_city = self.request.session.get('city')
+        context = super(OfferSearchListView , self).get_context_data(*args, **kwargs)
+        context['destaques'] = Offer.objects.select_related('city').filter(highlight=True, options__start_time__lte=datetime.today(), options__end_time__gte=datetime.today()).distinct()
+        context['categories'] = Category.objects.filter(type__id=id_type).annotate(total=Count('subcategories__offer'))
+        return context
+
 
 
 class OfferListView(ListView):

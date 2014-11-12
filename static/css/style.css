@@ -171,7 +171,7 @@ div.active-dados {
       min-height: 88px; }
   #header h1 {
     position: absolute;
-    left: 0;
+    left: 10px;
     top: -25px; }
   #header form {
     position: relative;
@@ -284,29 +284,30 @@ div.active-dados {
   border-radius: 3px;
   margin-top: 2px;
   padding: 10px 0 13px; }
-#navigation a {
-  padding-left: 15px;
-  font-size: 14px;
-  height: 28px;
-  display: inline-block; }
-  #navigation a p {
-    float: left;
-    color: #737373;
-    margin-right: 11px;
-    padding-top: 1px; }
-  #navigation a span {
-    width: 19px;
-    height: 19px;
-    color: #9e9e9e;
-    display: inline-block;
-    background: #eeeeee;
-    border-radius: 3px;
-    padding: 4px 2px;
-    margin-left: 5px;
-    font-size: 12px;
-    text-decoration: none; }
-#navigation a:hover p {
-  color: #ff9a15; }
+  #navigation ul a {
+    padding-left: 15px;
+    font-size: 14px;
+    height: 28px;
+    display: inline-block; }
+    #navigation ul a p {
+      float: left;
+      color: #737373;
+      margin-right: 11px;
+      padding-top: 1px; }
+    #navigation ul a span {
+      width: 19px;
+      height: 19px;
+      color: #9e9e9e;
+      display: inline-block;
+      background: #eeeeee;
+      border-radius: 3px;
+      padding: 4px 2px;
+      margin-left: 5px;
+      font-size: 12px;
+      text-decoration: none;
+      text-align: center; }
+  #navigation ul a:hover p {
+    color: #ff9a15; }
 #navigation input[type="checkbox"] {
   margin-left: 10px;
   margin-right: -15px; }
@@ -444,7 +445,7 @@ div.active-dados {
     margin-top: 15px;
     border-radius: 3px; }
     .box-content article header {
-      min-height: 107px;
+      min-height: 157px;
       width: 100%;
       background: #fff;
       padding: 5px 6px 20px;
@@ -1925,6 +1926,19 @@ label[for="saldo-check"] {
     margin-top: -8px;
     color: red;
     text-align: right; }
+
+#link-categ {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 35px;
+  width: 50px; }
+
+#bread-crumb {
+  padding-left: 10px;
+  margin-bottom: 10px; }
+  #bread-crumb a:hover, #bread-crumb a.active-bread {
+    color: #FF8D10; }
 
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media only screen and (min-width: 768px) and (max-width: 959px) { }
