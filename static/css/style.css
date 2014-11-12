@@ -99,8 +99,17 @@ div.active-dados {
 .show-presente, .show-presente body {
   overflow: hidden !important; }
 
-.btn-top:hover {
-  color: #FF8D11 !important; }
+.btn-top:hover span {
+  color: #FFA719 !important;
+  opacity: 0; }
+
+.btn-top span {
+  color: #fff;
+  -webkit-transition: all ease-out 0.5s;
+  -moz-transition: all ease-out 0.5s;
+  -ms-transition: all ease-out 0.5s;
+  -o-transition: all ease-out 0.5s;
+  transition: all ease-out 0.5s; }
 
 #header {
   z-index: 10;
@@ -124,6 +133,11 @@ div.active-dados {
       text-decoration: underline;
       color: #FF8D11 !important; }
   #header a.cor-clara:before, #header a#titulo-cliente:before, #header a.cor-clara:after, #header a#titulo-cliente:after {
+    -webkit-transition: all ease-out 0.5s;
+    -moz-transition: all ease-out 0.5s;
+    -ms-transition: all ease-out 0.5s;
+    -o-transition: all ease-out 0.5s;
+    transition: all ease-out 0.5s;
     content: "";
     position: absolute;
     width: 18px;
@@ -145,6 +159,16 @@ div.active-dados {
     background-image: url(../img/viagens-menu-hover.png); }
   #header .btn-top:nth-child(3):after {
     background-image: url(../img/sacola-menu-hover.png); }
+  #header .btn-top:hover:after, #header .btn-top:hover:before {
+    -webkit-transform: translateX(28px) scale(1.4);
+    -moz-transform: translateX(28px) scale(1.4);
+    -o-transform: translateX(28px) scale(1.4);
+    -ms-transform: translateX(28px) scale(1.4);
+    transform: translateX(28px) scale(1.4); }
+  #header .btn-top:hover:after {
+    opacity: 1; }
+  #header .btn-top:hover:before {
+    opacity: 0; }
   #header a {
     color: #fff; }
   #header li.redes {
@@ -1939,6 +1963,83 @@ label[for="saldo-check"] {
   margin-bottom: 10px; }
   #bread-crumb a:hover, #bread-crumb a.active-bread {
     color: #FF8D10; }
+
+/* MODAL */
+.comprar-modal {
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 222222; }
+
+.bg-modal {
+  position: fixed;
+  z-index: 22222;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%; }
+
+.box-modal-compra {
+  position: absolute;
+  z-index: 222222;
+  left: 50%;
+  padding-left: 40px;
+  top: 340px;
+  width: 675px;
+  min-height: 242px;
+  border-radius: 5px;
+  background: #fff;
+  padding-bottom: 30px;
+  margin-left: -460px; }
+
+.geral-info {
+  margin-top: 30px; }
+  .geral-info div:nth-child(2n+1) {
+    width: 350px;
+    float: left;
+    margin-right: 45px;
+    padding-bottom: 10px;
+    border-right: solid 1px #a0a0a0; }
+    .geral-info div:nth-child(2n+1) p {
+      font-size: 14px;
+      color: #26485d; }
+    .geral-info div:nth-child(2n+1) p:first-child {
+      font-family: "MyriadProBold", sans-serif; }
+
+.comprar-modal-box {
+  background: #40cd28;
+  color: #fff;
+  width: 81px;
+  height: 37px;
+  display: inline-block;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 38px;
+  margin: 3px 0 0 45px; }
+
+.price-modal {
+  float: left;
+  font-size: 18px;
+  color: #f6b65d;
+  margin-top: 4px;
+  font-family: "MyriadProBold", sans-serif; }
+  .price-modal span {
+    display: block;
+    font-size: 12px;
+    text-align: center;
+    padding-left: 5px; }
+
+.box-modal-compra:before {
+  content: "";
+  display: block;
+  border: solid 38px transparent;
+  position: absolute;
+  width: 0;
+  height: 0;
+  right: -76px;
+  top: 90px;
+  border-left-color: #fff; }
 
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media only screen and (min-width: 768px) and (max-width: 959px) { }
