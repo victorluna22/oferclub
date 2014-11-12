@@ -482,7 +482,7 @@ function createMarker(latlng, nome, morada1, morada2){
 function initialize(markersData) {
    var mapOptions = {
       center: new google.maps.LatLng(-19.212355602107472, -44.20234468749999),
-      zoom: 5,
+      zoom: 3,
       mapTypeId: 'roadmap',
    };
 
