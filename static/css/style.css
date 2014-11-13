@@ -808,7 +808,9 @@ div.active-dados {
   text-align: center;
   margin-top: 18px;
   margin-bottom: 62px;
-  border-radius: 5px; }
+  border-radius: 5px;
+  position: relative;
+  z-index: 2000000; }
 
 .info-produto {
   padding-top: 15px;
@@ -1965,11 +1967,33 @@ label[for="saldo-check"] {
     color: #FF8D10; }
 
 /* MODAL */
-.comprar-modal {
+#comprar-modal {
   position: relative;
   top: 0;
   left: 0;
+  visibility: hidden;
   z-index: 222222; }
+
+.checked-modal {
+  visibility: visible !important; }
+  .checked-modal .bg-modal {
+    opacity: 1; }
+  .checked-modal .box-modal-compra {
+    width: 675px;
+    -webkit-transform: translateX(3px);
+    -moz-transform: translateX(3px);
+    -o-transform: translateX(3px);
+    -ms-transform: translateX(3px);
+    transform: translateX(3px);
+    left: 50%; }
+    .checked-modal .box-modal-compra div {
+      visibility: visible;
+      opacity: 1;
+      -webkit-transition-delay: 0.6s;
+      -moz-transition-delay: 0.6s;
+      -o-transition-delay: 0.6s;
+      -ms-transition-delay: 0.6s;
+      transition-delay: 0.6s; }
 
 .bg-modal {
   position: fixed;
@@ -1978,25 +2002,47 @@ label[for="saldo-check"] {
   left: 0;
   background: rgba(0, 0, 0, 0.5);
   width: 100%;
-  height: 100%; }
+  height: 100%;
+  -webkit-transition: all ease-out 1s;
+  -moz-transition: all ease-out 1s;
+  -ms-transition: all ease-out 1s;
+  -o-transition: all ease-out 1s;
+  transition: all ease-out 1s;
+  opacity: 0; }
 
 .box-modal-compra {
+  -webkit-transition: all ease-out 0.6s;
+  -moz-transition: all ease-out 0.6s;
+  -ms-transition: all ease-out 0.6s;
+  -o-transition: all ease-out 0.6s;
+  transition: all ease-out 0.6s;
   position: absolute;
   z-index: 222222;
-  left: 50%;
+  left: 51%;
   padding-left: 40px;
-  top: 340px;
-  width: 675px;
+  top: 168px;
   min-height: 242px;
+  max-height: 242px;
   border-radius: 5px;
   background: #fff;
   padding-bottom: 30px;
-  margin-left: -460px; }
-  .box-modal-compra .btn-comprar {
-    position: absolute;
-    right: -220px;
-    z-index: 1;
-    top: 82px; }
+  margin-left: -460px;
+  /*width: 675px;*/
+  -webkit-transform: translateX(685px);
+  -moz-transform: translateX(685px);
+  -o-transform: translateX(685px);
+  -ms-transform: translateX(685px);
+  transform: translateX(685px);
+  width: 0;
+  overflow: hidden; }
+  .box-modal-compra div {
+    visibility: hidden;
+    -webkit-transition: all ease-out 1.2s;
+    -moz-transition: all ease-out 1.2s;
+    -ms-transition: all ease-out 1.2s;
+    -o-transition: all ease-out 1.2s;
+    transition: all ease-out 1.2s;
+    opacity: 0; }
 
 .geral-info {
   margin-top: 30px; }
@@ -2035,16 +2081,16 @@ label[for="saldo-check"] {
     text-align: center;
     padding-left: 5px; }
 
-.box-modal-compra:before {
+.active-modal:before {
   content: "";
   display: block;
   border: solid 38px transparent;
   position: absolute;
   width: 0;
-  z-index: 2;
   height: 0;
-  right: -76px;
-  top: 90px;
+  z-index: 2;
+  right: 144px;
+  top: -10px;
   border-left-color: #fff; }
 
 /* Tablet Portrait size to standard 960 (devices and browsers) */

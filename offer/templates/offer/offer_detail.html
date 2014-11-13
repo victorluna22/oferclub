@@ -56,7 +56,91 @@
 		</div>
 		<!-- END GERAL INFO -->
 
-		<p class="btn-comprar">COMPRAR</p>
+		<div class="geral-info">
+			<div>
+				<p>Duas Diárias para casal</p>
+				<p>Hospedagem + Café da manhã</p>
+			</div>
+
+			<div>
+				<p class="price-modal">
+					R$ 199,00
+					<span>50% OFF</span>
+				</p>
+
+				<a href="" class="comprar-modal-box">Comprar</a>
+			</div>
+		</div>
+		<!-- END GERAL INFO -->
+
+		<div class="geral-info">
+			<div>
+				<p>Duas Diárias para casal</p>
+				<p>Hospedagem + Café da manhã</p>
+			</div>
+
+			<div>
+				<p class="price-modal">
+					R$ 199,00
+					<span>50% OFF</span>
+				</p>
+
+				<a href="" class="comprar-modal-box">Comprar</a>
+			</div>
+		</div>
+		<!-- END GERAL INFO -->
+
+		<div class="geral-info">
+			<div>
+				<p>Duas Diárias para casal</p>
+				<p>Hospedagem + Café da manhã</p>
+			</div>
+
+			<div>
+				<p class="price-modal">
+					R$ 199,00
+					<span>50% OFF</span>
+				</p>
+
+				<a href="" class="comprar-modal-box">Comprar</a>
+			</div>
+		</div>
+		<!-- END GERAL INFO -->
+
+		<div class="geral-info">
+			<div>
+				<p>Duas Diárias para casal</p>
+				<p>Hospedagem + Café da manhã</p>
+			</div>
+
+			<div>
+				<p class="price-modal">
+					R$ 199,00
+					<span>50% OFF</span>
+				</p>
+
+				<a href="" class="comprar-modal-box">Comprar</a>
+			</div>
+		</div>
+		<!-- END GERAL INFO -->
+
+
+		<div class="geral-info">
+			<div>
+				<p>Duas Diárias para casal</p>
+				<p>Hospedagem + Café da manhã</p>
+			</div>
+
+			<div>
+				<p class="price-modal">
+					R$ 199,00
+					<span>50% OFF</span>
+				</p>
+
+				<a href="" class="comprar-modal-box">Comprar</a>
+			</div>
+		</div>
+		<!-- END GERAL INFO -->
 
 	</div>
 	<!-- END BOX -->
@@ -84,7 +168,7 @@
 		<article class="comprar-produto five columns">
 			<p class="de"><span class="riscado">R$ {{ first_option.old_price }}</span> <span class="por"> por</span></p>
 			<p class="preco-destaque">R$ {{ first_option.new_price }}</p>
-			<a href="{% url 'offer:buy_offer' first_option.id %}" class="btn-comprar">COMPRAR</a>
+			<a href="{% url 'offer:buy_offer' first_option.id %}" class="btn-comprar open-modal">COMPRAR</a>
 
 			<footer>Compre por telefone: 3388 1414</footer>
 		</article>
@@ -340,7 +424,18 @@ google.maps.event.addDomListener(window, 'load', iniciarMapa);
 				arguments[0].style.display = "none";
 			},1000,this);
 		});
-	</script>
+
+		if(document.querySelector(".open-modal")){
+			document.querySelector(".open-modal").addEventListener("click",function(e){
+				e.preventDefault();
+				this.classList.add("active-modal");
+
+				document.querySelector("#comprar-modal").classList.add("checked-modal");
+
+				document.querySelector(".box-modal-compra").style.maxHeight = "10000000px";
+			});
+		}
+</script>
 
 
 {% endblock content %}
