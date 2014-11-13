@@ -21,7 +21,9 @@
 			</div>
 
 			<ul>
-			
+				{% for bloco in blocos %}
+					<li><a {%if forloop.counter == 2%}id="border-nav"{%endif%} href="{% url 'offer:offer_list' %}?category={{ bloco.category }}"><p {%if forloop.counter <= 2%}class="color-destaque"{%endif%}>{{ bloco.titulo_bloco }} </p><span>{{ bloco.ofertas|length }}</span></a></li>
+				{% endfor %}
 			</ul>
 		</nav>
 		<!-- END NAVIGATION -->
