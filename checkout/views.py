@@ -82,7 +82,7 @@ def order_create_view(request, option_id):
 
 		order = Order.objects.create(user=request.user, status=2, total=0)
 		#SUBTOTAIS
-		import pdb;pdb.set_trace()
+		# import pdb;pdb.set_trace()
 		if len(name_consumer) == len(option_id) and len(option_id) == len(quantity):
 			for i in range(len(name_consumer)):
 				opt = get_object_or_404(Option, pk=option_id[i])
