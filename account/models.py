@@ -195,7 +195,7 @@ class OferClubUser(OferClubAbstractUser):
 class Partner(models.Model):
     name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255, unique=True, db_index=True)
-    logo = models.ImageField(verbose_name=u'Logomarca',blank=True, null=True, upload_to='parceiro/')
+    logo = models.ImageField(verbose_name=u'Logomarca',blank=True, null=True, upload_to='parceiro/', help_text='Tamanho: 220 x 220')
     slug = models.SlugField(max_length=255, blank=True, unique=True, editable=False)
     cnpj = models.CharField(verbose_name=_(u'CNPJ'), max_length=18)
     phone = models.CharField(verbose_name=_(u'Telefone'), blank=True, null=True, max_length=20)
