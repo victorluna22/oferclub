@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse_lazy
 from offer.slugify import unique_slugify as slugify
 from tinymce import models as tinymce_models
 from account.models import City, Filial, Affiliate
+import locale
 
 DE_POR = 1
 APARTIR_DE = 2
@@ -84,10 +85,10 @@ class OfferManager(models.Manager):
 			fields["imagem"] = "/media/" + str(offer.image_grid)
 			fields["city"] = str(offer.city.name)
 			if offer.options.all().count() == 1:
-				fields["before_price"] = float(option.old_price)
+				fields["before_price"] = self.moeda(option.old_price)
 			else:
 				fields["before_price"] = ''
-			fields["new_price"] = float(option.new_price)
+			fields["new_price"] = self.moeda(option.new_price)
 			fields["cashback"] = float(offer.percent_cashback)
 			fields["discount"] = float(option.discount())
 			fields["remaining"] = option.time_remaining()
@@ -97,17 +98,23 @@ class OfferManager(models.Manager):
 			data.append(fields)
 		return data
 
+	def moeda(self, valor):
+	    if valor != None:
+	        locale.setlocale( locale.LC_ALL, 'pt_BR.utf8' )
+	        return locale.currency( valor, grouping=True )
+	    return ''
+
 class Offer(models.Model):
 	title = models.CharField(u'Título', max_length=255)
 	slug = models.SlugField(max_length=255, unique=True, blank=True)
-	image_grid = models.ImageField(verbose_name=u'Imagem do gride', upload_to='oferta/')
+	image_grid = models.ImageField(verbose_name=u'Imagem do gride', upload_to='oferta/', help_text='Tamanho : 300 x 195')
 	subcategory = models.ForeignKey(SubCategory, verbose_name=u'Sub Categoria')
 	interests = models.ManyToManyField(Interest, verbose_name=u'Interesses')
 	delivery = models.BooleanField(u'Entrega', default=0)
 	shipping = models.BooleanField(u'Cobra Frete', default=0)
 	cep_delivery = models.CharField(u'CEP de Origem', max_length=9, blank=True, null=True)
 	highlight = models.BooleanField(u'Destaque', default=False)
-	highlight_image = models.ImageField(verbose_name=u'Imagem Destaque', upload_to='oferta/')
+	highlight_image = models.ImageField(verbose_name=u'Imagem Destaque', upload_to='oferta/', help_text='Tamanho: 700 x 360')
 	affiliate = models.ForeignKey(Affiliate, verbose_name=u'Franqueado', blank=True, null=True)
 	bought = models.IntegerField(u'Comprados', default=0)
 	bought_virtual = models.IntegerField(u'Quantidade virtual')

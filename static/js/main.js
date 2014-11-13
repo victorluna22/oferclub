@@ -31,8 +31,8 @@ if(document.querySelector("#propagandas")){
 						'<h4>'+json[key].ofertas[i].title+'</h4>'+
 						'<a href="#"><h5>'+json[key].ofertas[i].partner+'</h5></a>'+
 						'<a href="#"><span class="localidade-box">'+json[key].ofertas[i].city+'</span></a>'+
-						'<p class="riscado">De R$:'+json[key].ofertas[i].before_price+'</p>'+
-						'<p class="color-destaque">Por R$ '+json[key].ofertas[i].new_price+'</p>'+
+						'<p class="riscado">De '+json[key].ofertas[i].before_price+'</p>'+
+						'<p class="color-destaque">Por  '+json[key].ofertas[i].new_price+'</p>'+
 					'</header>'+
 				'</article>';
 				}
