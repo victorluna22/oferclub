@@ -1,5 +1,11 @@
 {% extends 'offer/base.html' %}
 
+{% load offer %}
+
+{% block breadcrumb %}
+	{{ request|breadcrumb:offer|safe }}
+{% endblock %}
+
 {% block content %}
 	<!-- <a href=" url 'offer:buy_offer' option.id ">Comprar</a> -->
 

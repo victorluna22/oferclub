@@ -17,7 +17,7 @@ from django.views.generic.edit import UpdateView, FormView
 from django.views.generic.detail import DetailView
 from checkout.models import Coupon, Order, Operation
 from account.models import OferClubUser
-from offer.models import Offer, Category, Type, SubCategory, PromotionCode, Interest
+from offer.models import Offer, Category, Type, SubCategory, PromotionCode, Interest, City
 from account.forms import OferClubUserForm, OferClubUserChangeForm
 
 class LoginRequiredMixin(object):
