@@ -82,6 +82,7 @@ def order_create_view(request, option_id):
 
 		order = Order.objects.create(user=request.user, status=2, total=0)
 		#SUBTOTAIS
+		# import pdb;pdb.set_trace()
 		if len(name_consumer) == len(option_id) and len(option_id) == len(quantity):
 			for i in range(len(name_consumer)):
 				opt = get_object_or_404(Option, pk=option_id[i])
@@ -151,7 +152,8 @@ def order_create_view(request, option_id):
 	context = {}
 	context['option'] = option
 	context['other_options'] = option.offer.options.all()
-	context['range_quantity'] = range(option.offer.max_by_user or 10)
+	max_by_user = option.offer.max_by_user+1 if option.offer.max_by_user else 11
+	context['range_quantity'] = range(1, max_by_user)
 	return render(request, 'checkout/order_create.html', context)
 
 

@@ -4,12 +4,7 @@
 
 
 {% block breadcrumb %}
-	<p class="container" id="bread-crumb">
-	<a href="#">Inicio</a> > 
-		<a href="#">Categorias</a> > 
-			<a href="#" class="active-bread">produtos</a>
-	</p>
-
+	{{ request|breadcrumb|safe }}
 {% endblock %}
 
 {% block content %}
@@ -67,11 +62,11 @@
 
 		<ul>
 		<li><a href="{% url 'offer:offer_list' %}?category=ultimas-ofertas"><p class="color-destaque">Últimas Ofertas</p><span>{{ ultimas_count }}</span></a></li>
-		<li><a href="{% url 'offer:offer_list' %}?category=mais-vendidos"><p class="color-destaque">Mais Vendidos</p><span>{{ mais_vendidos_count }}</span></a></li>
+		<li><a id="border-nav" href="{% url 'offer:offer_list' %}?category=mais-vendidos"><p class="color-destaque">Mais Vendidos</p><span>{{ mais_vendidos_count }}</span></a></li>
 		{% for category in categories %}
 
 			{% if category.total > 0 %}
-			<li><a href="{% url 'offer:offer_list' %}?category={{ category.slug }}"><p class="color-destaque">{{ category.name }} </p><span>{{ category.total }}</span></a></li>
+			<li><a href="{% url 'offer:offer_list' %}?category={{ category.slug }}"><p>{{ category.name }} </p><span>{{ category.total }}</span></a></li>
 			{% endif %}
 		{% endfor %}
 		</ul>

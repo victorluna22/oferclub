@@ -87,13 +87,12 @@
 						<!-- FAKE -->
 						<li>
 							<ul>
-								<li class="bg-area-clara sub-itens"><a href="#" data-valor="1" data-texto="1"><p>1</p></a></li>
-								<li class="bg-area-clara sub-itens"><a href="#" data-valor="2" data-texto="2"><p>2</p></a></li>
-								<li class="bg-area-clara sub-itens"><a href="#" data-valor="3" data-texto="3"><p>3</p></a></li>
+							{% for i in range_quantity %}
+								<li class="bg-area-clara sub-itens"><a href="#" data-valor="{{i}}" data-texto="{{i}}"><p>{{i}}</p></a></li>
+							{% endfor %}
 							</ul>
 						</li>
 					</ul>
-
 					<!-- SELECT DE QUANTIDADE -->
 					<select name="quantity[]" class="esconde-select">
 						{% for i in range_quantity %}

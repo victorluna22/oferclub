@@ -88,7 +88,7 @@ class CouponAdmin(admin.ModelAdmin):
         qs = super(CouponAdmin, self).queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(order__option__filial=request.user)
+        return qs.filter(order_item__option__filial=request.user)
 
 class OperationAdmin(admin.ModelAdmin):
     
