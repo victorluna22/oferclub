@@ -1980,6 +1980,11 @@ label[for="saldo-check"] {
     opacity: 1; }
   .checked-modal .box-modal-compra {
     width: 675px;
+    -webkit-transition: all ease-out 0.6s;
+    -moz-transition: all ease-out 0.6s;
+    -ms-transition: all ease-out 0.6s;
+    -o-transition: all ease-out 0.6s;
+    transition: all ease-out 0.6s;
     -webkit-transform: translateX(3px);
     -moz-transform: translateX(3px);
     -o-transform: translateX(3px);
@@ -1993,7 +1998,12 @@ label[for="saldo-check"] {
       -moz-transition-delay: 0.6s;
       -o-transition-delay: 0.6s;
       -ms-transition-delay: 0.6s;
-      transition-delay: 0.6s; }
+      transition-delay: 0.6s;
+      -webkit-transition: all ease-out 1.2s;
+      -moz-transition: all ease-out 1.2s;
+      -ms-transition: all ease-out 1.2s;
+      -o-transition: all ease-out 1.2s;
+      transition: all ease-out 1.2s; }
 
 .bg-modal {
   position: fixed;
@@ -2011,11 +2021,6 @@ label[for="saldo-check"] {
   opacity: 0; }
 
 .box-modal-compra {
-  -webkit-transition: all ease-out 0.6s;
-  -moz-transition: all ease-out 0.6s;
-  -ms-transition: all ease-out 0.6s;
-  -o-transition: all ease-out 0.6s;
-  transition: all ease-out 0.6s;
   position: absolute;
   z-index: 222222;
   left: 51%;
@@ -2037,11 +2042,6 @@ label[for="saldo-check"] {
   overflow: hidden; }
   .box-modal-compra div {
     visibility: hidden;
-    -webkit-transition: all ease-out 1.2s;
-    -moz-transition: all ease-out 1.2s;
-    -ms-transition: all ease-out 1.2s;
-    -o-transition: all ease-out 1.2s;
-    transition: all ease-out 1.2s;
     opacity: 0; }
 
 .geral-info {
@@ -2092,6 +2092,40 @@ label[for="saldo-check"] {
   right: 144px;
   top: -10px;
   border-left-color: #fff; }
+
+#close-comprar:before, #close-comprar:after {
+  cursor: pointer;
+  content: "";
+  position: absolute;
+  background: #d6d6d6;
+  width: 1px;
+  height: 16px;
+  top: 0;
+  left: 10px; }
+
+#close-comprar {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  z-index: 100000;
+  top: 140px;
+  left: 50%;
+  margin-left: 206px;
+  cursor: pointer; }
+
+#close-comprar:before {
+  -webkit-transform: rotate(42deg);
+  -moz-transform: rotate(42deg);
+  -o-transform: rotate(42deg);
+  -ms-transform: rotate(42deg);
+  transform: rotate(42deg); }
+
+#close-comprar:after {
+  -webkit-transform: rotate(-42deg);
+  -moz-transform: rotate(-42deg);
+  -o-transform: rotate(-42deg);
+  -ms-transform: rotate(-42deg);
+  transform: rotate(-42deg); }
 
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media only screen and (min-width: 768px) and (max-width: 959px) { }

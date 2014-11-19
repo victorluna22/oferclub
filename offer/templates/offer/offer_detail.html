@@ -12,22 +12,10 @@
 <section id="comprar-modal">
 	<div class="bg-modal"></div>
 	
+	<div id="close-comprar">
+	</div>
+
 	<div class="box-modal-compra">
-		<div class="geral-info">
-			<div>
-				<p>Duas Diárias para casal</p>
-				<p>Hospedagem + Café da manhã</p>
-			</div>
-
-			<div>
-				<p class="price-modal">
-					R$ 199,00
-					<span>50% OFF</span>
-				</p>
-
-				<a href="" class="comprar-modal-box">Comprar</a>
-			</div>
-		</div>
 
 		<div class="geral-info">
 			<div>
@@ -60,7 +48,6 @@
 				<a href="" class="comprar-modal-box">Comprar</a>
 			</div>
 		</div>
-		<!-- END GERAL INFO -->
 
 		<div class="geral-info">
 			<div>
@@ -78,6 +65,21 @@
 			</div>
 		</div>
 		<!-- END GERAL INFO -->
+		<div class="geral-info">
+			<div>
+				<p>Duas Diárias para casal</p>
+				<p>Hospedagem + Café da manhã</p>
+			</div>
+
+			<div>
+				<p class="price-modal">
+					R$ 199,00
+					<span>50% OFF</span>
+				</p>
+
+				<a href="" class="comprar-modal-box">Comprar</a>
+			</div>
+		</div>
 
 		<div class="geral-info">
 			<div>
@@ -94,42 +96,6 @@
 				<a href="" class="comprar-modal-box">Comprar</a>
 			</div>
 		</div>
-		<!-- END GERAL INFO -->
-
-		<div class="geral-info">
-			<div>
-				<p>Duas Diárias para casal</p>
-				<p>Hospedagem + Café da manhã</p>
-			</div>
-
-			<div>
-				<p class="price-modal">
-					R$ 199,00
-					<span>50% OFF</span>
-				</p>
-
-				<a href="" class="comprar-modal-box">Comprar</a>
-			</div>
-		</div>
-		<!-- END GERAL INFO -->
-
-		<div class="geral-info">
-			<div>
-				<p>Duas Diárias para casal</p>
-				<p>Hospedagem + Café da manhã</p>
-			</div>
-
-			<div>
-				<p class="price-modal">
-					R$ 199,00
-					<span>50% OFF</span>
-				</p>
-
-				<a href="" class="comprar-modal-box">Comprar</a>
-			</div>
-		</div>
-		<!-- END GERAL INFO -->
-
 
 		<div class="geral-info">
 			<div>
@@ -421,26 +387,46 @@ google.maps.event.addDomListener(window, 'load', iniciarMapa);
 		<!-- END BOX -->
 	</div>
 <script type="text/javascript">
-		document.querySelector(".ver-mais").addEventListener("click",function(e){
-			e.preventDefault();
+	document.querySelector(".ver-mais").addEventListener("click",function(e){
+		e.preventDefault();
 
-			this.previousElementSibling.style.maxHeight = "4000px";
+		this.previousElementSibling.style.maxHeight = "4000px";
+
+		setTimeout(function(){
+			arguments[0].style.display = "none";
+		},1000,this);
+	});
+
+	if(document.querySelector(".open-modal")){
+		document.querySelector(".open-modal").addEventListener("click",function(e){
+			e.preventDefault();
+			this.classList.add("active-modal");
+
+			document.querySelector("#comprar-modal").classList.add("checked-modal");
 
 			setTimeout(function(){
-				arguments[0].style.display = "none";
-			},1000,this);
+				document.querySelector(".box-modal-compra").style.maxHeight = "10000000px";
+			},500);
 		});
 
-		if(document.querySelector(".open-modal")){
-			document.querySelector(".open-modal").addEventListener("click",function(e){
-				e.preventDefault();
-				this.classList.add("active-modal");
+		document.querySelector("#close-comprar").addEventListener('click',function(){
+			fechaModal();
+		});
 
-				document.querySelector("#comprar-modal").classList.add("checked-modal");
+		document.querySelector(".bg-modal").addEventListener('click',function(){
+			fechaModal();
+		});
 
-				document.querySelector(".box-modal-compra").style.maxHeight = "10000000px";
-			});
+		function fechaModal(){
+			document.querySelector(".active-modal").classList.remove("active-modal");
+			document.querySelector("#comprar-modal").classList.remove("checked-modal");
+
+			setTimeout(function(){
+				document.querySelector(".box-modal-compra").style.maxHeight = "242px";
+			},500);
 		}
+	}
+
 </script>
 
 
